@@ -26,7 +26,7 @@ public class Receipt {
 	}
 	
 	public String toString() {
-		String random3;
+		String random4;
 		String receiptDetails="";
 		receiptDetails+=String.format("-----------------------------------------------------------------------------------\n");
 		receiptDetails+=String.format("| Receipt ID: %-67s |\n", getFullRecID());
