@@ -1,0 +1,127 @@
+MP1284K,Meta Phone,2250,Mobile Devices,Smart Phone,1,128,4,6.7,Black
+MP1288K,Meta Phone,2500,Mobile Devices,Smart Phone,103,256,4,6.7,Black
+MP2564K,Meta Phone,2750,Mobile Devices,Smart Phone,98,128,8,6.7,Black
+MP2568K,Meta Phone,3000,Mobile Devices,Smart Phone,101,256,8,6.7,Black
+MP1284W,Meta Phone,2250,Mobile Devices,Smart Phone,177,128,4,6.7,White
+MP1288W,Meta Phone,2500,Mobile Devices,Smart Phone,43,256,4,6.7,White
+MP2564W,Meta Phone,2750,Mobile Devices,Smart Phone,180,128,8,6.7,White
+MP2568W,Meta Phone,3000,Mobile Devices,Smart Phone,42,256,8,6.7,White
+MP1284G,Meta Phone,2250,Mobile Devices,Smart Phone,133,128,4,6.7,Alpine Green
+MP1288G,Meta Phone,2500,Mobile Devices,Smart Phone,98,256,4,6.7,Alpine Green
+MP2564G,Meta Phone,2750,Mobile Devices,Smart Phone,117,128,8,6.7,Alpine Green
+MP2568G,Meta Phone,3000,Mobile Devices,Smart Phone,135,256,8,6.7,Alpine Green
+MP1284B,Meta Phone,2250,Mobile Devices,Smart Phone,141,128,4,6.7,Sierra Blue
+MP1288B,Meta Phone,2500,Mobile Devices,Smart Phone,197,256,4,6.7,Sierra Blue
+MP2564B,Meta Phone,2750,Mobile Devices,Smart Phone,173,128,8,6.7,Sierra Blue
+MP2568B,Meta Phone,3000,Mobile Devices,Smart Phone,103,256,8,6.7,Sierra Blue
+MP1284S,Meta Phone,2250,Mobile Devices,Smart Phone,106,128,4,6.7,Space Grey
+MP1288S,Meta Phone,2500,Mobile Devices,Smart Phone,45,256,4,6.7,Space Grey
+MP2564S,Meta Phone,2750,Mobile Devices,Smart Phone,151,128,8,6.7,Space Grey
+MP2568S,Meta Phone,3000,Mobile Devices,Smart Phone,66,256,8,6.7,Space Grey
+MP1284I,Meta Phone,2250,Mobile Devices,Smart Phone,151,128,4,6.7,Silver
+MP1288I,Meta Phone,2500,Mobile Devices,Smart Phone,160,256,4,6.7,Silver
+MP2564I,Meta Phone,2750,Mobile Devices,Smart Phone,59,128,8,6.7,Silver
+MP2568I,Meta Phone,3000,Mobile Devices,Smart Phone,167,256,8,6.7,Silver
+MP1284O,Meta Phone,2250,Mobile Devices,Smart Phone,192,128,4,6.7,Gold
+MP1288O,Meta Phone,2500,Mobile Devices,Smart Phone,130,256,4,6.7,Gold
+MP2564O,Meta Phone,2750,Mobile Devices,Smart Phone,32,128,8,6.7,Gold
+MP2568O,Meta Phone,3000,Mobile Devices,Smart Phone,120,256,8,6.7,Gold
+MP1284R,Meta Phone,2250,Mobile Devices,Smart Phone,52,128,4,6.7,Rose Gold
+MP1288R,Meta Phone,2500,Mobile Devices,Smart Phone,34,256,4,6.7,Rose Gold
+MP2564R,Meta Phone,2750,Mobile Devices,Smart Phone,49,128,8,6.7,Rose Gold
+MP2568R,Meta Phone,3000,Mobile Devices,Smart Phone,104,256,8,6.7,Rose Gold
+MP1284T,Meta Phone,2250,Mobile Devices,Smart Phone,129,128,4,6.7,Starlight
+MP1288T,Meta Phone,2500,Mobile Devices,Smart Phone,87,256,4,6.7,Starlight
+MP2564T,Meta Phone,2750,Mobile Devices,Smart Phone,190,128,8,6.7,Starlight
+MP2568T,Meta Phone,3000,Mobile Devices,Smart Phone,172,256,8,6.7,Starlight
+MP1284M,Meta Phone,2250,Mobile Devices,Smart Phone,120,128,4,6.7,Midnight
+MP1288M,Meta Phone,2500,Mobile Devices,Smart Phone,160,256,4,6.7,Midnight
+MP2564M,Meta Phone,2750,Mobile Devices,Smart Phone,94,128,8,6.7,Midnight
+MP2568M,Meta Phone,3000,Mobile Devices,Smart Phone,64,256,8,6.7,Midnight
+MP1284A,Meta Phone,2250,Mobile Devices,Smart Phone,88,128,4,6.7,Graphite
+MP1288A,Meta Phone,2500,Mobile Devices,Smart Phone,165,256,4,6.7,Graphite
+MP2564A,Meta Phone,2750,Mobile Devices,Smart Phone,52,128,8,6.7,Graphite
+MP2568A,Meta Phone,3000,Mobile Devices,Smart Phone,78,256,8,6.7,Graphite
+MP1284N,Meta Phone,2250,Mobile Devices,Smart Phone,62,128,4,6.7,Pink
+MP1288N,Meta Phone,2500,Mobile Devices,Smart Phone,84,256,4,6.7,Pink
+MP2564N,Meta Phone,2750,Mobile Devices,Smart Phone,180,128,8,6.7,Pink
+MP2568N,Meta Phone,3000,Mobile Devices,Smart Phone,171,256,8,6.7,Pink
+ME1B,Meta Pod,500,Accessories,Earphone,325,1st Generation,Black
+ME2B,Meta Pod,558,Accessories,Earphone,208,2nd Generation,Black
+ME3B,Meta Pod,760,Accessories,Earphone,79,3rd Generation,Black
+ME1W,Meta Pod,500,Accessories,Earphone,57,1st Generation,White
+ME2W,Meta Pod,558,Accessories,Earphone,127,2nd Generation,White
+ME3W,Meta Pod,760,Accessories,Earphone,60,3rd Generation,White
+ME1S,Meta Pod,500,Accessories,Earphone,48,1st Generation,Sky Blue
+ME2S,Meta Pod,558,Accessories,Earphone,97,2nd Generation,Sky Blue
+ME3S,Meta Pod,760,Accessories,Earphone,176,3rd Generation,Sky Blue
+ME1Y,Meta Pod,500,Accessories,Earphone,77,1st Generation,Yellow
+ME2Y,Meta Pod,558,Accessories,Earphone,144,2nd Generation,Yellow
+ME3Y,Meta Pod,760,Accessories,Earphone,185,3rd Generation,Yellow
+ME1P,Meta Pod,500,Accessories,Earphone,186,1st Generation,Pink
+ME2P,Meta Pod,558,Accessories,Earphone,153,2nd Generation,Pink
+ME3P,Meta Pod,760,Accessories,Earphone,50,3rd Generation,Pink
+MT08R,Meta Tablet,1200,Mobile Devices,Tablet,1,10.2,8,Rose Sakura
+MT16R,Meta Tablet,1800,Mobile Devices,Tablet,239,10.2,16,Rose Sakura
+MT08B,Meta Tablet,1200,Mobile Devices,Tablet,110,10.2,8,Beton
+MT16B,Meta Tablet,1800,Mobile Devices,Tablet,128,10.2,16,Beton
+MT08G,Meta Tablet,1200,Mobile Devices,Tablet,166,10.2,8,Gold
+MT16G,Meta Tablet,1800,Mobile Devices,Tablet,72,10.2,16,Gold
+MT08O,Meta Tablet,1200,Mobile Devices,Tablet,70,10.2,8,Orange
+MT16O,Meta Tablet,1800,Mobile Devices,Tablet,156,10.2,16,Orange
+MT08N,Meta Tablet,1200,Mobile Devices,Tablet,101,10.2,8,Noir
+MT16N,Meta Tablet,1800,Mobile Devices,Tablet,158,10.2,16,Noir
+MT08L,Meta Tablet,1200,Mobile Devices,Tablet,30,10.2,8,Bleu Lin
+MT16L,Meta Tablet,1800,Mobile Devices,Tablet,130,10.2,16,Bleu Lin
+MT08S,Meta Tablet,1200,Mobile Devices,Tablet,148,10.2,8,Bleu Saphir
+MT16S,Meta Tablet,1800,Mobile Devices,Tablet,134,10.2,16,Bleu Saphir
+MT08P,Meta Tablet,1200,Mobile Devices,Tablet,159,10.2,8,Space Grey
+MT16P,Meta Tablet,1800,Mobile Devices,Tablet,34,10.2,16,Space Grey
+MT08T,Meta Tablet,1200,Mobile Devices,Tablet,107,10.2,8,Starlight
+MT16T,Meta Tablet,1800,Mobile Devices,Tablet,118,10.2,16,Starlight
+MT08U,Meta Tablet,1200,Mobile Devices,Tablet,72,10.2,8,Purple
+MT16U,Meta Tablet,1800,Mobile Devices,Tablet,179,10.2,16,Purple
+MF617K,Meta Fridge,3100,Household Appliances,Refrigerator,34,800.78,617,Black
+MF650K,Meta Fridge,3350,Household Appliances,Refrigerator,27,900,650,Black
+MF660K,Meta Fridge,4112,Household Appliances,Refrigerator,24,1000.34,660,Black
+MF617I,Meta Fridge,3100,Household Appliances,Refrigerator,25,800.78,617,Silver
+MF660I,Meta Fridge,4112,Household Appliances,Refrigerator,74,1000.34,660,Silver
+MF617S,Meta Fridge,3100,Household Appliances,Refrigerator,33,800.78,617,Space Grey
+MF660S,Meta Fridge,4112,Household Appliances,Refrigerator,41,1000.34,660,Space Grey
+MF617B,Meta Fridge,3100,Household Appliances,Refrigerator,33,800.78,617,Blue
+MF660B,Meta Fridge,4112,Household Appliances,Refrigerator,25,1000.34,660,Blue
+MR720K,Meta Printer,2780,Computer Hardware,Printer,144,Meta Smart Series,720,Inkjet Printer,Yes,Black
+MR600K,Meta Printer,2300,Computer Hardware,Printer,193,Meta Inc Series,600,Laser Printer,No,Black
+MR550K,Meta Printer,2500,Computer Hardware,Printer,132,Meta UniOne Series,550,All-in-one Printer,Yes,Black
+MR720W,Meta Printer,2780,Computer Hardware,Printer,64,Meta Smart Series,720,Inkjet Printer,Yes,White
+MR550W,Meta Printer,2500,Computer Hardware,Printer,101,Meta Inc Series,550,Laser Printer,No,White
+MSFK,Meta Scanner,2160,Computer Hardware,Scanners,88,Flatbed scanner,3500,Black
+MSPK,Meta Scanner,3131,Computer Hardware,Scanners,56,Photo scanner,3500,Black
+MSSK,Meta Scanner,2204,Computer Hardware,Scanners,38,Sheetfed scanner,3500,Black
+MSOK,Meta Scanner,2833,Computer Hardware,Scanners,58,Portable scanner,3500,Black
+MSDK,Meta Scanner,2751,Computer Hardware,Scanners,59,Drum scanner,3500,Black
+MSIK,Meta Scanner,2924,Computer Hardware,Scanners,56,Film scanner,3500,Black
+MSLK,Meta Scanner,3583,Computer Hardware,Scanners,66,Slides scanner,3500,Black
+MSBK,Meta Scanner,2476,Computer Hardware,Scanners,36,Book scanner,3500,Black
+MM25K,Meta Wave,238,Household Appliances,Microwave,102,24x16x35.6,Smart microwaves,25,Black 
+MM32K,Meta Wave,255,Household Appliances,Microwave,187,25x18x40,Smart microwaves,32,Black 
+MM25E,Meta Wave,238,Household Appliances,Microwave,55,24x16x35.6,Smart microwaves,25,Beige
+MM32E,Meta Wave,255,Household Appliances,Microwave,75,25x18x40,Smart microwaves,32,Beige
+MM25P,Meta Wave,238,Household Appliances,Microwave,97,24x16x35.6,Smart microwaves,25,Pink
+MM32P,Meta Wave,255,Household Appliances,Microwave,59,25x18x40,Smart microwaves,32,Pink
+MM25B,Meta Wave,238,Household Appliances,Microwave,84,24x16x35.6,Smart microwaves,25,Blue
+MM32B,Meta Wave,255,Household Appliances,Microwave,97,25x18x40,Smart microwaves,32,Blue
+MM25R,Meta Wave,238,Household Appliances,Microwave,95,24x16x35.6,Smart microwaves,25,Red
+MM32R,Meta Wave,255,Household Appliances,Microwave,64,25x18x40,Smart microwaves,32,Red
+MW8B,Meta Watch,1749,Accessories,Smart Watch,121,41,352x430,8,Up to 18 hours,50,Blue
+MW8B,Meta Watch,1749,Accessories,Smart Watch,172,45,396x484,8,Up to 18 hours,50,Blue
+MW8M,Meta Watch,1749,Accessories,Smart Watch,142,41,352x431,8,Up to 18 hours,50,Midnight
+MW8M,Meta Watch,1749,Accessories,Smart Watch,166,45,396x485,8,Up to 18 hours,50,Midnight
+MW8T,Meta Watch,1749,Accessories,Smart Watch,163,41,352x432,8,Up to 18 hours,50,Starlight
+MW8T,Meta Watch,1749,Accessories,Smart Watch,67,45,396x486,8,Up to 18 hours,50,Starlight
+MW8G,Meta Watch,1749,Accessories,Smart Watch,141,41,352x433,8,Up to 18 hours,50,Green
+MW8G,Meta Watch,1749,Accessories,Smart Watch,127,45,396x487,8,Up to 18 hours,50,Green
+MW8O,Meta Watch,1749,Accessories,Smart Watch,83,41,352x434,8,Up to 18 hours,50,Gold
+MW8BO,Meta Watch,1749,Accessories,Smart Watch,98,45,396x488,8,Up to 18 hours,50,Gold
+MW8I,Meta Watch,1749,Accessories,Smart Watch,106,41,352x435,8,Up to 18 hours,50,Silver
+MW8I,Meta Watch,1749,Accessories,Smart Watch,144,45,396x489,8,Up to 18 hours,50,Silver
