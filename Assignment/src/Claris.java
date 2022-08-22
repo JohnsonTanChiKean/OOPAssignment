@@ -17,8 +17,5 @@ public class Claris {
 		}
 	}
 	
-	public static void testingClaris() {
-		
-	}
-	
+
 }

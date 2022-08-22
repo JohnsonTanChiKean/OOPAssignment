@@ -54,4 +54,8 @@ public class ZhiHang {
 	public static void menuList(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, Staff staff, ArrayList<Receipt> receiptList, ArrayList<Cart> cartList) {
 		ChiKean.cart(staffList,productList,memberList, cartList, staff, receiptList);
 	}
+	
+	public static void testingZH() {
+		
+	}
 }

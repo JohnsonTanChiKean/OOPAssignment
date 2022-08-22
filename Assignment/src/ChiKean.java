@@ -1730,5 +1730,8 @@ public class ChiKean {
 		
 	}
 	
+	public static void testingCK() {
+		
+	}
 
 }
