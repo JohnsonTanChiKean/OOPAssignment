@@ -55,7 +55,8 @@ public class ZhiHang {
 		ChiKean.cart(staffList,productList,memberList, cartList, staff, receiptList);
 	}
 	
-	public static void testingZH() {
+	public static void testingZH2() {
 		
 	}
+	
 }
