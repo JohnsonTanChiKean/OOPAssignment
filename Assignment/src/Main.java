@@ -16,15 +16,16 @@ public class Main {
 		ArrayList<Staff> staffList=new ArrayList<Staff>();
 		ArrayList<Member> memberList=new ArrayList<Member>();
 		ArrayList<Receipt> receiptList=new ArrayList<Receipt>();
-		ArrayList<Cart> cartList=new ArrayList<Cart>();
+		ArrayList<Payment> paymentList=new ArrayList<Payment>();
+		BankAccount bankAccount=new BankAccount();
 		readProduct(productList);
 		readStaff(staffList);
-		readMember(memberList);
+		readMember(memberList, staffList);
 		
 		GetDate date=new GetDate();
 		
 		System.out.println(date.toString());
-		ZhiHang.login(staffList, productList, memberList, cartList, receiptList);
+		ZhiHang.login(staffList, productList, memberList, paymentList, receiptList, bankAccount);
 		
 
 	}
@@ -84,7 +85,7 @@ public class Main {
 			reader=new BufferedReader(new FileReader(file));
 			while((line=reader.readLine())!=null) {
 				String[] row=line.split(",");
-				Staff tempStaff=new Staff(row[0], row[1], row[2], row[3], Integer.parseInt(row[4]), row[5], row[6], Double.parseDouble(row[7]));
+				Staff tempStaff=new Staff(row[0], row[1], row[2], row[3], Integer.parseInt(row[4]), row[5], row[6], Double.parseDouble(row[7]), row[8], row[9]);
 				staffList.add(tempStaff);
 			}
 		} catch (Exception e) {
@@ -92,7 +93,7 @@ public class Main {
 		}
 	}
 	
-	public static void readMember(ArrayList<Member> memberList) {
+	public static void readMember(ArrayList<Member> memberList, ArrayList<Staff> staffList) {
 		String file="src\\member.txt";
 		BufferedReader reader;
 		String line="";
@@ -102,8 +103,13 @@ public class Main {
 			
 				while((line=reader.readLine())!=null) {
 					String[] row=line.split(",");
-					Member tempMember=new Member(row[0], row[1], row[2], row[3], Integer.parseInt(row[4]), row[5]);
-					memberList.add(tempMember);
+					for(int i=0; i<staffList.size(); i++) {
+						if(staffList.get(i).getFullStaffID().equals(row[6])) {
+							Member tempMember=new Member(row[0], row[1], row[2], row[3], Integer.parseInt(row[4]), row[5], staffList.get(i), row[7]);
+							memberList.add(tempMember);
+						}
+					}
+					
 				}
 			
 		} catch (Exception e) {

@@ -2,8 +2,10 @@
 public class BankAccount {
 	private String accountNo;
 	private Payment[] payment =new Payment[1000];
+	private Refund[] refund=new Refund[1000];
 	private int noOfPayments;
-	private double moneyAmount;
+	private int noOfRefunds;
+	private double revenue;
 	
 	public BankAccount() {
 		accountNo="CNTACC001";
@@ -22,19 +24,28 @@ public class BankAccount {
 		noOfPayments++;
 		calcMoney();
 	}
+	
+	public void addRefund(Refund refund) {
+		this.refund[noOfRefunds] = refund;
+		noOfRefunds++;
+		calcMoney();
+	}
 
 	public void calcMoney() {
-		moneyAmount=0;
+		revenue=0;
 		for(int i=0; i<noOfPayments; i++) {
-			moneyAmount+=payment[i].getPaymentAmount();
+			revenue+=payment[i].getPaymentAmount();
+		}
+		
+		for(int i=0; i<noOfRefunds; i++) {
+			revenue-=refund[i].getRefundAmount();
 		}
 	}
 	
-	public double getMoneyAmount() {
-		return moneyAmount;
+	
+	public double getRevenue() {
+		return revenue;
 	}
 
-	public void setMoneyAmount(double moneyAmount) {
-		this.moneyAmount = moneyAmount;
-	}
+
 }
