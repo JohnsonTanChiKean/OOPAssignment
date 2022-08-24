@@ -1496,14 +1496,14 @@ public class ChiKean {
 		
 	}
 	
-	public static void paymentFunc(Cart cart, Payment payment, ArrayList<Member> memberList, Staff staff) {
+	public static void paymentFunc(Payment payment, ArrayList<Member> memberList, Staff staff) {
 		Scanner scanner=new Scanner(System.in);
 		String memID, creditCardNo, paymentMethod = "";
 		int memIDNo, checkMemID, paymentMChoice, foundMem=0, retryPayment, paymentError=0;
 		double receivedAmount = 0, balance;
 		payment.setStaff(staff);
 		System.out.println("Cart Details");
-		System.out.println(cart.toString());
+		System.out.println(payment.getCart().toString());
 		
 	
 		do {
@@ -1609,7 +1609,7 @@ public class ChiKean {
 		receiptList.add(receipt);
 	}
 	
-	public static void cart(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, ArrayList<Cart> cartList, Staff staff, ArrayList<Receipt> receiptList) {
+	public static void cart(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, ArrayList<Payment> paymentList, Staff staff, ArrayList<Receipt> receiptList, BankAccount bankAccount) {
 		int newQty, memIDNo, checkMemID=0;
 		char choice='N', addProdChoice='N', editChoice='N', paymentChoice='N', orderChoice='N';
 		String memID;
@@ -1700,19 +1700,26 @@ public class ChiKean {
 				System.out.print("Would you like to proceed with payment? (Y=yes)");
 				paymentChoice=Character.toUpperCase(scanner.next().charAt(0));
 				scanner.nextLine();
+				payment=new Payment(cart, "On-Hold");
 				if(paymentChoice=='Y') {
-					payment=new Payment(cart);
-					paymentFunc(cart, payment, memberList, staff);
+					
+					paymentFunc(payment, memberList, staff);
+					
+				}
+				else {
+					System.out.println("Payment has been put on-hold.");
+					paymentList.add(payment);
+				}
+				
+				if(payment.getStatus().equals("Completed")) {
+					bankAccount.addPayment(payment);
+					System.out.println(bankAccount.getRevenue());
 					System.out.println("Generate receipt");
 					genReceipt(receiptList, receipt, payment);
 				}
 				else {
-					System.out.println("Payment has been put on-hold.");
-					cartList.add(cart);
-				}
-				
-				if(payment!=null) {
-					
+					System.out.println("Payment was process was not completed. Payment has been put on hold");
+					paymentList.add(payment);
 				}
 			}
 			else {

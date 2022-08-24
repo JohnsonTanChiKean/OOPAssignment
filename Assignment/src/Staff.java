@@ -3,7 +3,10 @@ public class Staff extends Person{
 	private String staffID, position, password;
 	private int idNo;
 	private double salary;
+	private GetDate joinDate;
+	private String status;
 	private static int staffCount;
+	private static int genIDNo;
 	
 	public Staff() {
 		
@@ -16,13 +19,17 @@ public class Staff extends Person{
 		staffCount++;
 	}
 	
-	public Staff(String name, String icNo, String birthDate, String staffID, int idNo, String password, String position, double salary) {
+	public Staff(String name, String icNo, String birthDate, String staffID, int idNo, String password, String position, double salary, String joinDate, String status) {
 		super(name, icNo, birthDate);
 		setStaffID(staffID);
 		setIdNo(idNo);
 		setPosition(position);
 		setSalary(salary);
 		setPassword(password);
+		this.joinDate=new GetDate(joinDate);
+		this.status=status;
+		this.genIDNo=idNo;
+		this.genIDNo++;
 		staffCount++;
 	}
 	
@@ -70,4 +77,9 @@ public class Staff extends Person{
 		this.password = password;
 	}
 
+	public String toString() {
+		String staffDetails="";
+		staffDetails+=String.format("%s", getFullStaffID());
+		return staffDetails;
+	}
 }

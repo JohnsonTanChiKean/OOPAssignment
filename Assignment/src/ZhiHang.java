@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ZhiHang {
-	public static void login(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, ArrayList<Cart> cartList, ArrayList<Receipt> receiptList) {
+	public static void login(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, ArrayList<Payment> paymentList, ArrayList<Receipt> receiptList, BankAccount bankAccount) {
 
 		int found=0;
 		char choice;
@@ -45,17 +45,18 @@ public class ZhiHang {
 					System.out.println("Successful login");
 					System.out.println("Welcome "+staffList.get(i).getName());
 					
-					menuList(staffList, productList, memberList, staffList.get(i), receiptList, cartList);
+					menuList(staffList, productList, memberList, staffList.get(i), receiptList, paymentList, bankAccount);
 				}
 			}
 		}
 	}
 	
-	public static void menuList(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, Staff staff, ArrayList<Receipt> receiptList, ArrayList<Cart> cartList) {
-		ChiKean.cart(staffList,productList,memberList, cartList, staff, receiptList);
+	public static void menuList(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, Staff staff, ArrayList<Receipt> receiptList, ArrayList<Payment> paymentList, BankAccount bankAccount) {
+		ChiKean.cart(staffList,productList,memberList, paymentList, staff, receiptList, bankAccount);
 	}
 	
-	public static void clarisBranchTest() {
+	public static void testingZH2() {
 		
 	}
+	
 }
