@@ -2,7 +2,7 @@
 public class Payment {
 	private Staff staff;
 	private Member member;
-	private String paymentID;
+	private String paymentID="P";
 	private int idNo;
 	private double subtotal;
 	private Cart cart;
@@ -20,9 +20,12 @@ public class Payment {
 		
 	}
 	
-	public Payment(Cart cart) {
+	public Payment(Cart cart, String status) {
 		this.cart=cart;
 		subtotal=cart.getTotalPrice();
+		this.status=status;
+		idNo=genIDNo;
+		genIDNo++;
 	}
 	
 	public Cart getCart() {
@@ -33,14 +36,6 @@ public class Payment {
 		this.cart = cart;
 	}
 
-	public Payment(double subtotal, String status, String paymentMethod) {
-		this.subtotal=subtotal;
-		this.status=status;
-		if(status.equals("Completed")) {
-			idNo=generateIDNo();
-		}
-	}
-	
 	public double getSubtotal() {
 		return subtotal;
 	}
@@ -48,14 +43,6 @@ public class Payment {
 	public void setSubtotal(double subtotal) {
 		this.subtotal = subtotal;
 	}
-
-	public int generateIDNo() {
-		int tempIDNo;
-		tempIDNo=genIDNo;
-		genIDNo++;
-		return tempIDNo;
-	}
-	
 	
 	public Staff getStaff() {
 		return staff;
@@ -111,9 +98,6 @@ public class Payment {
 		this.status=status;
 		this.receivedAmount = receivedAmount;
 		this.balance=receivedAmount-paymentAmount;
-		this.paymentID="P";
-		this.idNo=genIDNo;
-		genIDNo++;
 		
 		GetDate paymentDate=new GetDate();
 		this.paymentDate=paymentDate;
@@ -134,7 +118,7 @@ public class Payment {
 	public String toString() {
 		String paymentDetails="";
 		paymentDetails+=String.format("Payment ID  : "+paymentID+idNo+"\n");
-		paymentDetails+=String.format("Payment Date: "+paymentDate.getFullDateTime()+"\n");
+		paymentDetails+=String.format("Payment Date: "+paymentDate.toString()+"\n");
 		paymentDetails+=String.format("\n");
 		paymentDetails+=String.format(cart.toString()+"\n");
 		if(member.getMemberID()!="null") {
