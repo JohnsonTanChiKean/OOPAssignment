@@ -47,7 +47,7 @@ public class ChiKean {
 	
 	public static void phone(ArrayList<Product> productList, SmartPhone product) {
 		Scanner scanner=new Scanner(System.in);
-		int storageChoice, ramChoice, colorChoice, foundStorage, foundRam, foundColor, tempStorage=0, tempRam=0, quantity, loopQuantity=0;
+		int storageChoice=0, ramChoice=0, colorChoice=0, foundStorage, foundRam, foundColor, tempStorage=0, tempRam=0, quantity, loopQuantity=0, cancel=0;
 		String tempColor="";
 		ArrayList<SmartPhone> phoneList=new ArrayList<SmartPhone>();
 		ArrayList<Integer> storage=new ArrayList<Integer>();
@@ -90,138 +90,154 @@ public class ChiKean {
 				System.out.println((i+1)+". "+storage.get(i)+"GB");
 			}
 			do {
-				System.out.print("Select Storage Capacity: ");
+				System.out.print("Select Storage Capacity(Enter -1 to cancel): ");
 				storageChoice=scanner.nextInt();
 				scanner.nextLine();
 				
-				if((storageChoice>storage.size())||(storageChoice<=0)) {
+				if((storageChoice>storage.size())||(storageChoice==0)||(storageChoice<-1)) {
 					System.out.println("Invalid Choice. Please try again");
 				}
-			}while((storageChoice>storage.size())||(storageChoice<=0));	
+				else if(storageChoice==-1) {
+					cancel=-1;
+				}
+			}while((storageChoice>storage.size())||(storageChoice==0)||(storageChoice<-1));	
 		}
 		
-			
-		for(int i=0; i<phoneList.size(); i++) {
-			foundRam=0;
-			if((storage.get(storageChoice-1)==phoneList.get(i).getStorageCapacity())&&(phoneList.get(i).getQuantity()>0)) {
-				tempRam=phoneList.get(i).getSizeOfRam();
-				for(int j=0; j<ram.size(); j++) {
-					if(tempRam==ram.get(j)) {
-						foundRam=1;
+		if(cancel!=-1) {
+			for(int i=0; i<phoneList.size(); i++) {
+				foundRam=0;
+				if((storage.get(storageChoice-1)==phoneList.get(i).getStorageCapacity())&&(phoneList.get(i).getQuantity()>0)) {
+					tempRam=phoneList.get(i).getSizeOfRam();
+					for(int j=0; j<ram.size(); j++) {
+						if(tempRam==ram.get(j)) {
+							foundRam=1;
+						}
+					}
+					if(foundRam==0) {
+						ram.remove(Integer.valueOf(0));
+						ram.add(tempRam);
 					}
 				}
-				if(foundRam==0) {
-					ram.remove(Integer.valueOf(0));
-					ram.add(tempRam);
-				}
+				
 			}
 			
-		}
-		
-		if(ram.size()==1) {
-			ramChoice=1;
-		}
-		else {
-			System.out.println("RAM capacity");
-			for(int i=0; i<ram.size(); i++) {
-				System.out.println((i+1)+". "+ram.get(i)+"GB");
+			if(ram.size()==1) {
+				ramChoice=1;
 			}
-				
-			do {
-				System.out.print("Select RAM capacity: ");
-				ramChoice=scanner.nextInt();
-				scanner.nextLine();
-				
-				if((ramChoice>ram.size())||(ramChoice<=0)) {
-					System.out.println("Invalid Choice. Please try again");
+			else {
+				System.out.println("RAM capacity");
+				for(int i=0; i<ram.size(); i++) {
+					System.out.println((i+1)+". "+ram.get(i)+"GB");
 				}
-			}while((ramChoice>ram.size())||(ramChoice<=0));
-		}
-		
-		
-		
-		for(int i=0; i<phoneList.size(); i++) {
-			foundColor=0;
-			if((storage.get(storageChoice-1)==phoneList.get(i).getStorageCapacity())&&(ram.get(ramChoice-1)==phoneList.get(i).getSizeOfRam())&&(phoneList.get(i).getQuantity()>0)) {
-				tempColor=phoneList.get(i).getColor();
-				for(int j=0; j<color.size(); j++) {
-					if(tempColor.equals(color.get(j))) {
-						foundColor=1;
-					}
-				}
-				if(foundColor==0) {
-					color.remove("null");
-					color.add(tempColor);
-				}
-			}
-			
-		}
-		
-		if(color.size()==1) {
-			colorChoice=1;
-		}
-		else {
-			System.out.println("Color");
-			for(int i=0; i<color.size(); i++) {
-				System.out.println((i+1)+". "+color.get(i));
-			}
-			
-			do {
-				System.out.print("Select Color: ");
-				colorChoice=scanner.nextInt();
-				scanner.nextLine();
-				
-				if((colorChoice>color.size())||(colorChoice<=0)) {
-					System.out.println("Invalid Choice. Please try again");
-				}
-			}while((colorChoice>color.size())||(colorChoice<=0));
-		}
-		
-		
-		
-		for(int i=0; i<phoneList.size(); i++) {
-			if((storage.get(storageChoice-1)==phoneList.get(i).getStorageCapacity())&&(ram.get(ramChoice-1)==phoneList.get(i).getSizeOfRam())&&(color.get(colorChoice-1).equals(phoneList.get(i).getColor()))) {
-				System.out.println(phoneList.get(i).toString());
+					
 				do {
-					loopQuantity=0;
-					System.out.println("Quantity Available: "+phoneList.get(i).getQuantity());
-					System.out.print("Enter Quantity: ");
-					quantity=scanner.nextInt();
+					System.out.print("Select RAM capacity(Enter -1 to cancel): ");
+					ramChoice=scanner.nextInt();
 					scanner.nextLine();
-					if(quantity>phoneList.get(i).getQuantity()) {
-						System.out.println("Entered Quantity exceeds Quantity Available. Please try again");
-						loopQuantity=1;
+					
+					if((ramChoice>ram.size())||(ramChoice==0)||(ramChoice<-1)) {
+						System.out.println("Invalid Choice. Please try again");
 					}
-					else if(quantity<0) {
-						System.out.println("Entered Quantity is below 0. Please try again");
-						loopQuantity=1;
+					else if(ramChoice==-1) {
+						cancel=-1;
 					}
-					else if(quantity==0){
-						System.out.println("Quantity entered is 0. Please try again");
-						loopQuantity=1;
+				}while((ramChoice>ram.size())||(ramChoice==0)||(ramChoice<-1));
+			}
+		}
+		
+		
+		if(cancel!=-1) {
+			for(int i=0; i<phoneList.size(); i++) {
+				foundColor=0;
+				if((storage.get(storageChoice-1)==phoneList.get(i).getStorageCapacity())&&(ram.get(ramChoice-1)==phoneList.get(i).getSizeOfRam())&&(phoneList.get(i).getQuantity()>0)) {
+					tempColor=phoneList.get(i).getColor();
+					for(int j=0; j<color.size(); j++) {
+						if(tempColor.equals(color.get(j))) {
+							foundColor=1;
+						}
 					}
-				}while(loopQuantity==1);
-				
-				if(quantity>0) {
-					product.setProductID(phoneList.get(i).getProductID());
-					product.setProductName(phoneList.get(i).getProductName());
-					product.setPrice(phoneList.get(i).getPrice());
-					product.setCategory(phoneList.get(i).getCategory());
-					product.setType(phoneList.get(i).getType());
-					product.setQuantity(quantity);
-					product.setStorageCapacity(phoneList.get(i).getStorageCapacity());
-					product.setSizeOfRam(phoneList.get(i).getSizeOfRam());
-					product.setScreenSize(phoneList.get(i).getScreenSize());
-					product.setColor(phoneList.get(i).getColor());
+					if(foundColor==0) {
+						color.remove("null");
+						color.add(tempColor);
+					}
 				}
 				
 			}
+			
+			if(color.size()==1) {
+				colorChoice=1;
+			}
+			else {
+				System.out.println("Color");
+				for(int i=0; i<color.size(); i++) {
+					System.out.println((i+1)+". "+color.get(i));
+				}
+				
+				do {
+					System.out.print("Select Color(Enter -1 to cancel): ");
+					colorChoice=scanner.nextInt();
+					scanner.nextLine();
+					
+					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
+						System.out.println("Invalid Choice. Please try again");
+					}
+					else if(colorChoice==-1) {
+						cancel=-1;
+					}
+				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1));
+			}
 		}
+		
+		if(cancel!=-1) {
+			for(int i=0; i<phoneList.size(); i++) {
+				if((storage.get(storageChoice-1)==phoneList.get(i).getStorageCapacity())&&(ram.get(ramChoice-1)==phoneList.get(i).getSizeOfRam())&&(color.get(colorChoice-1).equals(phoneList.get(i).getColor()))) {
+					System.out.println(phoneList.get(i).toString());
+					do {
+						loopQuantity=0;
+						System.out.println("Quantity Available: "+phoneList.get(i).getQuantity());
+						System.out.print("Enter Quantity(Enter -1 to cancel): ");
+						quantity=scanner.nextInt();
+						scanner.nextLine();
+						if(quantity>phoneList.get(i).getQuantity()) {
+							System.out.println("Entered Quantity exceeds Quantity Available. Please try again");
+							loopQuantity=1;
+						}
+						else if(quantity<-1) {
+							System.out.println("Entered Quantity is below 0. Please try again");
+							loopQuantity=1;
+						}
+						else if(quantity==0){
+							System.out.println("Quantity entered is 0. Please try again");
+							loopQuantity=1;
+						}
+						else if(quantity==-1) {
+							cancel=-1;
+						}
+					}while(loopQuantity==1);
+					
+					if(quantity>0) {
+						product.setProductID(phoneList.get(i).getProductID());
+						product.setProductName(phoneList.get(i).getProductName());
+						product.setPrice(phoneList.get(i).getPrice());
+						product.setCategory(phoneList.get(i).getCategory());
+						product.setType(phoneList.get(i).getType());
+						product.setQuantity(quantity);
+						product.setStorageCapacity(phoneList.get(i).getStorageCapacity());
+						product.setSizeOfRam(phoneList.get(i).getSizeOfRam());
+						product.setScreenSize(phoneList.get(i).getScreenSize());
+						product.setColor(phoneList.get(i).getColor());
+					}
+					
+				}
+			}
+		}
+		
+		
 	}
 	
 	public static void earphone(ArrayList<Product> productList, Earphone product) {
 		Scanner scanner=new Scanner(System.in);
-		int genChoice, colorChoice, foundGen, foundColor, quantity, loopQuantity;
+		int genChoice=0, colorChoice=0, foundGen, foundColor, quantity, loopQuantity, cancel=0;
 		String tempGen="", tempColor="";
 		ArrayList<Earphone> earphoneList=new ArrayList<Earphone>();
 		ArrayList<String> generation=new ArrayList<String>();
@@ -260,88 +276,102 @@ public class ChiKean {
 			}
 			
 			do {
-				System.out.print("Select Generation: ");
+				System.out.print("Select Generation(Enter -1 to cancel): ");
 				genChoice=scanner.nextInt();
 				scanner.nextLine();
 				
-				if((genChoice>generation.size())||(genChoice<=0)) {
+				if((genChoice>generation.size())||(genChoice==0)||(genChoice<-1)) {
 					System.out.println("Invalid choice. Please try again");
 				}
-			}while((genChoice>generation.size())||(genChoice<=0));
+				else if(genChoice==-1) {
+					cancel=-1;
+				}
+			}while((genChoice>generation.size())||(genChoice==0)||(genChoice<-1));
 		}
 		
-		for(int i=0; i<earphoneList.size(); i++) {
-			foundColor=0;
-			if((earphoneList.get(i).getGeneration().equals(generation.get(genChoice-1)))&&(earphoneList.get(i).getQuantity()>0)) {
-				tempColor=earphoneList.get(i).getColor();
-				for(int j=0; j<color.size(); j++) {
-					if(tempColor.equals(color.get(j))) {
-						foundColor=1;
+		if(cancel!=-1) {
+			for(int i=0; i<earphoneList.size(); i++) {
+				foundColor=0;
+				if((earphoneList.get(i).getGeneration().equals(generation.get(genChoice-1)))&&(earphoneList.get(i).getQuantity()>0)) {
+					tempColor=earphoneList.get(i).getColor();
+					for(int j=0; j<color.size(); j++) {
+						if(tempColor.equals(color.get(j))) {
+							foundColor=1;
+						}
+					}
+					if(foundColor==0) {
+						color.remove("null");
+						color.add(tempColor);
 					}
 				}
-				if(foundColor==0) {
-					color.remove("null");
-					color.add(tempColor);
-				}
-			}
-		}
-		
-		if(color.size()==1) {
-			colorChoice=1;
-		}
-		else {
-			System.out.println("Color");
-			for(int i=0; i<color.size(); i++) {
-				System.out.println((i+1)+". "+color.get(i));
 			}
 			
-			do {
-				System.out.print("Select Color: ");
-				colorChoice=scanner.nextInt();
-				scanner.nextLine();
-				
-				if((colorChoice>color.size())||(colorChoice<=0)) {
-					System.out.println("Invalid Choice. Please try again");
+			if(color.size()==1) {
+				colorChoice=1;
+			}
+			else {
+				System.out.println("Color");
+				for(int i=0; i<color.size(); i++) {
+					System.out.println((i+1)+". "+color.get(i));
 				}
-			}while((colorChoice>color.size())||(colorChoice<=0));
+				
+				do {
+					System.out.print("Select Color(Enter -1 to cancel): ");
+					colorChoice=scanner.nextInt();
+					scanner.nextLine();
+					
+					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
+						System.out.println("Invalid Choice. Please try again");
+					}
+					else if(colorChoice==-1) {
+						cancel=-1;
+					}
+				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1));
+			}
 		}
 		
 		
-		for(int i=0; i<earphoneList.size(); i++) {
-			if((earphoneList.get(i).getGeneration().equals(generation.get(genChoice-1)))&&(earphoneList.get(i).getColor().equals(color.get(colorChoice-1)))) {
-				do {
-					System.out.println(earphoneList.get(i).toString());
-					loopQuantity=0;
-					System.out.println("Available Quantity: "+earphoneList.get(i).getQuantity());
-					System.out.print("Enter Quantity: ");
-					quantity=scanner.nextInt();
-					scanner.nextLine();
-					if(quantity>earphoneList.get(i).getQuantity()) {
-						System.out.println("Entered Quantity exceeds Available Quantity. Please try again");
-						loopQuantity=1;
+		if(cancel!=-1) {
+			for(int i=0; i<earphoneList.size(); i++) {
+				if((earphoneList.get(i).getGeneration().equals(generation.get(genChoice-1)))&&(earphoneList.get(i).getColor().equals(color.get(colorChoice-1)))) {
+					do {
+						System.out.println(earphoneList.get(i).toString());
+						loopQuantity=0;
+						System.out.println("Available Quantity: "+earphoneList.get(i).getQuantity());
+						System.out.print("Enter Quantity(Enter -1 to cancel): ");
+						quantity=scanner.nextInt();
+						scanner.nextLine();
+						if(quantity>earphoneList.get(i).getQuantity()) {
+							System.out.println("Entered Quantity exceeds Available Quantity. Please try again");
+							loopQuantity=1;
+						}
+						else if(quantity<-1) {
+							System.out.println("Entered Quantity is less than 0. Please try again");
+							loopQuantity=1;
+						}
+						else if(quantity==0) {
+							System.out.println("Entered Quantity is 0. Please try again");
+							loopQuantity=1;
+						}
+						else if(quantity==-1) {
+							cancel=-1;
+						}
+					}while(loopQuantity==1);
+					
+					if(quantity>0) {
+						product.setProductID(earphoneList.get(i).getProductID());
+						product.setProductName(earphoneList.get(i).getProductName());
+						product.setPrice(earphoneList.get(i).getPrice());
+						product.setCategory(earphoneList.get(i).getCategory());
+						product.setType(earphoneList.get(i).getType());
+						product.setQuantity(quantity);
+						product.setGeneration(earphoneList.get(i).getGeneration());
+						product.setColor(earphoneList.get(i).getColor());
 					}
-					else if(quantity<0) {
-						System.out.println("Entered Quantity is less than 0. Please try again");
-						loopQuantity=1;
-					}
-					else if(quantity==0) {
-						System.out.println("Entered Quantity is 0. Please try again");
-						loopQuantity=1;
-					}
-				}while(loopQuantity==1);
-				
-				if(quantity>0) {
-					product.setProductID(earphoneList.get(i).getProductID());
-					product.setProductName(earphoneList.get(i).getProductName());
-					product.setPrice(earphoneList.get(i).getPrice());
-					product.setCategory(earphoneList.get(i).getCategory());
-					product.setType(earphoneList.get(i).getType());
-					product.setQuantity(quantity);
-					product.setGeneration(earphoneList.get(i).getGeneration());
-					product.setColor(earphoneList.get(i).getColor());
 				}
 			}
 		}
+		
 	}
 	
 	public static void tablet(ArrayList<Product> productList, Tablet product) {
@@ -1664,26 +1694,33 @@ public class ChiKean {
 				else {
 					product=new Product();
 				}
-				System.out.print("Would you like to add this product to cart?(Y=yes) ");
-				addProdChoice=Character.toUpperCase(scanner.next().charAt(0));
-				scanner.nextLine();
 				
-				if(addProdChoice=='Y') {
-					for(int i=0; i<productList.size(); i++) {
-						if(product.getProductID().equals(productList.get(i).getProductID())) {
-							newQty=productList.get(i).getQuantity()-product.getQuantity();
-							productList.get(i).setQuantity(newQty);
+				if(product.getQuantity()>0) {
+					System.out.print("Would you like to add this product to cart?(Y=yes) ");
+					addProdChoice=Character.toUpperCase(scanner.next().charAt(0));
+					scanner.nextLine();
+					
+					if(addProdChoice=='Y') {
+						for(int i=0; i<productList.size(); i++) {
+							if(product.getProductID().equals(productList.get(i).getProductID())) {
+								newQty=productList.get(i).getQuantity()-product.getQuantity();
+								productList.get(i).setQuantity(newQty);
+							}
 						}
+						cart.addProduct(product);
+						System.out.println("Product has been added to cart.");
 					}
-					cart.addProduct(product);
-					System.out.println("Product has been added to cart.");
 				}
+				else {
+					System.out.println("Product not added to cart");
+				}
+				
 				
 				System.out.print("Would you like to add another product?(Y=yes) ");
 				choice=Character.toUpperCase(scanner.next().charAt(0));
 				scanner.nextLine();
 			}while(choice=='Y');
-			if(cart.getProduct().length>0) {
+			if(cart.getNoOfProducts()>0) {
 				System.out.println(cart.toString());
 				
 				System.out.print("Would you like to edit the items in the cart? (Y=yes) ");
