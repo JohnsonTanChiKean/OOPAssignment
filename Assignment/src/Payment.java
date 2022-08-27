@@ -22,7 +22,6 @@ public class Payment {
 	
 	public Payment(Cart cart, String status) {
 		this.cart=cart;
-		subtotal=cart.getTotalPrice();
 		this.status=status;
 		idNo=genIDNo;
 		genIDNo++;
@@ -78,6 +77,7 @@ public class Payment {
 	}
 
 	private void calcPaymentAmount() {
+		subtotal=cart.getTotalPrice();
 		paymentAmount=subtotal-(subtotal*discount);
 	}
 	

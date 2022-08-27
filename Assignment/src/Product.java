@@ -1,6 +1,6 @@
 
 public class Product {
-	protected String productID, productName, category, type;
+	private String productID, productName, category, type;
 	private double price;
 	private int quantity;
 	

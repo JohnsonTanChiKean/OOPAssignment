@@ -65,6 +65,7 @@ public class ZhiHang {
 			loop=0;
 			System.out.println("Main Menu");
 			System.out.println("1. Place Order");
+			System.out.println("2. On-Hold Payment List");
 			System.out.println("0. Logout");
 			System.out.print("Select Action to perform: ");
 			choice=scanner.nextInt();
@@ -72,6 +73,7 @@ public class ZhiHang {
 			
 			switch(choice) {
 			case 1: ChiKean.cart(staffList,productList,memberList, paymentList, staff, receiptList, bankAccount); loop=1; break;
+			case 2: ChiKean.onHoldPayment(paymentList, memberList, staff, productList, receiptList, bankAccount); loop=1; break;
 			case 0: break;
 			}
 			
