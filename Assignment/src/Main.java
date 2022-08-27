@@ -17,6 +17,7 @@ public class Main {
 		ArrayList<Member> memberList=new ArrayList<Member>();
 		ArrayList<Receipt> receiptList=new ArrayList<Receipt>();
 		ArrayList<Payment> paymentList=new ArrayList<Payment>();
+		ArrayList<Refund> refundList=new ArrayList<Refund>();
 		BankAccount bankAccount=new BankAccount();
 		readProduct(productList);
 		readStaff(staffList);
@@ -25,7 +26,7 @@ public class Main {
 		GetDate date=new GetDate();
 		
 		System.out.println(date.toString());
-		ZhiHang.login(staffList, productList, memberList, paymentList, receiptList, bankAccount);
+		ZhiHang.login(staffList, productList, memberList, paymentList, receiptList, bankAccount, refundList);
 		
 
 	}
