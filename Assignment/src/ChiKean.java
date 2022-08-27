@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 //if payment=cancelled, quantity of all items in the cart must be added back to their respective arraylist counterparts
 // report should show original quantity, current quantity, quantity on-hold and quantity sold
+//onhold list -1 not working
 public class ChiKean {
 	public static String selectProduct(ArrayList<Product> productList) {
 		int prodChoice=0;
@@ -103,17 +104,24 @@ public class ChiKean {
 			storageChoice=1;
 		}
 		else {
-			System.out.println("Storage Capacity");
+			System.out.printf("%-10s--------------------\n", "");
+			System.out.printf("%-10s| Storage Capacity |\n", "");
+			System.out.printf("%-10s| ================ |\n", "");
+			System.out.printf("%-10s|                  |\n", "");
 			for(int i=0; i<storage.size(); i++) {
-				System.out.println((i+1)+". "+storage.get(i)+"GB");
+				System.out.printf("%-10s|    %d%-3s%d%-6s |\n", "", (i+1), ".", storage.get(i), "GB");
 			}
+			System.out.printf("%-10s|                  |\n", "");
+			System.out.printf("%-10s--------------------\n\n", "");
 			do {
 				System.out.print("Select Storage Capacity(Enter -1 to cancel): ");
 				storageChoice=scanner.nextInt();
 				scanner.nextLine();
 				
 				if((storageChoice>storage.size())||(storageChoice==0)||(storageChoice<-1)) {
-					System.out.println("Invalid Choice. Please try again");
+					System.out.printf("\n%-10sInvalid Choice.\n", "");
+					System.out.printf("%-10sPress enter to try again\n", "");
+					scanner.nextLine();
 				}
 				else if(storageChoice==-1) {
 					cancel=-1;
@@ -1687,7 +1695,7 @@ public class ChiKean {
 		do {
 			onHold=0;
 			if(tempPayment.size()==0) {
-				System.out.printf("%-30sThere no On-Hold Payments\n", "");
+				System.out.printf("%-30sThere are no On-Hold Payments\n", "");
 			}
 			else {
 				onHold=1;
@@ -1717,6 +1725,7 @@ public class ChiKean {
 					}
 					else if(choice==-1) {
 						cancel=-1;
+						break;
 					}
 				}while((choice>tempPayment.size())||(choice==0)||(choice<-1));
 				
@@ -1785,7 +1794,7 @@ public class ChiKean {
 						}
 					}
 			}
-		}while(onHold==1);
+		}while((onHold==1)&&(cancel!=-1));
 		
 		
 
