@@ -35,9 +35,13 @@ public class Refrigerator extends Product {
 	
 	public String toString() {
 		String productDetails="";
-		productDetails+=String.format("%-15s%-17s%-19s%-13s%-16s%s\n", "Product ID", "Product Name", "Horse Power(W)", "Capacity", "Color", "Price");
-		productDetails+=String.format("%-15s%-17s%-19s%-13s%-16s%s\n", "----------", "------------", "--------------", "--------", "-----", "-----");
-		productDetails+=String.format("%-15s%-17s%-19.2f%-13.0f%-16s%.2f", super.getProductID(), super.getProductName(), horsePower, capacity, color, super.getPrice());
+		productDetails+=String.format("%-10s-------------------------------------------------------------------------------------------------\n", "");
+		productDetails+=String.format("%-10s|                                                                                               |\n", "");
+		productDetails+=String.format("%-10s|    %-15s%-17s%-19s%-13s%-16s%-10s |\n", "", "Product ID", "Product Name", "Horse Power(W)", "Capacity", "Color", "Price");
+		productDetails+=String.format("%-10s|    %-15s%-17s%-19s%-13s%-16s%-10s |\n", "", "----------", "------------", "--------------", "--------", "-----", "-----");
+		productDetails+=String.format("%-10s|    %-15s%-17s%-19.2f%-13.0f%-16s%-10.2f |\n", "", super.getProductID(), super.getProductName(), horsePower, capacity, color, super.getPrice());
+		productDetails+=String.format("%-10s|                                                                                               |\n", "");
+		productDetails+=String.format("%-10s-------------------------------------------------------------------------------------------------\n", "");
 		return productDetails;
 	}
 	

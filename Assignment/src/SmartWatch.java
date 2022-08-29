@@ -57,9 +57,13 @@ public class SmartWatch extends Product{
 	
 	public String toString() {
 		String productDetails="";
-		productDetails+=String.format("%-15s%-17s%-16s%-18s%-11s%-19s%-21s%-13s%s\n", "Product ID", "Product Name", "Screen Size", "Resolution", "Series", "Battery Life", "Water Resistance", "Color", "Price");
-		productDetails+=String.format("%-15s%-17s%-16s%-18s%-11s%-19s%-21s%-13s%s\n", "----------", "------------", "-----------", "----------", "------", "------------", "----------------", "-----", "-----");
-		productDetails+=String.format("%-15s%-17s%.0f%-14s%s%-11s%-11d%-19s%-21d%-13s%.2f", super.getProductID(), super.getProductName(), screenSize, "mm", resolution, "pixels", series, batteryLife, waterResistance, color, super.getPrice());
+		productDetails+=String.format("%-10s---------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
+		productDetails+=String.format("%-10s|                                                                                                                                                 |\n", "");
+		productDetails+=String.format("%-10s|    %-15s%-17s%-16s%-18s%-11s%-19s%-21s%-13s%-10s |\n", "", "Product ID", "Product Name", "Screen Size", "Resolution", "Series", "Battery Life", "Water Resistance", "Color", "Price");
+		productDetails+=String.format("%-10s|    %-15s%-17s%-16s%-18s%-11s%-19s%-21s%-13s%-10s |\n", "", "----------", "------------", "-----------", "----------", "------", "------------", "----------------", "-----", "-----");
+		productDetails+=String.format("%-10s|    %-15s%-17s%.0f%-14s%s%-11s%-11d%-19s%-21d%-13s%-10.2f |\n", "", super.getProductID(), super.getProductName(), screenSize, "mm", resolution, "pixels", series, batteryLife, waterResistance, color, super.getPrice());
+		productDetails+=String.format("%-10s|                                                                                                                                                 |\n", "");
+		productDetails+=String.format("%-10s---------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
 		return productDetails;
 	}
 }

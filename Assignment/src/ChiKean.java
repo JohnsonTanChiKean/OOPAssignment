@@ -104,24 +104,27 @@ public class ChiKean {
 			storageChoice=1;
 		}
 		else {
-			System.out.printf("%-10s--------------------\n", "");
-			System.out.printf("%-10s| Storage Capacity |\n", "");
-			System.out.printf("%-10s| ================ |\n", "");
-			System.out.printf("%-10s|                  |\n", "");
-			for(int i=0; i<storage.size(); i++) {
-				System.out.printf("%-10s|    %d%-3s%d%-6s |\n", "", (i+1), ".", storage.get(i), "GB");
-			}
-			System.out.printf("%-10s|                  |\n", "");
-			System.out.printf("%-10s--------------------\n\n", "");
 			do {
+				System.out.println();
+				System.out.printf("%-10s--------------------\n", "");
+				System.out.printf("%-10s| Storage Capacity |\n", "");
+				System.out.printf("%-10s| ================ |\n", "");
+				System.out.printf("%-10s|                  |\n", "");
+				for(int i=0; i<storage.size(); i++) {
+					System.out.printf("%-10s| %4d%-3s%d%-6s |\n", "", (i+1), ".", storage.get(i), "GB");
+				}
+				System.out.printf("%-10s|                  |\n", "");
+				System.out.printf("%-10s--------------------\n\n", "");
+			
 				System.out.print("Select Storage Capacity(Enter -1 to cancel): ");
 				storageChoice=scanner.nextInt();
 				scanner.nextLine();
 				
 				if((storageChoice>storage.size())||(storageChoice==0)||(storageChoice<-1)) {
 					System.out.printf("\n%-10sInvalid Choice.\n", "");
-					System.out.printf("%-10sPress enter to try again\n", "");
+					System.out.printf("%-10sPress enter to try again", "");
 					scanner.nextLine();
+					System.out.println();
 				}
 				else if(storageChoice==-1) {
 					cancel=-1;
@@ -151,18 +154,27 @@ public class ChiKean {
 				ramChoice=1;
 			}
 			else {
-				System.out.println("RAM capacity");
-				for(int i=0; i<ram.size(); i++) {
-					System.out.println((i+1)+". "+ram.get(i)+"GB");
-				}
-					
 				do {
+					System.out.println();
+					System.out.printf("%-10s----------------\n", "");
+					System.out.printf("%-10s| RAM capacity |\n", "");
+					System.out.printf("%-10s| ============ |\n", "");
+					System.out.printf("%-10s|              |\n", "");
+					for(int i=0; i<ram.size(); i++) {
+						System.out.printf("%-10s| %3d%-3s%d%-5s |\n", "", (i+1), ".", ram.get(i), "GB");
+					}
+					System.out.printf("%-10s|              |\n", "");	
+					System.out.printf("%-10s----------------\n\n", "");
+				
 					System.out.print("Select RAM capacity(Enter -1 to cancel): ");
 					ramChoice=scanner.nextInt();
 					scanner.nextLine();
 					
 					if((ramChoice>ram.size())||(ramChoice==0)||(ramChoice<-1)) {
-						System.out.println("Invalid Choice. Please try again");
+						System.out.printf("\n%-10sInvalid Choice.\n", "");
+						System.out.printf("%-10sPress enter to try again", "");
+						scanner.nextLine();
+						System.out.println();
 					}
 					else if(ramChoice==-1) {
 						cancel=-1;
@@ -194,18 +206,27 @@ public class ChiKean {
 				colorChoice=1;
 			}
 			else {
-				System.out.println("Color");
-				for(int i=0; i<color.size(); i++) {
-					System.out.println((i+1)+". "+color.get(i));
-				}
-				
 				do {
+					System.out.println();
+					System.out.printf("%-10s------------------------\n", "");
+					System.out.printf("%-10s|         Color        |\n", "");
+					System.out.printf("%-10s|         =====        |\n", "");
+					System.out.printf("%-10s|                      |\n", "");
+					for(int i=0; i<color.size(); i++) {
+						System.out.printf("%-10s| %3d%-3s%-14s |\n", "", (i+1), ".", color.get(i));
+					}
+					System.out.printf("%-10s|                      |\n", "");
+					System.out.printf("%-10s------------------------\n\n", "");
+				
 					System.out.print("Select Color(Enter -1 to cancel): ");
 					colorChoice=scanner.nextInt();
 					scanner.nextLine();
 					
 					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
-						System.out.println("Invalid Choice. Please try again");
+						System.out.printf("\n%-10sInvalid Choice.\n", "");
+						System.out.printf("%-10sPress enter to try again", "");
+						scanner.nextLine();
+						System.out.println();
 					}
 					else if(colorChoice==-1) {
 						cancel=-1;
@@ -217,9 +238,10 @@ public class ChiKean {
 		if(cancel!=-1) {
 			for(int i=0; i<phoneList.size(); i++) {
 				if((storage.get(storageChoice-1)==phoneList.get(i).getStorageCapacity())&&(ram.get(ramChoice-1)==phoneList.get(i).getSizeOfRam())&&(color.get(colorChoice-1).equals(phoneList.get(i).getColor()))) {
-					System.out.println(phoneList.get(i).toString());
-					do {
+					System.out.println();
+					do {						
 						loopQuantity=0;
+						System.out.println(phoneList.get(i).toString());
 						System.out.println("Quantity Available: "+phoneList.get(i).getQuantity());
 						System.out.print("Enter Quantity(Enter -1 to cancel): ");
 						quantity=scanner.nextInt();
@@ -296,18 +318,27 @@ public class ChiKean {
 			genChoice=1;
 		}
 		else {
-			System.out.println("Generation");
-			for(int i=0; i<generation.size(); i++) {
-				System.out.println((i+1)+". "+generation.get(i));
-			}
-			
 			do {
+				System.out.println();
+				System.out.printf("%-10s----------------------------\n", "");
+				System.out.printf("%-10s|        Generation        |\n", "");
+				System.out.printf("%-10s|        ==========        |\n", "");
+				System.out.printf("%-10s|                          |\n", "");
+				for(int i=0; i<generation.size(); i++) {
+					System.out.printf("%-10s| %4d%-3s%-17s |\n", "", (i+1), ".", generation.get(i));
+				}
+				System.out.printf("%-10s|                          |\n", "");
+				System.out.printf("%-10s----------------------------\n\n", "");
+			
 				System.out.print("Select Generation(Enter -1 to cancel): ");
 				genChoice=scanner.nextInt();
 				scanner.nextLine();
 				
 				if((genChoice>generation.size())||(genChoice==0)||(genChoice<-1)) {
-					System.out.println("Invalid choice. Please try again");
+					System.out.printf("\n%-10sInvalid Choice.\n", "");
+					System.out.printf("%-10sPress enter to try again", "");
+					scanner.nextLine();
+					System.out.println();
 				}
 				else if(genChoice==-1) {
 					cancel=-1;
@@ -336,18 +367,27 @@ public class ChiKean {
 				colorChoice=1;
 			}
 			else {
-				System.out.println("Color");
-				for(int i=0; i<color.size(); i++) {
-					System.out.println((i+1)+". "+color.get(i));
-				}
-				
 				do {
+					System.out.println();
+					System.out.printf("%-10s----------------------\n", "");
+					System.out.printf("%-10s|        Color       |\n", "");
+					System.out.printf("%-10s|        =====       |\n", "");
+					System.out.printf("%-10s|                    |\n", "");
+					for(int i=0; i<color.size(); i++) {
+						System.out.printf("%-10s| %4d%-3s%-11s |\n", "", (i+1), ".", color.get(i));
+					}
+					System.out.printf("%-10s|                    |\n", "");
+					System.out.printf("%-10s----------------------\n\n", "");
+					
 					System.out.print("Select Color(Enter -1 to cancel): ");
 					colorChoice=scanner.nextInt();
 					scanner.nextLine();
 					
 					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
-						System.out.println("Invalid Choice. Please try again");
+						System.out.printf("\n%-10sInvalid Choice.\n", "");
+						System.out.printf("%-10sPress enter to try again", "");
+						scanner.nextLine();
+						System.out.println();
 					}
 					else if(colorChoice==-1) {
 						cancel=-1;
@@ -360,9 +400,10 @@ public class ChiKean {
 		if(cancel!=-1) {
 			for(int i=0; i<earphoneList.size(); i++) {
 				if((earphoneList.get(i).getGeneration().equals(generation.get(genChoice-1)))&&(earphoneList.get(i).getColor().equals(color.get(colorChoice-1)))) {
+					System.out.println();
 					do {
-						System.out.println(earphoneList.get(i).toString());
 						loopQuantity=0;
+						System.out.println(earphoneList.get(i).toString());
 						System.out.println("Available Quantity: "+earphoneList.get(i).getQuantity());
 						System.out.print("Enter Quantity(Enter -1 to cancel): ");
 						quantity=scanner.nextInt();
@@ -437,18 +478,28 @@ public class ChiKean {
 			ramChoice=1;
 		}
 		else {
-			System.out.println("RAM Capacity");
-			for(int i=0; i<ram.size(); i++) {
-				System.out.println((i+1)+". "+ram.get(i)+"GB");
-			}
-			
 			do {
+				System.out.println();
+				System.out.printf("%-10s----------------\n", "");
+				System.out.printf("%-10s| RAM capacity |\n", "");
+				System.out.printf("%-10s| ============ |\n", "");
+				System.out.printf("%-10s|              |\n", "");
+				for(int i=0; i<ram.size(); i++) {
+					System.out.printf("%-10s| %3d%-3s%2d%-4s |\n", "", (i+1), ".", ram.get(i), "GB");
+				}
+				System.out.printf("%-10s|              |\n", "");	
+				System.out.printf("%-10s----------------\n\n", "");
+			
+			
 				System.out.print("Select RAM Capacity(Enter -1 to cancel): ");
 				ramChoice=scanner.nextInt();
 				scanner.nextLine();
 				
 				if((ramChoice>ram.size())||(ramChoice==0)||(ramChoice<-1)) {
-					System.out.println("Invalid Choice. Please try again");
+					System.out.printf("\n%-10sInvalid Choice.\n", "");
+					System.out.printf("%-10sPress enter to try again", "");
+					scanner.nextLine();
+					System.out.println();
 				}
 				else if(ramChoice==-1) {
 					cancel=-1;
@@ -477,18 +528,27 @@ public class ChiKean {
 				colorChoice=1;
 			}
 			else {
-				System.out.println("Color");
-				for(int i=0; i<color.size();i++) {
-					System.out.println((i+1)+". "+color.get(i));
-				}
-				
 				do {
+					System.out.println();
+					System.out.printf("%-10s-----------------------\n", "");
+					System.out.printf("%-10s|        Color        |\n", "");
+					System.out.printf("%-10s|        =====        |\n", "");
+					System.out.printf("%-10s|                     |\n", "");
+					for(int i=0; i<color.size();i++) {
+						System.out.printf("%-10s| %3d%-3s%-13s |\n", "", (i+1), ".", color.get(i));
+					}
+					System.out.printf("%-10s|                     |\n", "");
+					System.out.printf("%-10s-----------------------\n\n", "");
+				
 					System.out.print("Select Color(Enter -1 to cancel): ");
 					colorChoice=scanner.nextInt();
 					scanner.nextLine();
 					
 					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
-						System.out.println("Invalid Choice. Please try again");
+						System.out.printf("\n%-10sInvalid Choice.\n", "");
+						System.out.printf("%-10sPress enter to try again", "");
+						scanner.nextLine();
+						System.out.println();
 					}
 					else if(colorChoice==-1) {
 						cancel=-1;
@@ -501,9 +561,10 @@ public class ChiKean {
 		if(cancel!=-1) {
 			for(int i=0; i<tabletList.size(); i++) {
 				if((ram.get(ramChoice-1)==tabletList.get(i).getSizeOfRam())&&(color.get(colorChoice-1).equals(tabletList.get(i).getColor()))) {
+					System.out.println();
 					do {
-						System.out.println(tabletList.get(i).toString());
 						loopQuantity=0;
+						System.out.println(tabletList.get(i).toString());
 						System.out.println("Available Quantity: "+tabletList.get(i).getQuantity());
 						System.out.print("Enter Quantity(Enter -1 to cancel): ");
 						quantity=scanner.nextInt();
@@ -547,7 +608,7 @@ public class ChiKean {
 	public static void refrigerator(ArrayList<Product> productList, Refrigerator product) {
 		Scanner scanner=new Scanner(System.in);
 		double tempHPower, tempCapacity;
-		int hPowerChoice=0, capChoice=0, colorChoice=0, foundHPower, foundCap, foundColor, quantity, loopQuantity, cancel=0;
+		int hpNCChoice=0, colorChoice=0, foundHPower, foundCap, foundColor, quantity, loopQuantity, cancel=0;
 		String tempColor="";
 		ArrayList<Refrigerator> fridgeList=new ArrayList<Refrigerator>();
 		ArrayList<Double> horsePower=new ArrayList<Double>();
@@ -566,89 +627,66 @@ public class ChiKean {
 		
 		for(int i=0; i<fridgeList.size(); i++) {
 			foundHPower=0;
+			foundCap=0;
 			if(fridgeList.get(i).getQuantity()>0) {
 				tempHPower=fridgeList.get(i).getHorsePower();
+				tempCapacity=fridgeList.get(i).getCapacity();
 				for(int j=0; j<horsePower.size(); j++) {
 					if(tempHPower==horsePower.get(j)) {
 						foundHPower=1;
+					}
+				}
+				for(int j=0; j<capacity.size(); j++) {
+					if(tempCapacity==capacity.get(j)) {
+						foundCap=1;
 					}
 				}
 				if(foundHPower==0){
 					horsePower.remove(Double.valueOf(0.0));
 					horsePower.add(tempHPower);
 				}
+				if(foundCap==0) {
+					capacity.remove(Double.valueOf(0.0));
+					capacity.add(tempCapacity);
+				}
 			}
 		}
 		
 		if(horsePower.size()==1) {
-			hPowerChoice=1;
+			hpNCChoice=1;
 		}
 		else {
-			System.out.println("Horse Power");
-			for(int i=0; i<horsePower.size(); i++) {
-				System.out.println((i+1)+". "+horsePower.get(i)+"W");
-			}
-			
 			do {
+				System.out.println();
+				System.out.printf("%-10s-------------------------------\n", "");
+				System.out.printf("%-10s|    | Horse Power | Capacity |\n", "");
+				//System.out.printf("%-10s|----+-------------+----------|\n", "");
+				for(int i=0; i<horsePower.size(); i++) {
+					System.out.printf("%-10s|----+-------------+----------|\n", "");
+					System.out.printf("%-10s| %d%s | %8.2f%-3s | %2s%-6.0f |\n", "", (i+1), ".", horsePower.get(i), "W", "", capacity.get(i));
+				}
+				System.out.printf("%-10s-------------------------------\n\n", "");
+			
 				System.out.print("Select Horse Power(Enter -1 to cancel): ");
-				hPowerChoice=scanner.nextInt();
+				hpNCChoice=scanner.nextInt();
 				scanner.nextLine();
 				
-				if((hPowerChoice>horsePower.size())||(hPowerChoice==0)||(hPowerChoice<-1)) {
-					System.out.println("Invalid Choice. Please try again.");
+				if((hpNCChoice>horsePower.size())||(hpNCChoice==0)||(hpNCChoice<-1)) {
+					System.out.printf("\n%-10sInvalid Choice.\n", "");
+					System.out.printf("%-10sPress enter to try again", "");
+					scanner.nextLine();
+					System.out.println();
 				}
-				else if(hPowerChoice==-1) {
+				else if(hpNCChoice==-1) {
 					cancel=-1;
 				}
-			}while((hPowerChoice>horsePower.size())||(hPowerChoice==0)||(hPowerChoice<-1));
+			}while((hpNCChoice>horsePower.size())||(hpNCChoice==0)||(hpNCChoice<-1));
 		}
-		
-		if(cancel!=-1) {
-			for(int i=0; i<fridgeList.size(); i++) {
-				foundCap=0;
-				if((horsePower.get(hPowerChoice-1)==fridgeList.get(i).getHorsePower())&&(fridgeList.get(i).getQuantity()>0)) {
-					tempCapacity=fridgeList.get(i).getCapacity();
-					for(int j=0; j<capacity.size(); j++) {
-						if(tempCapacity==capacity.get(j)) {
-							foundCap=1;
-						}
-					}
-					if(foundCap==0) {
-						capacity.remove(Double.valueOf(0.0));
-						capacity.add(tempCapacity);
-					}
-				}
-			}
-			
-			if(capacity.size()==1) {
-				capChoice=1;
-			}
-			else {
-				System.out.println("Capacity");
-				for(int i=0; i<capacity.size(); i++) {
-					System.out.println((i+1)+". "+capacity.get(i));
-				}
-				
-				do {
-					System.out.print("Select Capacity(Enter -1 to cancel): ");
-					capChoice=scanner.nextInt();
-					scanner.nextLine();
-					
-					if((capChoice>capacity.size())||(capChoice==0)||(capChoice<-1)) {
-						System.out.println("Invalid Choice. Please try again");
-					}
-					else if(capChoice==-1) {
-						cancel=-1;
-					}
-				}while((capChoice>capacity.size())||(capChoice==0)||(capChoice<-1));
-			}
-		}
-		
 		
 		if(cancel!=-1) {
 			for(int i=0; i<fridgeList.size(); i++) {
 				foundColor=0;
-				if((horsePower.get(hPowerChoice-1)==fridgeList.get(i).getHorsePower())&&(capacity.get(capChoice-1)==fridgeList.get(i).getCapacity())&&(fridgeList.get(i).getQuantity()>0)) {
+				if((horsePower.get(hpNCChoice-1)==fridgeList.get(i).getHorsePower())&&(capacity.get(hpNCChoice-1)==fridgeList.get(i).getCapacity())&&(fridgeList.get(i).getQuantity()>0)) {
 					tempColor=fridgeList.get(i).getColor();
 					for(int j=0; j<color.size(); j++) {
 						if(tempColor.equals(color.get(j))) {
@@ -666,18 +704,27 @@ public class ChiKean {
 				colorChoice=1;
 			}
 			else {
-				System.out.println("Color");
-				for(int i=0; i<color.size(); i++) {
-					System.out.println((i+1)+". "+color.get(i));
-				}
-				
 				do {
+					System.out.println();
+					System.out.printf("%-10s----------------------\n", "");
+					System.out.printf("%-10s|        Color       |\n", "");
+					System.out.printf("%-10s|        =====       |\n", "");
+					System.out.printf("%-10s|                    |\n", "");
+					for(int i=0; i<color.size(); i++) {
+						System.out.printf("%-10s| %3d%-3s%-12s |\n", "", (i+1), ".", color.get(i));
+					}
+					System.out.printf("%-10s|                    |\n", "");
+					System.out.printf("%-10s----------------------\n\n", "");
+				
 					System.out.print("Select Color(Enter -1 to cancel): ");
 					colorChoice=scanner.nextInt();
 					scanner.nextLine();
 					
 					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
-						System.out.println("Invalid Choice. Please try again.");
+						System.out.printf("\n%-10sInvalid Choice.\n", "");
+						System.out.printf("%-10sPress enter to try again", "");
+						scanner.nextLine();
+						System.out.println();
 					}
 					else if(colorChoice==-1) {
 						cancel=-1;
@@ -689,10 +736,11 @@ public class ChiKean {
 		
 		if(cancel!=-1) {
 			for(int i=0; i<fridgeList.size(); i++) {
-				if((horsePower.get(hPowerChoice-1)==fridgeList.get(i).getHorsePower())&&(capacity.get(capChoice-1)==fridgeList.get(i).getCapacity())&&(color.get(colorChoice-1).equals(fridgeList.get(i).getColor()))) {
+				if((horsePower.get(hpNCChoice-1)==fridgeList.get(i).getHorsePower())&&(capacity.get(hpNCChoice-1)==fridgeList.get(i).getCapacity())&&(color.get(colorChoice-1).equals(fridgeList.get(i).getColor()))) {
+					System.out.println();
 					do {
-						System.out.println(fridgeList.get(i).toString());
 						loopQuantity=0;
+						System.out.println(fridgeList.get(i).toString());
 						System.out.println("Available Quantity: "+fridgeList.get(i).getQuantity());
 						System.out.print("Enter Quantity(Enter -1 to cancel): ");
 						quantity=scanner.nextInt();
@@ -757,84 +805,99 @@ public class ChiKean {
 		}
 		
 		for(int i=0; i<printerList.size(); i++) {
-			foundRes=0;
-			if(productList.get(i).getQuantity()>0) {
-				tempRes=printerList.get(i).getResolution();
-				for(int j=0; j<resolution.size(); j++) {
-					if(tempRes.equals(resolution.get(j))) {
-						foundRes=1;
+			foundType=0;
+			if((productList.get(i).getQuantity()>0)) {
+				tempType=printerList.get(i).getPrinterType();
+				for(int j=0; j<printerType.size(); j++) {
+					if(tempType.equals(printerType.get(j))) {
+						foundType=1;
 					}
 				}
-				if(foundRes==0) {
-					resolution.remove("null");
-					resolution.add(tempRes);
+				if(foundType==0) {
+					printerType.remove("null");
+					printerType.add(tempType);
 				}
 			}
 		}
 		
-		if(resolution.size()==1) {
-			resChoice=1;
+		if(printerType.size()==1) {
+			typeChoice=1;
 		}
 		else {
-			System.out.println("Resolution");
-			for(int i=0; i<resolution.size(); i++) {
-				System.out.println((i+1)+". "+resolution.get(i)+"dpi");
-			}
-			
 			do {
-				System.out.print("Select Resolution(Enter -1 to cancel): ");
-				resChoice=scanner.nextInt();
+				System.out.println();
+				System.out.printf("%-10s------------------------------\n", "");
+				System.out.printf("%-10s|        Printer Type        |\n", "");
+				System.out.printf("%-10s|        ============        |\n", "");
+				System.out.printf("%-10s|                            |\n", "");
+				for(int i=0; i<printerType.size(); i++) {
+					System.out.printf("%-10s| %3d%-3s%-20s |\n", "", (i+1), ".", printerType.get(i));
+				}
+				System.out.printf("%-10s|                            |\n", "");
+				System.out.printf("%-10s------------------------------\n\n", "");
+				System.out.print("Select Printer Type(Enter -1 to cancel): ");
+				typeChoice=scanner.nextInt();
 				scanner.nextLine();
 				
-				if((resChoice>resolution.size())||(resChoice==0)||(resChoice<-1)) {
-					System.out.println("Invalid Choice. Please try again");
+				if((typeChoice>printerType.size())||(typeChoice==0)||(typeChoice<-1)) {
+					System.out.printf("\n%-10sInvalid Choice.\n", "");
+					System.out.printf("%-10sPress enter to try again", "");
+					scanner.nextLine();
+					System.out.println();
 				}
-				else if(resChoice==-1) {
+				else if(typeChoice==-1) {
 					cancel=-1;
 				}
-			}while((resChoice>resolution.size())||(resChoice==0)||(resChoice<-1));
+			}while((typeChoice>printerType.size())||(typeChoice==0)||(typeChoice<-1));
 		}
 		
 		if(cancel!=-1) {
 			for(int i=0; i<printerList.size(); i++) {
-				foundType=0;
-				if((resolution.get(resChoice-1).equals(printerList.get(i).getResolution()))&&(productList.get(i).getQuantity()>0)) {
-					tempType=printerList.get(i).getPrinterType();
-					for(int j=0; j<printerType.size(); j++) {
-						if(tempType.equals(printerType.get(j))) {
-							foundType=1;
+				foundRes=0;
+				if((printerType.get(typeChoice-1).equals(printerList.get(i).getPrinterType()))&&(productList.get(i).getQuantity()>0)) {
+					tempRes=printerList.get(i).getResolution();
+					for(int j=0; j<resolution.size(); j++) {
+						if(tempRes.equals(resolution.get(j))) {
+							foundRes=1;
 						}
 					}
-					if(foundType==0) {
-						printerType.remove("null");
-						printerType.add(tempType);
+					if(foundRes==0) {
+						resolution.remove("null");
+						resolution.add(tempRes);
 					}
 				}
 			}
 			
-			if(printerType.size()==1) {
-				typeChoice=1;
+			if(resolution.size()==1) {
+				resChoice=1;
 			}
 			else {
-				System.out.println("Printer Type");
-				for(int i=0; i<printerType.size(); i++) {
-					System.out.println((i+1)+". "+printerType.get(i));
-				}
-				
 				do {
-					System.out.print("Select Printer Type(Enter -1 to cancel): ");
-					typeChoice=scanner.nextInt();
+					System.out.println();
+					System.out.printf("%-10s------------------\n", "");
+					System.out.printf("%-10s|   Resolution   |\n", "");
+					System.out.printf("%-10s|   ==========   |\n", "");
+					System.out.printf("%-10s|                |\n", "");
+					for(int i=0; i<resolution.size(); i++) {
+						System.out.printf("%-10s| %3d%-3s%s%-5s |\n", "", (i+1), ".", resolution.get(i), "dpi");
+					}
+					System.out.printf("%-10s|                |\n", "");
+					System.out.printf("%-10s------------------\n\n", "");
+					System.out.print("Select Resolution(Enter -1 to cancel): ");
+					resChoice=scanner.nextInt();
 					scanner.nextLine();
 					
-					if((typeChoice>printerType.size())||(typeChoice==0)||(typeChoice<-1)) {
-						System.out.println("Invalid Choice. Please try again");
+					if((resChoice>resolution.size())||(resChoice==0)||(resChoice<-1)) {
+						System.out.printf("\n%-10sInvalid Choice.\n", "");
+						System.out.printf("%-10sPress enter to try again", "");
+						scanner.nextLine();
+						System.out.println();
 					}
-					else if(typeChoice==-1) {
+					else if(resChoice==-1) {
 						cancel=-1;
 					}
-				}while((typeChoice>printerType.size())||(typeChoice==0)||(typeChoice<-1));
+				}while((resChoice>resolution.size())||(resChoice==0)||(resChoice<-1));
 			}
-			
 		}
 		
 		if(cancel!=-1) {
@@ -856,25 +919,6 @@ public class ChiKean {
 			
 			if(duplexCapability.size()==1) {
 				duplexChoice=1;
-			}
-			else {
-				System.out.println("Duplex Capability");
-				for(int i=0; i<duplexCapability.size();i++) {
-					System.out.println((i+1)+". "+duplexCapability.get(i));
-				}
-				
-				do {
-					System.out.print("Select Duplex Capability(Enter -1 to exit): ");
-					duplexChoice=scanner.nextInt();
-					scanner.nextLine();
-					
-					if((duplexChoice>duplexCapability.size())||(duplexChoice==0)||(duplexChoice<-1)){
-						System.out.println("Invalid Choice. Please try again");
-					}
-					else if(duplexChoice==-1) {
-						cancel=-1;
-					}
-				}while((duplexChoice>duplexCapability.size())||(duplexChoice==0)||(duplexChoice<-1));
 			}
 		}
 		
@@ -899,25 +943,6 @@ public class ChiKean {
 			if(series.size()==1) {
 				seriesChoice=1;
 			}
-			else {
-				System.out.println("Series");
-				for(int i=0; i<series.size(); i++) {
-					System.out.println((i+1)+". "+series.get(i));
-				}
-				
-				do {
-					System.out.print("Select Series(Enter -1 to cancel): ");
-					seriesChoice=scanner.nextInt();
-					scanner.nextLine();
-					
-					if((seriesChoice>series.size())||(seriesChoice==0)||(seriesChoice<-1)) {
-						System.out.println("Invalid Choice. Please try again");
-					}
-					else if(seriesChoice==-1) {
-						cancel=-1;
-					}
-				}while((seriesChoice>series.size())||(seriesChoice==0)||(seriesChoice<-1));
-			}
 		}
 		
 		if(cancel!=-1) {
@@ -941,18 +966,26 @@ public class ChiKean {
 				colorChoice=1;
 			}
 			else {
-				System.out.println("Color");
-				for(int i=0; i<color.size(); i++) {
-					System.out.println((i+1)+". "+color.get(i));
-				}
-				
 				do {
+					System.out.println();
+					System.out.printf("%-10s-----------------\n", "");
+					System.out.printf("%-10s|     Color     |\n", "");
+					System.out.printf("%-10s|     =====     |\n", "");
+					System.out.printf("%-10s|               |\n", "");
+					for(int i=0; i<color.size(); i++) {
+						System.out.printf("%-10s| %3d%-3s%-7s |\n", "", (i+1), ".", color.get(i));
+					}
+					System.out.printf("%-10s|               |\n", "");
+					System.out.printf("%-10s-----------------\n\n", "");
 					System.out.print("Select Color(Enter -1 to cancel): ");
 					colorChoice=scanner.nextInt();
 					scanner.nextLine();
 					
 					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
-						System.out.println("Invalid Choice. Please try again");
+						System.out.printf("\n%-10sInvalid Choice.\n", "");
+						System.out.printf("%-10sPress enter to try again", "");
+						scanner.nextLine();
+						System.out.println();
 					}
 					else if(colorChoice==-1) {
 						cancel=-1;
@@ -965,10 +998,10 @@ public class ChiKean {
 		if(cancel!=-1) {
 			for(int i=0; i<printerList.size(); i++) {
 				if((resolution.get(resChoice-1).equals(printerList.get(i).getResolution()))&&(printerType.get(typeChoice-1).equals(printerList.get(i).getPrinterType()))&&(duplexCapability.get(duplexChoice-1).equals(printerList.get(i).getDuplexCapability()))&&(series.get(seriesChoice-1).equals(printerList.get(i).getSeries()))&&(color.get(colorChoice-1).equals(printerList.get(i).getColor()))) {
+					System.out.println();
 					do {
-						System.out.println(printerList.get(i).toString());
 						loopQuantity=0;
-						
+						System.out.println(printerList.get(i).toString());
 						System.out.println("Available Quantity: "+printerList.get(i).getQuantity());
 						System.out.print("Enter Quantity(Enter -1 to cancel): ");
 						quantity=scanner.nextInt();
@@ -1046,18 +1079,25 @@ public class ChiKean {
 			seriesChoice=1;
 		}
 		else {
-			System.out.println("Series");
-			for(int i=0; i<series.size(); i++) {
-				System.out.println((i+1)+". "+series.get(i));
-			}
-			
 			do {
+				System.out.printf("%-10s----------------------------\n", "");
+				System.out.printf("%-10s|          Series          |\n", "");
+				System.out.printf("%-10s|          ======          |\n", "");
+				System.out.printf("%-10s|                          |\n", "");
+				for(int i=0; i<series.size(); i++) {
+					System.out.printf("%-10s| %3d%-3s%-18s |\n", "", (i+1), ".", series.get(i));
+				}
+				System.out.printf("%-10s|                          |\n", "");
+				System.out.printf("%-10s----------------------------\n\n", "");
 				System.out.print("Select Series(Enter -1 to cancel): ");
 				seriesChoice=scanner.nextInt();
 				scanner.nextLine();
 				
 				if((seriesChoice>series.size())||(seriesChoice==0)||(seriesChoice<-1)) {
-					System.out.println("Invalid Choice. Please try again");
+					System.out.printf("\n%-10sInvalid Choice.\n", "");
+					System.out.printf("%-10sPress enter to try again", "");
+					scanner.nextLine();
+					System.out.println();
 				}
 				else if(seriesChoice==-1) {
 					cancel=-1;
@@ -1068,10 +1108,10 @@ public class ChiKean {
 		if(cancel!=-1) {
 			for(int i=0; i<scannerList.size(); i++) {
 				if(series.get(seriesChoice-1).equals(scannerList.get(i).getSeries())) {
+					System.out.println();
 					do {
-						System.out.println(scannerList.get(i).toString());
 						loopQuantity=0;
-						
+						System.out.println(scannerList.get(i).toString());
 						System.out.println("Available Quantity: "+scannerList.get(i).getQuantity());
 						System.out.print("Enter Quantity(Enter -1 to cancel): ");
 						quantity=scanner.nextInt();
@@ -1114,7 +1154,7 @@ public class ChiKean {
 	
 	public static void microwave(ArrayList<Product> productList, Microwave product) {
 		Scanner scanner=new Scanner(System.in);
-		int sizeChoice=0, capChoice=0, colorChoice=0, foundSize, foundCap, foundColor, quantity, loopQuantity, cancel=0;
+		int sizeNCapChoice=0, colorChoice=0, foundSize, foundCap, foundColor, quantity, loopQuantity, cancel=0;
 		double tempCap;
 		String tempSize, tempColor;
 		ArrayList<Microwave> microwaveList= new ArrayList<Microwave>();
@@ -1133,89 +1173,67 @@ public class ChiKean {
 		
 		for(int i=0; i<microwaveList.size(); i++) {
 			foundSize=0;
+			foundCap=0;
 			if(microwaveList.get(i).getQuantity()>0) {
 				tempSize=microwaveList.get(i).getSize();
+				tempCap=microwaveList.get(i).getCapacity();
 				for(int j=0; j<size.size(); j++) {
 					if(tempSize.equals(size.get(j))) {
 						foundSize=1;
+					}
+				}
+				for(int j=0; j<capacity.size(); j++) {
+					if(tempCap==capacity.get(j)) {
+						foundCap=1;
 					}
 				}
 				if(foundSize==0) {
 					size.remove("null");
 					size.add(tempSize);
 				}
+				if(foundCap==0) {
+					capacity.remove(Double.valueOf(0.0));
+					capacity.add(tempCap);
+				}
 			}
 		}
 		
 		if(size.size()==1) {
-			sizeChoice=1;
+			sizeNCapChoice=1;
 		}
 		else {
-			System.out.println("Size");
-			for(int i=0; i<size.size(); i++) {
-				System.out.println((i+1)+". "+size.get(i));
-			}
-			
 			do {
+				System.out.println();
+				System.out.printf("%-10s------------------------------\n", "");
+				System.out.printf("%-10s|    |    Size    | Capacity |\n", "");
+				
+				for(int i=0; i<size.size(); i++) {
+					System.out.printf("%-10s|----+------------+----------|\n", "");
+					System.out.printf("%-10s| %d%s | %-10s | %3s%-5.0f |\n", "", (i+1), ".", size.get(i), "", capacity.get(i));
+				}
+				System.out.printf("%-10s------------------------------\n\n", "");
+			
 				System.out.print("Select Size(Enter -1 to cancel): ");
-				sizeChoice=scanner.nextInt();
+				sizeNCapChoice=scanner.nextInt();
 				scanner.nextLine();
 				
-				if((sizeChoice>size.size())||(sizeChoice==0)||(sizeChoice<-1)) {
-					System.out.println("Invalid Choice. Please try again");
+				if((sizeNCapChoice>size.size())||(sizeNCapChoice==0)||(sizeNCapChoice<-1)) {
+					System.out.printf("\n%-10sInvalid Choice.\n", "");
+					System.out.printf("%-10sPress enter to try again", "");
+					scanner.nextLine();
+					System.out.println();
 				}
-				else if(sizeChoice==-1) {
+				else if(sizeNCapChoice==-1) {
 					cancel=-1;
 				}
-			}while((sizeChoice>size.size())||(sizeChoice==0)||(sizeChoice<-1));
+			}while((sizeNCapChoice>size.size())||(sizeNCapChoice==0)||(sizeNCapChoice<-1));
 		}
 		
-		if(cancel!=-1) {
-			for(int i=0; i<microwaveList.size(); i++) {
-				foundCap=0;
-				if((size.get(sizeChoice-1).equals(microwaveList.get(i).getSize()))&&microwaveList.get(i).getQuantity()>0) {
-					tempCap=microwaveList.get(i).getCapacity();
-					for(int j=0; j<capacity.size(); j++) {
-						if(tempCap==capacity.get(j)) {
-							foundCap=1;
-						}
-					}
-					if(foundCap==0) {
-						capacity.remove(Double.valueOf(0.0));
-						capacity.add(tempCap);
-					}
-				}
-			}
-			
-			
-			if(capacity.size()==1) {
-				capChoice=1;
-			}
-			else {
-				System.out.println("Capacity");
-				for(int i=0; i<capacity.size(); i++) {
-					System.out.println((i+1)+". "+capacity.get(i));
-				}
-				
-				do {
-					System.out.print("Select Capacity(Enter -1 to cancel): ");
-					capChoice=scanner.nextInt();
-					scanner.nextLine();
-					
-					if((capChoice>size.size())||(capChoice==0)||(capChoice<-1)) {
-						System.out.println("Invalid Choice. Please try again");
-					}
-					else if(capChoice==-1) {
-						cancel=-1;
-					}
-				}while((capChoice>size.size())||(capChoice==0)||(capChoice<-1));
-			}
-		}
 		
 		if(cancel!=-1) {
 			for(int i=0; i<microwaveList.size(); i++) {
 				foundColor=0;
-				if((size.get(sizeChoice-1).equals(microwaveList.get(i).getSize()))&&(capacity.get(capChoice-1)==microwaveList.get(i).getCapacity())&&(microwaveList.get(i).getQuantity()>0)) {
+				if((size.get(sizeNCapChoice-1).equals(microwaveList.get(i).getSize()))&&(capacity.get(sizeNCapChoice-1)==microwaveList.get(i).getCapacity())&&(microwaveList.get(i).getQuantity()>0)) {
 					tempColor=microwaveList.get(i).getColor();
 					for(int j=0; j<color.size(); j++) {
 						if(tempColor.equals(color.get(j))) {
@@ -1234,18 +1252,27 @@ public class ChiKean {
 				colorChoice=1;
 			}
 			else {
-				System.out.println("Color");
-				for(int i=0; i<color.size(); i++) {
-					System.out.println((i+1)+". "+color.get(i));
-				}
-				
 				do {
+					System.out.println();
+					System.out.printf("%-10s-----------------\n", "");
+					System.out.printf("%-10s|     Color     |\n", "");
+					System.out.printf("%-10s|     =====     |\n", "");
+					System.out.printf("%-10s|               |\n", "");
+					for(int i=0; i<color.size(); i++) {
+						System.out.printf("%-10s| %3d%-3s%-7s |\n", "", (i+1), ".", color.get(i));
+					}
+					System.out.printf("%-10s|               |\n", "");
+					System.out.printf("%-10s-----------------\n\n", "");
+				
 					System.out.print("Select Color(Enter -1 to cancel): ");
 					colorChoice=scanner.nextInt();
 					scanner.nextLine();
 					
 					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
-						System.out.println("Invalid Choice. Please try again");
+						System.out.printf("\n%-10sInvalid Choice.\n", "");
+						System.out.printf("%-10sPress enter to try again", "");
+						scanner.nextLine();
+						System.out.println();
 					}
 					else if(colorChoice==-1) {
 						cancel=-1;
@@ -1256,12 +1283,10 @@ public class ChiKean {
 		
 		if(cancel!=-1) {
 			for(int i=0; i<microwaveList.size(); i++) {
-				if((size.get(sizeChoice-1).equals(microwaveList.get(i).getSize()))&&(capacity.get(capChoice-1)==microwaveList.get(i).getCapacity())&&(color.get(colorChoice-1).equals(microwaveList.get(i).getColor()))) {
+				if((size.get(sizeNCapChoice-1).equals(microwaveList.get(i).getSize()))&&(capacity.get(sizeNCapChoice-1)==microwaveList.get(i).getCapacity())&&(color.get(colorChoice-1).equals(microwaveList.get(i).getColor()))) {
 					do {
-						System.out.println(microwaveList.get(i).toString());
-						
 						loopQuantity=0;
-						
+						System.out.println(microwaveList.get(i).toString());
 						System.out.println("Available Quantity: "+microwaveList.get(i).getQuantity());
 						System.out.print("Enter Quantity(Enter -1 to cancel): ");
 						quantity=scanner.nextInt();
@@ -1343,18 +1368,26 @@ public class ChiKean {
 			scrSizeChoice=1;
 		}
 		else {
-			System.out.println("Screen Size");
-			for(int i=0; i<scrSize.size(); i++) {
-				System.out.println((i+1)+". "+scrSize.get(i));
-			}
-			
 			do {
+				System.out.println();
+				System.out.printf("%-10s----------------\n", "");
+				System.out.printf("%-10s|  Screen Size |\n", "");
+				System.out.printf("%-10s|  =========== |\n", "");
+				System.out.printf("%-10s|              |\n", "");
+				for(int i=0; i<scrSize.size(); i++) {
+					System.out.printf("%-10s| %3d%-3s%.0f%-4s |\n", "", (i+1), ".", scrSize.get(i), "mm");
+				}
+				System.out.printf("%-10s|              |\n", "");
+				System.out.printf("%-10s----------------\n", "");
 				System.out.print("Select Screen Size(Enter -1 to cancel): ");
 				scrSizeChoice=scanner.nextInt();
 				scanner.nextLine();
 				
 				if((scrSizeChoice>scrSize.size())||(scrSizeChoice==0)||(scrSizeChoice<-1)) {
-					System.out.println("Invalid Choice. Please try again");
+					System.out.printf("\n%-10sInvalid Choice.\n", "");
+					System.out.printf("%-10sPress enter to try again", "");
+					scanner.nextLine();
+					System.out.println();
 				}
 				else if(scrSizeChoice==-1) {
 					cancel=-1;
@@ -1384,18 +1417,26 @@ public class ChiKean {
 				resChoice=1;
 			}
 			else {
-				System.out.println("Resolution");
-				for(int i=0; i<resolution.size(); i++) {
-					System.out.println((i+1)+". "+resolution.get(i));
-				}
-				
 				do {
+					System.out.println();
+					System.out.printf("%-10s------------------\n", "");
+					System.out.printf("%-10s|   Resolution   |\n", "");
+					System.out.printf("%-10s|   ==========   |\n", "");
+					System.out.printf("%-10s|                |\n", "");
+					for(int i=0; i<resolution.size(); i++) {
+						System.out.printf("%-10s| %3d%-2s%-9s |\n", "", (i+1), ".", resolution.get(i));
+					}
+					System.out.printf("%-10s|                |\n", "");
+					System.out.printf("%-10s------------------\n\n", "");
 					System.out.print("Select Resolution(Enter -1 to cancel): ");
 					resChoice=scanner.nextInt();
 					scanner.nextLine();
 					
 					if((resChoice>resolution.size())||(resChoice==0)||(resChoice<-1)) {
-						System.out.println("Invalid Choice. Please try again");
+						System.out.printf("\n%-10sInvalid Choice.\n", "");
+						System.out.printf("%-10sPress enter to try again", "");
+						scanner.nextLine();
+						System.out.println();
 					}	
 					else if(resChoice==-1) {
 						cancel=-1;
@@ -1423,25 +1464,6 @@ public class ChiKean {
 			
 			if(color.size()==1){
 				colorChoice=1;
-			}
-			else {
-				System.out.println("Color");
-				for(int i=0; i<color.size(); i++) {
-					System.out.println((i+1)+". "+color.get(i));
-				}
-				
-				do {
-					System.out.print("Select Color(Enter -1 to cancel): ");
-					colorChoice=scanner.nextInt();
-					scanner.nextLine();
-					
-					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
-						System.out.println("Invalid Choice. Please try again");
-					}
-					else if(colorChoice==-1) {
-						cancel=-1;
-					}
-				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1));
 			}
 		}
 		
@@ -1682,7 +1704,7 @@ public class ChiKean {
 	public static void onHoldPayment(ArrayList<Payment> paymentList, ArrayList<Member> memberList, Staff staff, ArrayList<Product> productList, ArrayList<Receipt> receiptList, BankAccount bankAccount) {
 		ArrayList<Payment> tempPayment=new ArrayList<Payment>();
 		Scanner scanner=new Scanner(System.in);
-		int choice=0, cancel=0, funcChoice=0, onHold=0;
+		int choice=0, cancel=0, funcChoice=0, onHold=0, cancel1=0;
 		char paymentChoice='N';
 		Receipt receipt=null;
 		
@@ -1724,12 +1746,13 @@ public class ChiKean {
 						System.out.printf("%-10sInvalid Choice. Please try again", "");
 					}
 					else if(choice==-1) {
+						cancel1=-1;
 						cancel=-1;
 						break;
 					}
 				}while((choice>tempPayment.size())||(choice==0)||(choice<-1));
 				
-				if(cancel!=-1) {
+				if(cancel1!=-1) {
 					System.out.printf("%-10s-----------------------------------------------------------------------------------\n", "");
 					System.out.printf("%-10s| %-15s%-17s%-23s%-10s%14s |\n", "","Product ID", "Product Name", "Price Per Quantity", "Quantity", "Price");
 					System.out.printf("%-10s| %-15s%-17s%-23s%-10s%s |\n", "", "----------", "------------", "------------------", "--------", "--------------");
@@ -1794,7 +1817,7 @@ public class ChiKean {
 						}
 					}
 			}
-		}while((onHold==1)&&(cancel!=-1));
+		}while((onHold==1)&&(cancel1!=-1));
 		
 		
 
@@ -1993,14 +2016,13 @@ public class ChiKean {
 	}
 	
 	public static void cart(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, ArrayList<Payment> paymentList, Staff staff, ArrayList<Receipt> receiptList, BankAccount bankAccount) {
-		int newQty, memIDNo, checkMemID=0, cancel=0;;
+		int newQty, memIDNo, checkMemID=0, cancel=0;
 		char choice='N', addProdChoice='N', editChoice='N', paymentChoice='N', orderChoice='N';
 		String memID;
 		Scanner scanner=new Scanner(System.in);
 		Receipt receipt=null;
 		Product product=null;
 		Payment payment=null;
-		Product[] prodArray=new Product[100];
 		System.out.println("Staff Name: "+ staff.getName());
 		
 		
@@ -2009,6 +2031,7 @@ public class ChiKean {
 			do {
 				choice='N';
 				addProdChoice='N';
+				cancel=0;
 				String prodChoice=selectProduct(productList);
 				if(prodChoice.equals("Smart Phone")) {
 					product=new SmartPhone();

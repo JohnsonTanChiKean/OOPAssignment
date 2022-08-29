@@ -36,9 +36,25 @@ public class Tablet extends Product{
 	
 	public String toString() {
 		String productDetails="";
-		productDetails+=String.format("%-15s%-17s%-17s%-8s%-16s%s\n", "Product ID", "Product Name", "Display Size", "RAM", "Color", "Price");
-		productDetails+=String.format("%-15s%-17s%-17s%-8s%-16s%s\n", "----------", "------------", "------------", "---", "-----", "-----");
-		productDetails+=String.format("%-15s%-17s%.1f%-13s%d%-7s%-16s%.2f", super.getProductID(), super.getProductName(), displaySize, "inches", sizeOfRam, "GB", color, super.getPrice());
+		if(sizeOfRam==8) {
+			productDetails+=String.format("%-10s------------------------------------------------------------------------------------------\n","");
+			productDetails+=String.format("%-10s|                                                                                        |\n","");
+			productDetails+=String.format("%-10s|    %-15s%-17s%-17s%-8s%-16s%-10s |\n", "", "Product ID", "Product Name", "Display Size", "RAM", "Color", "Price");
+			productDetails+=String.format("%-10s|    %-15s%-17s%-17s%-8s%-16s%-10s |\n", "","----------", "------------", "------------", "---", "-----", "-----");
+			productDetails+=String.format("%-10s|    %-15s%-17s%.1f%-13s%d%-7s%-16s%-10.2f |\n", "", super.getProductID(), super.getProductName(), displaySize, "inches", sizeOfRam, "GB", color, super.getPrice());
+			productDetails+=String.format("%-10s|                                                                                        |\n","");
+			productDetails+=String.format("%-10s------------------------------------------------------------------------------------------\n","");
+		}
+		
+		else {
+			productDetails+=String.format("%-10s-------------------------------------------------------------------------------------------\n","");
+			productDetails+=String.format("%-10s|                                                                                         |\n","");
+			productDetails+=String.format("%-10s|    %-15s%-17s%-17s%-9s%-16s%-10s |\n", "", "Product ID", "Product Name", "Display Size", "RAM", "Color", "Price");
+			productDetails+=String.format("%-10s|    %-15s%-17s%-17s%-9s%-16s%-10s |\n", "","----------", "------------", "------------", "---", "-----", "-----");
+			productDetails+=String.format("%-10s|    %-15s%-17s%.1f%-13s%d%-7s%-16s%-10.2f |\n", "", super.getProductID(), super.getProductName(), displaySize, "inches", sizeOfRam, "GB", color, super.getPrice());
+			productDetails+=String.format("%-10s|                                                                                         |\n","");
+			productDetails+=String.format("%-10s-------------------------------------------------------------------------------------------\n","");
+		}
 		return productDetails;
 	}
 }
