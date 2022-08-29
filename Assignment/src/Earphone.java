@@ -30,9 +30,13 @@ public class Earphone extends Product{
 	
 	public String toString() {
 		String productDetails="";
-		productDetails+=String.format("%-15s%-17s%-19s%-13s%s\n", "Product ID", "Product Name", "Generation", "Color", "Price");
-		productDetails+=String.format("%-15s%-17s%-19s%-13s%s\n", "----------", "------------", "----------", "-----", "-----");
-		productDetails+=String.format("%-15s%-17s%-19s%-13s%.2f", super.getProductID(), super.getProductName(), generation, color, super.getPrice());
+		productDetails+=String.format("%-10s--------------------------------------------------------------------------------\n", "");
+		productDetails+=String.format("%-10s|                                                                              |\n", "");
+		productDetails+=String.format("%-10s|    %-15s%-17s%-19s%-13s%-9s |\n", "", "Product ID", "Product Name", "Generation", "Color", "Price");
+		productDetails+=String.format("%-10s|    %-15s%-17s%-19s%-13s%-9s |\n", "", "----------", "------------", "----------", "-----", "-----");
+		productDetails+=String.format("%-10s|    %-15s%-17s%-19s%-13s%-9.2f |\n", "", super.getProductID(), super.getProductName(), generation, color, super.getPrice());
+		productDetails+=String.format("%-10s|                                                                              |\n", "");
+		productDetails+=String.format("%-10s--------------------------------------------------------------------------------\n", "");
 		return productDetails;
 	}
 	

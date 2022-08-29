@@ -42,9 +42,13 @@ public class Microwave extends Product{
 	
 	public String toString() {
 		String productDetails="";
-		productDetails+=String.format("%-15s%-17s%-15s%-21s%-13s%-10s%s\n", "Product ID", "Product Name", "Size", "Microwave Type", "Capacity", "Color", "Price");
-		productDetails+=String.format("%-15s%-17s%-15s%-21s%-13s%-10s%s\n", "----------", "------------", "----", "--------------", "--------", "-----", "-----");
-		productDetails+=String.format("%-15s%-17s%-15s%-21s%-13.2f%-10s%.2f", super.getProductID(), super.getProductName(), size, microwaveType, capacity, color, super.getPrice());
+		productDetails+=String.format("%-10s-----------------------------------------------------------------------------------------------------------\n", "");
+		productDetails+=String.format("%-10s|                                                                                                         |\n", "");
+		productDetails+=String.format("%-10s|    %-15s%-17s%-15s%-21s%-13s%-10s%-9s |\n", "", "Product ID", "Product Name", "Size", "Microwave Type", "Capacity", "Color", "Price");
+		productDetails+=String.format("%-10s|    %-15s%-17s%-15s%-21s%-13s%-10s%-9s |\n", "", "----------", "------------", "----", "--------------", "--------", "-----", "-----");
+		productDetails+=String.format("%-10s|    %-15s%-17s%-15s%-21s%-13.2f%-10s%-9.2f |\n", "", super.getProductID(), super.getProductName(), size, microwaveType, capacity, color, super.getPrice());
+		productDetails+=String.format("%-10s|                                                                                                         |\n", "");
+		productDetails+=String.format("%-10s-----------------------------------------------------------------------------------------------------------\n", "");
 		return productDetails;
 	}
 }
