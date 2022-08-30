@@ -22,7 +22,7 @@ public class Main {
 		readProduct(productList);
 		readStaff(staffList);
 		readMember(memberList, staffList);
-		
+		ZhiHang.AddStaff();
 		GetDate date=new GetDate();
 		
 		System.out.println(date.toString());
