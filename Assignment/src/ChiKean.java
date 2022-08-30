@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.Image;
 
 
 //if payment=cancelled, quantity of all items in the cart must be added back to their respective arraylist counterparts
@@ -1823,6 +1827,23 @@ public class ChiKean {
 
 	}
 	
+	public static void displayQR() {
+		ImageIcon image=new ImageIcon("C:\\Users\\User\\Documents\\College\\Year 2 Sem 1\\OOP\\Assignment Share Drive\\OOPAssignment\\Assignment\\src\\TNG.jpg");
+		Image tngImage=image.getImage();
+		Image modifiedImage=tngImage.getScaledInstance(500, 700, Image.SCALE_SMOOTH);
+		image=new ImageIcon(modifiedImage);
+		
+		JLabel label=new JLabel();
+		label.setIcon(image);
+		
+		JFrame frame=new JFrame();
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frame.setSize(500, 700);
+		frame.setResizable(false);
+		frame.setVisible(true);
+		frame.add(label);
+	}
+	
 	public static void returnQuantity(ArrayList<Product> productList, Cart cart) {
 		for(int i=0; i<productList.size(); i++) {
 			for(int j=0; j<cart.getNoOfProducts(); j++) {
@@ -1910,17 +1931,18 @@ public class ChiKean {
 							System.out.println("Payment Methods");
 							System.out.println("1. Cash");
 							System.out.println("2. Credit Card");
+							System.out.println("3. Touch N Go E-Wallet");
 							System.out.print("Select Payment Method(Enter -1 to cancel): ");
 							paymentMChoice=scanner.nextInt();
 							scanner.nextLine();
 							
-							if((paymentMChoice>2)||(paymentMChoice==0)||(paymentMChoice<-1)) {
+							if((paymentMChoice>3)||(paymentMChoice==0)||(paymentMChoice<-1)) {
 								System.out.println("Invalid Choice. Please try again");
 							}
 							else if(paymentMChoice==-1) {
 								cancel=-1;
 							}
-						}while((paymentMChoice>2)||(paymentMChoice==0)||(paymentMChoice<-1));
+						}while((paymentMChoice>3)||(paymentMChoice==0)||(paymentMChoice<-1));
 						
 						if(cancel!=-1) {
 							do {
@@ -1958,6 +1980,13 @@ public class ChiKean {
 										receivedAmount=payment.getPaymentAmount();
 										paymentMethod="Credit Card";
 									}
+								}
+								else if(paymentMChoice==3) {
+									displayQR();
+									scanner.nextLine();
+									receivedAmount=payment.getPaymentAmount();
+									paymentMethod="Touch N Go E-Wallet";
+									
 								}
 								else if(paymentMChoice==-1) {
 									cancel=-1;
