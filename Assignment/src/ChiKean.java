@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -11,7 +12,7 @@ import java.awt.Image;
 //onhold list -1 not working
 public class ChiKean {
 	public static String selectProduct(ArrayList<Product> productList) {
-		int prodChoice=0;
+		int prodChoice=0, invalidInput=0;
 		Scanner scanner=new Scanner(System.in);
 		int foundProd=0;
 		String tempProdType="";
@@ -36,6 +37,7 @@ public class ChiKean {
 		
 		
 		do{
+			invalidInput=0;
 			System.out.printf("%-10s---------------------------\n", "");
 			System.out.printf("%-10s| Available Product Types |\n", "");
 			System.out.printf("%-10s| ======================= |\n", "");
@@ -47,16 +49,21 @@ public class ChiKean {
 			}
 			System.out.printf("%-10s|                         |\n", "");
 			System.out.printf("%-10s---------------------------\n\n", "");
-			System.out.printf("Select product type(Enter -1 to quit): ");
-			prodChoice=scanner.nextInt();
-			scanner.nextLine();
-			
-			if((prodChoice>prodSelectList.size())||(prodChoice==0)||(prodChoice<-1)) {
+			System.out.printf("%-2sSelect product type(Enter -1 to quit): ", "");
+			try {
+				prodChoice=scanner.nextInt();
+				scanner.nextLine();
+			}
+			catch(InputMismatchException e) {
+				invalidInput=1;
+				scanner.nextLine();
+			}
+			if((prodChoice>prodSelectList.size())||(prodChoice==0)||(prodChoice<-1)||(invalidInput==1)) {
 				System.out.printf("%-10sInvalid choice.\n","");
 				System.out.printf("%-10sPress enter to try again\n","");
 				scanner.nextLine();
 			}
-		}while((prodChoice>prodSelectList.size())||(prodChoice==0)||(prodChoice<-1));
+		}while((prodChoice>prodSelectList.size())||(prodChoice==0)||(prodChoice<-1)||(invalidInput==1));
 		
 		if(prodChoice==-1) {
 			return "Cancel";
@@ -70,7 +77,7 @@ public class ChiKean {
 	
 	public static void phone(ArrayList<Product> productList, SmartPhone product) {
 		Scanner scanner=new Scanner(System.in);
-		int storageChoice=0, ramChoice=0, colorChoice=0, foundStorage, foundRam, foundColor, tempStorage=0, tempRam=0, quantity, loopQuantity=0, cancel=0;
+		int storageChoice=0, ramChoice=0, colorChoice=0, foundStorage, foundRam, foundColor, tempStorage=0, tempRam=0, quantity=0, loopQuantity=0, cancel=0, invalidInput=0;
 		String tempColor="";
 		ArrayList<SmartPhone> phoneList=new ArrayList<SmartPhone>();
 		ArrayList<Integer> storage=new ArrayList<Integer>();
@@ -109,6 +116,7 @@ public class ChiKean {
 		}
 		else {
 			do {
+				invalidInput=0;
 				System.out.println();
 				System.out.printf("%-10s--------------------\n", "");
 				System.out.printf("%-10s| Storage Capacity |\n", "");
@@ -120,11 +128,18 @@ public class ChiKean {
 				System.out.printf("%-10s|                  |\n", "");
 				System.out.printf("%-10s--------------------\n\n", "");
 			
-				System.out.print("Select Storage Capacity(Enter -1 to cancel): ");
-				storageChoice=scanner.nextInt();
-				scanner.nextLine();
+				System.out.printf("%-2sSelect Storage Capacity(Enter -1 to cancel): ", "");
+				try{
+					storageChoice=scanner.nextInt();
+					scanner.nextLine();
+				}
+				catch(InputMismatchException e){
+					invalidInput=1;
+					scanner.nextLine();
+				}
 				
-				if((storageChoice>storage.size())||(storageChoice==0)||(storageChoice<-1)) {
+				
+				if((storageChoice>storage.size())||(storageChoice==0)||(storageChoice<-1)||(invalidInput==1)) {
 					System.out.printf("\n%-10sInvalid Choice.\n", "");
 					System.out.printf("%-10sPress enter to try again", "");
 					scanner.nextLine();
@@ -133,7 +148,7 @@ public class ChiKean {
 				else if(storageChoice==-1) {
 					cancel=-1;
 				}
-			}while((storageChoice>storage.size())||(storageChoice==0)||(storageChoice<-1));	
+			}while((storageChoice>storage.size())||(storageChoice==0)||(storageChoice<-1)||(invalidInput==1));	
 		}
 		
 		if(cancel!=-1) {
@@ -159,6 +174,7 @@ public class ChiKean {
 			}
 			else {
 				do {
+					invalidInput=0;
 					System.out.println();
 					System.out.printf("%-10s----------------\n", "");
 					System.out.printf("%-10s| RAM capacity |\n", "");
@@ -170,11 +186,18 @@ public class ChiKean {
 					System.out.printf("%-10s|              |\n", "");	
 					System.out.printf("%-10s----------------\n\n", "");
 				
-					System.out.print("Select RAM capacity(Enter -1 to cancel): ");
-					ramChoice=scanner.nextInt();
-					scanner.nextLine();
+					System.out.printf("%-2sSelect RAM capacity(Enter -1 to cancel): ", "");
+					try{
+						ramChoice=scanner.nextInt();
+						scanner.nextLine();
+					}
+					catch(InputMismatchException e){
+						invalidInput=1;
+						scanner.nextLine();
+					}
 					
-					if((ramChoice>ram.size())||(ramChoice==0)||(ramChoice<-1)) {
+					
+					if((ramChoice>ram.size())||(ramChoice==0)||(ramChoice<-1)||(invalidInput==1)) {
 						System.out.printf("\n%-10sInvalid Choice.\n", "");
 						System.out.printf("%-10sPress enter to try again", "");
 						scanner.nextLine();
@@ -183,7 +206,7 @@ public class ChiKean {
 					else if(ramChoice==-1) {
 						cancel=-1;
 					}
-				}while((ramChoice>ram.size())||(ramChoice==0)||(ramChoice<-1));
+				}while((ramChoice>ram.size())||(ramChoice==0)||(ramChoice<-1)||(invalidInput==1));
 			}
 		}
 		
@@ -211,6 +234,7 @@ public class ChiKean {
 			}
 			else {
 				do {
+					invalidInput=0;
 					System.out.println();
 					System.out.printf("%-10s------------------------\n", "");
 					System.out.printf("%-10s|         Color        |\n", "");
@@ -222,11 +246,18 @@ public class ChiKean {
 					System.out.printf("%-10s|                      |\n", "");
 					System.out.printf("%-10s------------------------\n\n", "");
 				
-					System.out.print("Select Color(Enter -1 to cancel): ");
-					colorChoice=scanner.nextInt();
-					scanner.nextLine();
+					System.out.printf("%-2sSelect Color(Enter -1 to cancel): ", "");
+					try{
+						colorChoice=scanner.nextInt();
+						scanner.nextLine();
+					}
+					catch(InputMismatchException e){
+						invalidInput=1;
+						scanner.nextLine();
+					}
 					
-					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
+					
+					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)||(invalidInput==1)) {
 						System.out.printf("\n%-10sInvalid Choice.\n", "");
 						System.out.printf("%-10sPress enter to try again", "");
 						scanner.nextLine();
@@ -235,7 +266,7 @@ public class ChiKean {
 					else if(colorChoice==-1) {
 						cancel=-1;
 					}
-				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1));
+				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)||(invalidInput==1));
 			}
 		}
 		
@@ -243,27 +274,39 @@ public class ChiKean {
 			for(int i=0; i<phoneList.size(); i++) {
 				if((storage.get(storageChoice-1)==phoneList.get(i).getStorageCapacity())&&(ram.get(ramChoice-1)==phoneList.get(i).getSizeOfRam())&&(color.get(colorChoice-1).equals(phoneList.get(i).getColor()))) {
 					System.out.println();
-					do {						
+					do {		
+						invalidInput=0;
 						loopQuantity=0;
 						System.out.println(phoneList.get(i).toString());
-						System.out.println("Quantity Available: "+phoneList.get(i).getQuantity());
-						System.out.print("Enter Quantity(Enter -1 to cancel): ");
-						quantity=scanner.nextInt();
-						scanner.nextLine();
+						System.out.println("  Quantity Available: "+phoneList.get(i).getQuantity());
+						System.out.printf("%-2sEnter Quantity(Enter -1 to cancel): ", "");
+						try{
+							quantity=scanner.nextInt();
+							scanner.nextLine();
+						}
+						catch(InputMismatchException e){
+							invalidInput=1;
+							scanner.nextLine();
+						}
+						
 						if(quantity>phoneList.get(i).getQuantity()) {
-							System.out.println("Entered Quantity exceeds Quantity Available. Please try again");
+							System.out.println("  Entered Quantity exceeds Quantity Available. Please try again");
 							loopQuantity=1;
 						}
 						else if(quantity<-1) {
-							System.out.println("Entered Quantity is below 0. Please try again");
+							System.out.println("  Entered Quantity is below 0. Please try again");
 							loopQuantity=1;
 						}
-						else if(quantity==0){
-							System.out.println("Quantity entered is 0. Please try again");
+						else if((quantity==0)&&(invalidInput!=1)){
+							System.out.println("  Quantity entered is 0. Please try again");
 							loopQuantity=1;
 						}
 						else if(quantity==-1) {
 							cancel=-1;
+						}
+						else if(invalidInput==1){
+							System.out.println("  Quantity entered is not valid. Please try again");
+							loopQuantity=1;
 						}
 					}while(loopQuantity==1);
 					
@@ -289,7 +332,7 @@ public class ChiKean {
 	
 	public static void earphone(ArrayList<Product> productList, Earphone product) {
 		Scanner scanner=new Scanner(System.in);
-		int genChoice=0, colorChoice=0, foundGen, foundColor, quantity, loopQuantity, cancel=0;
+		int genChoice=0, colorChoice=0, foundGen, foundColor, quantity=0, loopQuantity, cancel=0, invalidInput=0;
 		String tempGen="", tempColor="";
 		ArrayList<Earphone> earphoneList=new ArrayList<Earphone>();
 		ArrayList<String> generation=new ArrayList<String>();
@@ -323,6 +366,7 @@ public class ChiKean {
 		}
 		else {
 			do {
+				invalidInput=0;
 				System.out.println();
 				System.out.printf("%-10s----------------------------\n", "");
 				System.out.printf("%-10s|        Generation        |\n", "");
@@ -334,11 +378,18 @@ public class ChiKean {
 				System.out.printf("%-10s|                          |\n", "");
 				System.out.printf("%-10s----------------------------\n\n", "");
 			
-				System.out.print("Select Generation(Enter -1 to cancel): ");
-				genChoice=scanner.nextInt();
-				scanner.nextLine();
+				System.out.print("  Select Generation(Enter -1 to cancel): ");
+				try{
+					genChoice=scanner.nextInt();
+					scanner.nextLine();
+				}
+				catch(InputMismatchException e){
+					invalidInput=1;
+					scanner.nextLine();
+				}
 				
-				if((genChoice>generation.size())||(genChoice==0)||(genChoice<-1)) {
+				
+				if((genChoice>generation.size())||(genChoice==0)||(genChoice<-1)||(invalidInput==1)) {
 					System.out.printf("\n%-10sInvalid Choice.\n", "");
 					System.out.printf("%-10sPress enter to try again", "");
 					scanner.nextLine();
@@ -347,7 +398,7 @@ public class ChiKean {
 				else if(genChoice==-1) {
 					cancel=-1;
 				}
-			}while((genChoice>generation.size())||(genChoice==0)||(genChoice<-1));
+			}while((genChoice>generation.size())||(genChoice==0)||(genChoice<-1)||(invalidInput==1));
 		}
 		
 		if(cancel!=-1) {
@@ -372,6 +423,7 @@ public class ChiKean {
 			}
 			else {
 				do {
+					invalidInput=0;
 					System.out.println();
 					System.out.printf("%-10s----------------------\n", "");
 					System.out.printf("%-10s|        Color       |\n", "");
@@ -383,11 +435,18 @@ public class ChiKean {
 					System.out.printf("%-10s|                    |\n", "");
 					System.out.printf("%-10s----------------------\n\n", "");
 					
-					System.out.print("Select Color(Enter -1 to cancel): ");
-					colorChoice=scanner.nextInt();
-					scanner.nextLine();
+					System.out.print("  Select Color(Enter -1 to cancel): ");
+					try{
+						colorChoice=scanner.nextInt();
+						scanner.nextLine();
+					}
+					catch(InputMismatchException e){
+						invalidInput=1;
+						scanner.nextLine();
+					}
 					
-					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
+					
+					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)||(invalidInput==1)) {
 						System.out.printf("\n%-10sInvalid Choice.\n", "");
 						System.out.printf("%-10sPress enter to try again", "");
 						scanner.nextLine();
@@ -396,7 +455,7 @@ public class ChiKean {
 					else if(colorChoice==-1) {
 						cancel=-1;
 					}
-				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1));
+				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)||(invalidInput==1));
 			}
 		}
 		
@@ -406,26 +465,38 @@ public class ChiKean {
 				if((earphoneList.get(i).getGeneration().equals(generation.get(genChoice-1)))&&(earphoneList.get(i).getColor().equals(color.get(colorChoice-1)))) {
 					System.out.println();
 					do {
+						invalidInput=0;
 						loopQuantity=0;
 						System.out.println(earphoneList.get(i).toString());
-						System.out.println("Available Quantity: "+earphoneList.get(i).getQuantity());
-						System.out.print("Enter Quantity(Enter -1 to cancel): ");
-						quantity=scanner.nextInt();
-						scanner.nextLine();
+						System.out.println("  Available Quantity: "+earphoneList.get(i).getQuantity());
+						System.out.print("  Enter Quantity(Enter -1 to cancel): ");
+						try{
+							quantity=scanner.nextInt();
+							scanner.nextLine();
+						}
+						catch(InputMismatchException e){
+							invalidInput=1;
+							scanner.nextLine();
+						}
+						
 						if(quantity>earphoneList.get(i).getQuantity()) {
-							System.out.println("Entered Quantity exceeds Available Quantity. Please try again");
+							System.out.println("  Entered Quantity exceeds Available Quantity. Please try again");
 							loopQuantity=1;
 						}
 						else if(quantity<-1) {
-							System.out.println("Entered Quantity is less than 0. Please try again");
+							System.out.println("  Entered Quantity is less than 0. Please try again");
 							loopQuantity=1;
 						}
-						else if(quantity==0) {
-							System.out.println("Entered Quantity is 0. Please try again");
+						else if((quantity==0)&&(invalidInput==0)) {
+							System.out.println("  Entered Quantity is 0. Please try again");
 							loopQuantity=1;
 						}
 						else if(quantity==-1) {
 							cancel=-1;
+						}
+						else if(invalidInput==1){
+							System.out.println("  Quantity entered is not valid. Please try again");
+							loopQuantity=1;
 						}
 					}while(loopQuantity==1);
 					
@@ -447,7 +518,7 @@ public class ChiKean {
 	
 	public static void tablet(ArrayList<Product> productList, Tablet product) {
 		Scanner scanner=new Scanner(System.in);
-		int ramChoice=0, colorChoice=0, foundRam, foundColor, tempRam, quantity, loopQuantity=0, cancel=0;
+		int ramChoice=0, colorChoice=0, foundRam, foundColor, tempRam, quantity=0, loopQuantity=0, cancel=0, invalidInput=0;
 		String tempColor="";
 		ArrayList<Tablet> tabletList=new ArrayList<Tablet>();
 		ArrayList<Integer> ram=new ArrayList<Integer>();
@@ -483,6 +554,7 @@ public class ChiKean {
 		}
 		else {
 			do {
+				invalidInput=0;
 				System.out.println();
 				System.out.printf("%-10s----------------\n", "");
 				System.out.printf("%-10s| RAM capacity |\n", "");
@@ -495,11 +567,18 @@ public class ChiKean {
 				System.out.printf("%-10s----------------\n\n", "");
 			
 			
-				System.out.print("Select RAM Capacity(Enter -1 to cancel): ");
-				ramChoice=scanner.nextInt();
-				scanner.nextLine();
+				System.out.print("  Select RAM Capacity(Enter -1 to cancel): ");
+				try{
+					ramChoice=scanner.nextInt();
+					scanner.nextLine();
+				}
+				catch(InputMismatchException e){
+					invalidInput=1;
+					scanner.nextLine();
+				}
 				
-				if((ramChoice>ram.size())||(ramChoice==0)||(ramChoice<-1)) {
+				
+				if((ramChoice>ram.size())||(ramChoice==0)||(ramChoice<-1)||(invalidInput==1)) {
 					System.out.printf("\n%-10sInvalid Choice.\n", "");
 					System.out.printf("%-10sPress enter to try again", "");
 					scanner.nextLine();
@@ -508,7 +587,7 @@ public class ChiKean {
 				else if(ramChoice==-1) {
 					cancel=-1;
 				}
-			}while((ramChoice>ram.size())||(ramChoice==0)||(ramChoice<-1));
+			}while((ramChoice>ram.size())||(ramChoice==0)||(ramChoice<-1)||(invalidInput==1));
 		}
 		
 		if(cancel!=-1) {
@@ -533,6 +612,7 @@ public class ChiKean {
 			}
 			else {
 				do {
+					invalidInput=0;
 					System.out.println();
 					System.out.printf("%-10s-----------------------\n", "");
 					System.out.printf("%-10s|        Color        |\n", "");
@@ -544,11 +624,18 @@ public class ChiKean {
 					System.out.printf("%-10s|                     |\n", "");
 					System.out.printf("%-10s-----------------------\n\n", "");
 				
-					System.out.print("Select Color(Enter -1 to cancel): ");
-					colorChoice=scanner.nextInt();
-					scanner.nextLine();
+					System.out.print("  Select Color(Enter -1 to cancel): ");
+					try{
+						colorChoice=scanner.nextInt();
+						scanner.nextLine();
+					}
+					catch(InputMismatchException e){
+						invalidInput=1;
+						scanner.nextLine();
+					}
 					
-					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
+					
+					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)||(invalidInput==1)) {
 						System.out.printf("\n%-10sInvalid Choice.\n", "");
 						System.out.printf("%-10sPress enter to try again", "");
 						scanner.nextLine();
@@ -557,7 +644,7 @@ public class ChiKean {
 					else if(colorChoice==-1) {
 						cancel=-1;
 					}
-				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1));
+				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)||(invalidInput==1));
 			}
 		}
 		
@@ -567,23 +654,28 @@ public class ChiKean {
 				if((ram.get(ramChoice-1)==tabletList.get(i).getSizeOfRam())&&(color.get(colorChoice-1).equals(tabletList.get(i).getColor()))) {
 					System.out.println();
 					do {
+						invalidInput=0;
 						loopQuantity=0;
 						System.out.println(tabletList.get(i).toString());
-						System.out.println("Available Quantity: "+tabletList.get(i).getQuantity());
-						System.out.print("Enter Quantity(Enter -1 to cancel): ");
+						System.out.println("  Available Quantity: "+tabletList.get(i).getQuantity());
+						System.out.print("  Enter Quantity(Enter -1 to cancel): ");
 						quantity=scanner.nextInt();
 						scanner.nextLine();
 						
 						if(quantity>tabletList.get(i).getQuantity()) {
-							System.out.println("Entered Quantity exceeds Available Quantity. Please try again");
+							System.out.println("  Entered Quantity exceeds Available Quantity. Please try again");
 							loopQuantity=1;
 						}
 						else if(quantity<-1){
-							System.out.println("Entered Quantity is less than 0. Please try again");
+							System.out.println("  Entered Quantity is less than 0. Please try again");
 							loopQuantity=1;
 						}
-						else if(quantity==0) {
-							System.out.println("Entered Quantity is 0. Please try again");
+						else if((quantity==0)&&(invalidInput!=1)) {
+							System.out.println("  Entered Quantity is 0. Please try again");
+							loopQuantity=1;
+						}
+						else if(invalidInput==1) {
+							System.out.println("  Quantity entered is not valid. Please try again");
 							loopQuantity=1;
 						}
 						
@@ -612,7 +704,7 @@ public class ChiKean {
 	public static void refrigerator(ArrayList<Product> productList, Refrigerator product) {
 		Scanner scanner=new Scanner(System.in);
 		double tempHPower, tempCapacity;
-		int hpNCChoice=0, colorChoice=0, foundHPower, foundCap, foundColor, quantity, loopQuantity, cancel=0;
+		int hpNCChoice=0, colorChoice=0, foundHPower, foundCap, foundColor, quantity=0, loopQuantity, cancel=0, invalidInput=0;;
 		String tempColor="";
 		ArrayList<Refrigerator> fridgeList=new ArrayList<Refrigerator>();
 		ArrayList<Double> horsePower=new ArrayList<Double>();
@@ -661,21 +753,28 @@ public class ChiKean {
 		}
 		else {
 			do {
+				invalidInput=0;
 				System.out.println();
 				System.out.printf("%-10s-------------------------------\n", "");
 				System.out.printf("%-10s|    | Horse Power | Capacity |\n", "");
-				//System.out.printf("%-10s|----+-------------+----------|\n", "");
 				for(int i=0; i<horsePower.size(); i++) {
 					System.out.printf("%-10s|----+-------------+----------|\n", "");
 					System.out.printf("%-10s| %d%s | %8.2f%-3s | %2s%-6.0f |\n", "", (i+1), ".", horsePower.get(i), "W", "", capacity.get(i));
 				}
 				System.out.printf("%-10s-------------------------------\n\n", "");
 			
-				System.out.print("Select Horse Power(Enter -1 to cancel): ");
-				hpNCChoice=scanner.nextInt();
-				scanner.nextLine();
+				System.out.print("  Select Horse Power(Enter -1 to cancel): ");
+				try{
+					hpNCChoice=scanner.nextInt();
+					scanner.nextLine();
+				}
+				catch(InputMismatchException e){
+					invalidInput=1;
+					scanner.nextLine();
+				}
 				
-				if((hpNCChoice>horsePower.size())||(hpNCChoice==0)||(hpNCChoice<-1)) {
+				
+				if((hpNCChoice>horsePower.size())||(hpNCChoice==0)||(hpNCChoice<-1)||(invalidInput==1)) {
 					System.out.printf("\n%-10sInvalid Choice.\n", "");
 					System.out.printf("%-10sPress enter to try again", "");
 					scanner.nextLine();
@@ -684,7 +783,7 @@ public class ChiKean {
 				else if(hpNCChoice==-1) {
 					cancel=-1;
 				}
-			}while((hpNCChoice>horsePower.size())||(hpNCChoice==0)||(hpNCChoice<-1));
+			}while((hpNCChoice>horsePower.size())||(hpNCChoice==0)||(hpNCChoice<-1)||(invalidInput==1));
 		}
 		
 		if(cancel!=-1) {
@@ -709,6 +808,7 @@ public class ChiKean {
 			}
 			else {
 				do {
+					invalidInput=0;
 					System.out.println();
 					System.out.printf("%-10s----------------------\n", "");
 					System.out.printf("%-10s|        Color       |\n", "");
@@ -720,11 +820,16 @@ public class ChiKean {
 					System.out.printf("%-10s|                    |\n", "");
 					System.out.printf("%-10s----------------------\n\n", "");
 				
-					System.out.print("Select Color(Enter -1 to cancel): ");
-					colorChoice=scanner.nextInt();
-					scanner.nextLine();
-					
-					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
+					System.out.print("  Select Color(Enter -1 to cancel): ");
+					try{
+						colorChoice=scanner.nextInt();
+						scanner.nextLine();
+					}
+					catch(InputMismatchException e){
+						invalidInput=1;
+						scanner.nextLine();
+					}
+					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)||(invalidInput==1)) {
 						System.out.printf("\n%-10sInvalid Choice.\n", "");
 						System.out.printf("%-10sPress enter to try again", "");
 						scanner.nextLine();
@@ -733,7 +838,7 @@ public class ChiKean {
 					else if(colorChoice==-1) {
 						cancel=-1;
 					}
-				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1));
+				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)||(invalidInput==1));
 			}
 			
 		}
@@ -743,23 +848,35 @@ public class ChiKean {
 				if((horsePower.get(hpNCChoice-1)==fridgeList.get(i).getHorsePower())&&(capacity.get(hpNCChoice-1)==fridgeList.get(i).getCapacity())&&(color.get(colorChoice-1).equals(fridgeList.get(i).getColor()))) {
 					System.out.println();
 					do {
+						invalidInput=0;
 						loopQuantity=0;
 						System.out.println(fridgeList.get(i).toString());
-						System.out.println("Available Quantity: "+fridgeList.get(i).getQuantity());
-						System.out.print("Enter Quantity(Enter -1 to cancel): ");
-						quantity=scanner.nextInt();
-						scanner.nextLine();
+						System.out.println("  Available Quantity: "+fridgeList.get(i).getQuantity());
+						System.out.print("  Enter Quantity(Enter -1 to cancel): ");
+						try{
+							quantity=scanner.nextInt();
+							scanner.nextLine();
+						}
+						catch(InputMismatchException e){
+							invalidInput=1;
+							scanner.nextLine();
+						}
+						
 						
 						if(quantity>fridgeList.get(i).getQuantity()) {
-							System.out.println("Entered Quantity exceeds Available Quantity. Please try again");
+							System.out.println("  Entered Quantity exceeds Available Quantity. Please try again");
 							loopQuantity=1;
 						}
 						else if(quantity<-1){
-							System.out.println("Entered Quantity is less than 0. Please try again");
+							System.out.println("  Entered Quantity is less than 0. Please try again");
 							loopQuantity=1;
 						}
-						else if(quantity==0) {
-							System.out.println("Entered Quantity is 0. Please try again");
+						else if((quantity==0)&&(invalidInput!=1)) {
+							System.out.println("  Entered Quantity is 0. Please try again");
+							loopQuantity=1;
+						}
+						else if(invalidInput==1) {
+							System.out.println("  Quantity entered is not valid. Please try again");
 							loopQuantity=1;
 						}
 						
@@ -788,7 +905,7 @@ public class ChiKean {
 	
 	public static void printer(ArrayList<Product> productList, Printer product) {
 		Scanner scanner=new Scanner(System.in);
-		int seriesChoice=0, resChoice=0, typeChoice=0, duplexChoice=0, colorChoice=0, foundSeries, foundRes, foundType, foundDuplex, foundColor, quantity, loopQuantity, cancel=0;
+		int seriesChoice=0, resChoice=0, typeChoice=0, duplexChoice=0, colorChoice=0, foundSeries, foundRes, foundType, foundDuplex, foundColor, quantity=0, loopQuantity, cancel=0, invalidInput=0;;
 		String tempSeries, tempRes, tempType, tempDuplex, tempColor;
 		ArrayList<Printer> printerList=new ArrayList<Printer>();
 		ArrayList<String> series=new ArrayList<String>();
@@ -829,6 +946,7 @@ public class ChiKean {
 		}
 		else {
 			do {
+				invalidInput=0;
 				System.out.println();
 				System.out.printf("%-10s------------------------------\n", "");
 				System.out.printf("%-10s|        Printer Type        |\n", "");
@@ -839,11 +957,18 @@ public class ChiKean {
 				}
 				System.out.printf("%-10s|                            |\n", "");
 				System.out.printf("%-10s------------------------------\n\n", "");
-				System.out.print("Select Printer Type(Enter -1 to cancel): ");
-				typeChoice=scanner.nextInt();
-				scanner.nextLine();
+				System.out.print("  Select Printer Type(Enter -1 to cancel): ");
+				try{
+					typeChoice=scanner.nextInt();
+					scanner.nextLine();
+				}
+				catch(InputMismatchException e){
+					invalidInput=1;
+					scanner.nextLine();
+				}
 				
-				if((typeChoice>printerType.size())||(typeChoice==0)||(typeChoice<-1)) {
+				
+				if((typeChoice>printerType.size())||(typeChoice==0)||(typeChoice<-1)||(invalidInput==1)) {
 					System.out.printf("\n%-10sInvalid Choice.\n", "");
 					System.out.printf("%-10sPress enter to try again", "");
 					scanner.nextLine();
@@ -852,7 +977,7 @@ public class ChiKean {
 				else if(typeChoice==-1) {
 					cancel=-1;
 				}
-			}while((typeChoice>printerType.size())||(typeChoice==0)||(typeChoice<-1));
+			}while((typeChoice>printerType.size())||(typeChoice==0)||(typeChoice<-1)||(invalidInput==1));
 		}
 		
 		if(cancel!=-1) {
@@ -877,6 +1002,7 @@ public class ChiKean {
 			}
 			else {
 				do {
+					invalidInput=0;
 					System.out.println();
 					System.out.printf("%-10s------------------\n", "");
 					System.out.printf("%-10s|   Resolution   |\n", "");
@@ -887,11 +1013,18 @@ public class ChiKean {
 					}
 					System.out.printf("%-10s|                |\n", "");
 					System.out.printf("%-10s------------------\n\n", "");
-					System.out.print("Select Resolution(Enter -1 to cancel): ");
-					resChoice=scanner.nextInt();
-					scanner.nextLine();
+					System.out.print("  Select Resolution(Enter -1 to cancel): ");
+					try{
+						resChoice=scanner.nextInt();
+						scanner.nextLine();
+					}
+					catch(InputMismatchException e){
+						invalidInput=1;
+						scanner.nextLine();
+					}
+
 					
-					if((resChoice>resolution.size())||(resChoice==0)||(resChoice<-1)) {
+					if((resChoice>resolution.size())||(resChoice==0)||(resChoice<-1)||(invalidInput==1)) {
 						System.out.printf("\n%-10sInvalid Choice.\n", "");
 						System.out.printf("%-10sPress enter to try again", "");
 						scanner.nextLine();
@@ -900,7 +1033,7 @@ public class ChiKean {
 					else if(resChoice==-1) {
 						cancel=-1;
 					}
-				}while((resChoice>resolution.size())||(resChoice==0)||(resChoice<-1));
+				}while((resChoice>resolution.size())||(resChoice==0)||(resChoice<-1)||(invalidInput==1));
 			}
 		}
 		
@@ -971,6 +1104,7 @@ public class ChiKean {
 			}
 			else {
 				do {
+					invalidInput=0;
 					System.out.println();
 					System.out.printf("%-10s-----------------\n", "");
 					System.out.printf("%-10s|     Color     |\n", "");
@@ -981,11 +1115,18 @@ public class ChiKean {
 					}
 					System.out.printf("%-10s|               |\n", "");
 					System.out.printf("%-10s-----------------\n\n", "");
-					System.out.print("Select Color(Enter -1 to cancel): ");
-					colorChoice=scanner.nextInt();
-					scanner.nextLine();
+					System.out.print("  Select Color(Enter -1 to cancel): ");
+					try{
+						colorChoice=scanner.nextInt();
+						scanner.nextLine();
+					}
+					catch(InputMismatchException e){
+						invalidInput=1;
+						scanner.nextLine();
+					}
+
 					
-					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
+					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)||(invalidInput==1)) {
 						System.out.printf("\n%-10sInvalid Choice.\n", "");
 						System.out.printf("%-10sPress enter to try again", "");
 						scanner.nextLine();
@@ -994,7 +1135,7 @@ public class ChiKean {
 					else if(colorChoice==-1) {
 						cancel=-1;
 					}
-				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1));
+				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)||(invalidInput==1));
 			}
 			
 		}
@@ -1004,23 +1145,35 @@ public class ChiKean {
 				if((resolution.get(resChoice-1).equals(printerList.get(i).getResolution()))&&(printerType.get(typeChoice-1).equals(printerList.get(i).getPrinterType()))&&(duplexCapability.get(duplexChoice-1).equals(printerList.get(i).getDuplexCapability()))&&(series.get(seriesChoice-1).equals(printerList.get(i).getSeries()))&&(color.get(colorChoice-1).equals(printerList.get(i).getColor()))) {
 					System.out.println();
 					do {
+						invalidInput=0;
 						loopQuantity=0;
 						System.out.println(printerList.get(i).toString());
-						System.out.println("Available Quantity: "+printerList.get(i).getQuantity());
-						System.out.print("Enter Quantity(Enter -1 to cancel): ");
-						quantity=scanner.nextInt();
-						scanner.nextLine();
+						System.out.println("  Available Quantity: "+printerList.get(i).getQuantity());
+						System.out.print("  Enter Quantity(Enter -1 to cancel): ");
+						try{
+							quantity=scanner.nextInt();
+							scanner.nextLine();
+						}
+						catch(InputMismatchException e){
+							invalidInput=1;
+							scanner.nextLine();
+						}
+
 						
 						if(quantity>printerList.get(i).getQuantity()) {
-							System.out.println("Entered Quantity exceeds Available Quantity. Please try again");
+							System.out.println("  Entered Quantity exceeds Available Quantity. Please try again");
 							loopQuantity=1;
 						}
 						else if(quantity<-1){
-							System.out.println("Entered Quantity is less than 0. Please try again");
+							System.out.println("  Entered Quantity is less than 0. Please try again");
 							loopQuantity=1;
 						}
-						else if(quantity==0) {
-							System.out.println("Entered Quantity is 0. Please try again");
+						else if((quantity==0)&&(invalidInput!=1)) {
+							System.out.println("  Entered Quantity is 0. Please try again");
+							loopQuantity=1;
+						}
+						else if(invalidInput==1) {
+							System.out.println("  Quantity entered is not valid. Please try again");
 							loopQuantity=1;
 						}
 						
@@ -1051,7 +1204,7 @@ public class ChiKean {
 	
 	public static void scanners(ArrayList<Product> productList, Scanners product) {
 		Scanner scanner=new Scanner(System.in);
-		int seriesChoice=0, foundSeries, quantity, loopQuantity, cancel=0;
+		int seriesChoice=0, foundSeries, quantity=0, loopQuantity, cancel=0, invalidInput=0;;
 		String tempSeries;
 		ArrayList<Scanners> scannerList=new ArrayList<Scanners>();
 		ArrayList<String> series=new ArrayList<String>();
@@ -1084,6 +1237,7 @@ public class ChiKean {
 		}
 		else {
 			do {
+				invalidInput=0;
 				System.out.printf("%-10s----------------------------\n", "");
 				System.out.printf("%-10s|          Series          |\n", "");
 				System.out.printf("%-10s|          ======          |\n", "");
@@ -1093,11 +1247,17 @@ public class ChiKean {
 				}
 				System.out.printf("%-10s|                          |\n", "");
 				System.out.printf("%-10s----------------------------\n\n", "");
-				System.out.print("Select Series(Enter -1 to cancel): ");
-				seriesChoice=scanner.nextInt();
-				scanner.nextLine();
-				
-				if((seriesChoice>series.size())||(seriesChoice==0)||(seriesChoice<-1)) {
+				System.out.print("  Select Series(Enter -1 to cancel): ");
+				try{
+					seriesChoice=scanner.nextInt();
+					scanner.nextLine();
+				}
+				catch(InputMismatchException e){
+					invalidInput=1;
+					scanner.nextLine();
+				}
+
+				if((seriesChoice>series.size())||(seriesChoice==0)||(seriesChoice<-1)||(invalidInput==1)) {
 					System.out.printf("\n%-10sInvalid Choice.\n", "");
 					System.out.printf("%-10sPress enter to try again", "");
 					scanner.nextLine();
@@ -1106,7 +1266,7 @@ public class ChiKean {
 				else if(seriesChoice==-1) {
 					cancel=-1;
 				}
-			}while((seriesChoice>series.size())||(seriesChoice==0)||(seriesChoice<-1));
+			}while((seriesChoice>series.size())||(seriesChoice==0)||(seriesChoice<-1)||(invalidInput==1));
 		}
 		
 		if(cancel!=-1) {
@@ -1114,23 +1274,28 @@ public class ChiKean {
 				if(series.get(seriesChoice-1).equals(scannerList.get(i).getSeries())) {
 					System.out.println();
 					do {
+						invalidInput=0;
 						loopQuantity=0;
 						System.out.println(scannerList.get(i).toString());
-						System.out.println("Available Quantity: "+scannerList.get(i).getQuantity());
-						System.out.print("Enter Quantity(Enter -1 to cancel): ");
+						System.out.println("  Available Quantity: "+scannerList.get(i).getQuantity());
+						System.out.print("  Enter Quantity(Enter -1 to cancel): ");
 						quantity=scanner.nextInt();
 						scanner.nextLine();
 						
 						if(quantity>scannerList.get(i).getQuantity()) {
-							System.out.println("Entered Quantity exceeds Available Quantity. Please try again");
+							System.out.println("  Entered Quantity exceeds Available Quantity. Please try again");
 							loopQuantity=1;
 						}
 						else if(quantity<-1){
-							System.out.println("Entered Quantity is less than 0. Please try again");
+							System.out.println("  Entered Quantity is less than 0. Please try again");
 							loopQuantity=1;
 						}
-						else if(quantity==0) {
-							System.out.println("Entered Quantity is 0. Please try again");
+						else if((quantity==0)&&(invalidInput!=1)) {
+							System.out.println("  Entered Quantity is 0. Please try again");
+							loopQuantity=1;
+						}
+						else if(invalidInput==1) {
+							System.out.println("  Quantity entered is not valid. Please try again");
 							loopQuantity=1;
 						}
 						else if(quantity==-1) {
@@ -1158,7 +1323,7 @@ public class ChiKean {
 	
 	public static void microwave(ArrayList<Product> productList, Microwave product) {
 		Scanner scanner=new Scanner(System.in);
-		int sizeNCapChoice=0, colorChoice=0, foundSize, foundCap, foundColor, quantity, loopQuantity, cancel=0;
+		int sizeNCapChoice=0, colorChoice=0, foundSize, foundCap, foundColor, quantity=0, loopQuantity, cancel=0, invalidInput=0;;
 		double tempCap;
 		String tempSize, tempColor;
 		ArrayList<Microwave> microwaveList= new ArrayList<Microwave>();
@@ -1207,6 +1372,7 @@ public class ChiKean {
 		}
 		else {
 			do {
+				invalidInput=0;
 				System.out.println();
 				System.out.printf("%-10s------------------------------\n", "");
 				System.out.printf("%-10s|    |    Size    | Capacity |\n", "");
@@ -1217,11 +1383,18 @@ public class ChiKean {
 				}
 				System.out.printf("%-10s------------------------------\n\n", "");
 			
-				System.out.print("Select Size(Enter -1 to cancel): ");
-				sizeNCapChoice=scanner.nextInt();
-				scanner.nextLine();
+				System.out.print("  Select Size(Enter -1 to cancel): ");
+				try{
+					sizeNCapChoice=scanner.nextInt();
+					scanner.nextLine();
+				}
+				catch(InputMismatchException e){
+					invalidInput=1;
+					scanner.nextLine();
+				}
+
 				
-				if((sizeNCapChoice>size.size())||(sizeNCapChoice==0)||(sizeNCapChoice<-1)) {
+				if((sizeNCapChoice>size.size())||(sizeNCapChoice==0)||(sizeNCapChoice<-1)||(invalidInput==1)) {
 					System.out.printf("\n%-10sInvalid Choice.\n", "");
 					System.out.printf("%-10sPress enter to try again", "");
 					scanner.nextLine();
@@ -1230,7 +1403,7 @@ public class ChiKean {
 				else if(sizeNCapChoice==-1) {
 					cancel=-1;
 				}
-			}while((sizeNCapChoice>size.size())||(sizeNCapChoice==0)||(sizeNCapChoice<-1));
+			}while((sizeNCapChoice>size.size())||(sizeNCapChoice==0)||(sizeNCapChoice<-1)||(invalidInput==1));
 		}
 		
 		
@@ -1257,6 +1430,7 @@ public class ChiKean {
 			}
 			else {
 				do {
+					invalidInput=0;
 					System.out.println();
 					System.out.printf("%-10s-----------------\n", "");
 					System.out.printf("%-10s|     Color     |\n", "");
@@ -1268,11 +1442,18 @@ public class ChiKean {
 					System.out.printf("%-10s|               |\n", "");
 					System.out.printf("%-10s-----------------\n\n", "");
 				
-					System.out.print("Select Color(Enter -1 to cancel): ");
-					colorChoice=scanner.nextInt();
-					scanner.nextLine();
+					System.out.print("  Select Color(Enter -1 to cancel): ");
+					try{
+						colorChoice=scanner.nextInt();
+						scanner.nextLine();
+					}
+					catch(InputMismatchException e){
+						invalidInput=1;
+						scanner.nextLine();
+					}
+
 					
-					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)) {
+					if((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)||(invalidInput==1)) {
 						System.out.printf("\n%-10sInvalid Choice.\n", "");
 						System.out.printf("%-10sPress enter to try again", "");
 						scanner.nextLine();
@@ -1281,7 +1462,7 @@ public class ChiKean {
 					else if(colorChoice==-1) {
 						cancel=-1;
 					}
-				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1));
+				}while((colorChoice>color.size())||(colorChoice==0)||(colorChoice<-1)||(invalidInput==1));
 			}
 		}
 		
@@ -1289,23 +1470,35 @@ public class ChiKean {
 			for(int i=0; i<microwaveList.size(); i++) {
 				if((size.get(sizeNCapChoice-1).equals(microwaveList.get(i).getSize()))&&(capacity.get(sizeNCapChoice-1)==microwaveList.get(i).getCapacity())&&(color.get(colorChoice-1).equals(microwaveList.get(i).getColor()))) {
 					do {
+						invalidInput=0;
 						loopQuantity=0;
 						System.out.println(microwaveList.get(i).toString());
-						System.out.println("Available Quantity: "+microwaveList.get(i).getQuantity());
-						System.out.print("Enter Quantity(Enter -1 to cancel): ");
-						quantity=scanner.nextInt();
-						scanner.nextLine();
+						System.out.println("  Available Quantity: "+microwaveList.get(i).getQuantity());
+						System.out.print("  Enter Quantity(Enter -1 to cancel): ");
+						try{
+							quantity=scanner.nextInt();
+							scanner.nextLine();
+						}
+						catch(InputMismatchException e){
+							invalidInput=1;
+							scanner.nextLine();
+						}
+
 						
 						if(quantity>microwaveList.get(i).getQuantity()) {
-							System.out.println("Entered Quantity exceeds Available Quantity. Please try again");
+							System.out.println("  Entered Quantity exceeds Available Quantity. Please try again");
 							loopQuantity=1;
 						}
 						else if(quantity<-1){
-							System.out.println("Entered Quantity is less than 0. Please try again");
+							System.out.println("  Entered Quantity is less than 0. Please try again");
 							loopQuantity=1;
 						}
-						else if(quantity==0) {
-							System.out.println("Entered Quantity is 0. Please try again");
+						else if((quantity==0)&&(invalidInput!=1)) {
+							System.out.println("  Entered Quantity is 0. Please try again");
+							loopQuantity=1;
+						}
+						else if(invalidInput==1) {
+							System.out.println("  Quantity entered is not valid. Please try again");
 							loopQuantity=1;
 						}
 						else if(quantity==-1) {
@@ -1334,7 +1527,7 @@ public class ChiKean {
 	
 	public static void smartwatch(ArrayList<Product> productList, SmartWatch product) {
 		Scanner scanner=new Scanner(System.in);
-		int scrSizeChoice=0, resChoice=0, colorChoice=0, foundScrSize, foundRes, foundColor, quantity, loopQuantity, cancel=0;
+		int scrSizeChoice=0, resChoice=0, colorChoice=0, foundScrSize, foundRes, foundColor, quantity=0, loopQuantity, cancel=0, invalidInput=0;;
 		double tempScrSize;
 		String tempRes, tempColor;
 		ArrayList<SmartWatch> watchList=new ArrayList<SmartWatch>();
@@ -1373,6 +1566,7 @@ public class ChiKean {
 		}
 		else {
 			do {
+				invalidInput=0;
 				System.out.println();
 				System.out.printf("%-10s----------------\n", "");
 				System.out.printf("%-10s|  Screen Size |\n", "");
@@ -1383,11 +1577,17 @@ public class ChiKean {
 				}
 				System.out.printf("%-10s|              |\n", "");
 				System.out.printf("%-10s----------------\n", "");
-				System.out.print("Select Screen Size(Enter -1 to cancel): ");
-				scrSizeChoice=scanner.nextInt();
-				scanner.nextLine();
-				
-				if((scrSizeChoice>scrSize.size())||(scrSizeChoice==0)||(scrSizeChoice<-1)) {
+				System.out.print("  Select Screen Size(Enter -1 to cancel): ");
+				try{
+					scrSizeChoice=scanner.nextInt();
+					scanner.nextLine();
+				}
+				catch(InputMismatchException e){
+					invalidInput=1;
+					scanner.nextLine();
+				}
+
+				if((scrSizeChoice>scrSize.size())||(scrSizeChoice==0)||(scrSizeChoice<-1)||(invalidInput==1)) {
 					System.out.printf("\n%-10sInvalid Choice.\n", "");
 					System.out.printf("%-10sPress enter to try again", "");
 					scanner.nextLine();
@@ -1396,7 +1596,7 @@ public class ChiKean {
 				else if(scrSizeChoice==-1) {
 					cancel=-1;
 				}
-			}while((scrSizeChoice>scrSize.size())||(scrSizeChoice==0)||(scrSizeChoice<-1));
+			}while((scrSizeChoice>scrSize.size())||(scrSizeChoice==0)||(scrSizeChoice<-1)||(invalidInput==1));
 		}
 		
 		if(cancel!=-1) {
@@ -1422,6 +1622,7 @@ public class ChiKean {
 			}
 			else {
 				do {
+					invalidInput=0;
 					System.out.println();
 					System.out.printf("%-10s------------------\n", "");
 					System.out.printf("%-10s|   Resolution   |\n", "");
@@ -1432,11 +1633,17 @@ public class ChiKean {
 					}
 					System.out.printf("%-10s|                |\n", "");
 					System.out.printf("%-10s------------------\n\n", "");
-					System.out.print("Select Resolution(Enter -1 to cancel): ");
-					resChoice=scanner.nextInt();
-					scanner.nextLine();
+					System.out.print("  Select Resolution(Enter -1 to cancel): ");
+					try{
+						resChoice=scanner.nextInt();
+						scanner.nextLine();
+					}
+					catch(InputMismatchException e){
+						invalidInput=1;
+						scanner.nextLine();
+					}
 					
-					if((resChoice>resolution.size())||(resChoice==0)||(resChoice<-1)) {
+					if((resChoice>resolution.size())||(resChoice==0)||(resChoice<-1)||(invalidInput==1)) {
 						System.out.printf("\n%-10sInvalid Choice.\n", "");
 						System.out.printf("%-10sPress enter to try again", "");
 						scanner.nextLine();
@@ -1445,7 +1652,7 @@ public class ChiKean {
 					else if(resChoice==-1) {
 						cancel=-1;
 					}
-				}while((resChoice>resolution.size())||(resChoice==0)||(resChoice<-1));
+				}while((resChoice>resolution.size())||(resChoice==0)||(resChoice<-1)||(invalidInput==1));
 			}
 		}
 		
@@ -1475,25 +1682,35 @@ public class ChiKean {
 			for(int i=0; i<watchList.size(); i++) {
 				if((scrSize.get(scrSizeChoice-1)==watchList.get(i).getScreenSize())&&(resolution.get(resChoice-1).equals(watchList.get(i).getResolution()))&&(color.get(colorChoice-1).equals(watchList.get(i).getColor()))) {
 					do {
-						System.out.println(watchList.get(i).toString());
-						
+						invalidInput=0;
 						loopQuantity=0;
-						
-						System.out.println("Available Quantity: "+watchList.get(i).getQuantity());
-						System.out.print("Enter Quantity(Enter -1 to cancel): ");
-						quantity=scanner.nextInt();
-						scanner.nextLine();
+						System.out.println(watchList.get(i).toString());
+						System.out.println("  Available Quantity: "+watchList.get(i).getQuantity());
+						System.out.print("  Enter Quantity(Enter -1 to cancel): ");
+						try{
+							quantity=scanner.nextInt();
+							scanner.nextLine();
+						}
+						catch(InputMismatchException e){
+							invalidInput=1;
+							scanner.nextLine();
+						}
+
 						
 						if(quantity>watchList.get(i).getQuantity()) {
-							System.out.println("Entered Quantity exceeds Available Quantity. Please try again");
+							System.out.println("  Entered Quantity exceeds Available Quantity. Please try again");
 							loopQuantity=1;
 						}
 						else if(quantity<-1){
-							System.out.println("Entered Quantity is less than 0. Please try again");
+							System.out.println("  Entered Quantity is less than 0. Please try again");
 							loopQuantity=1;
 						}
-						else if(quantity==0) {
-							System.out.println("Entered Quantity is 0. Please try again");
+						else if((quantity==0)&&(invalidInput!=1)) {
+							System.out.println("  Entered Quantity is 0. Please try again");
+							loopQuantity=1;
+						}
+						else if(invalidInput==1) {
+							System.out.println("  Quantity entered is not valid. Please try again");
 							loopQuantity=1;
 						}
 						else if(quantity==-1) {
@@ -1842,6 +2059,7 @@ public class ChiKean {
 		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.add(label);
+		frame.setAlwaysOnTop(true);
 	}
 	
 	public static void returnQuantity(ArrayList<Product> productList, Cart cart) {
@@ -1857,36 +2075,51 @@ public class ChiKean {
 	public static void paymentFunc(Payment payment, ArrayList<Member> memberList, Staff staff, BankAccount bankAccount, ArrayList<Receipt> receiptList, ArrayList<Product> productList) {
 		Scanner scanner=new Scanner(System.in);
 		String memID, creditCardNo, paymentMethod = "";
-		int memIDNo, checkMemID, paymentMChoice=0, paymentChoice=0, foundMem=0, retryPayment, paymentError=0, cancel=0;
+		int memIDNo, checkMemID, paymentMChoice=0, paymentChoice=0, foundMem=0, retryPayment, paymentError=0, cancel=0, invalidInput=0;;
 		double receivedAmount = 0, balance;
 		Receipt receipt=null;
 		payment.setStaff(staff);
 		if(payment.getCart().getNoOfProducts()>0) {
-			System.out.println("Cart Details");
+			System.out.println("  Cart Details");
 			System.out.println(payment.getCart().toString());
 		}
 		
 		
 		if(payment.getCart().getNoOfProducts()==0) {
 			payment.setPaymentDetails(0, "null", "Cancelled");
-			System.out.println("Cart is empty. Payment has been cancelled");
+			System.out.println("  Cart is empty. Payment has been cancelled");
 		}
 		else {
 			do {
-				System.out.println("Which action would you like to perform?");
-				System.out.println("1. Complete payment");
-				System.out.println("2. Cancel payment");
-				System.out.print("Select Choice(Press -1 to exit): ");
-				paymentChoice=scanner.nextInt();
-				scanner.nextLine();
-				
-				if((paymentChoice>2)||(paymentChoice==0)|| (paymentChoice<-1)) {
-					System.out.println("Invalid Choice. Please try again");
+				invalidInput=0;
+				System.out.printf("%-10s-------------------------------------------", "");
+				System.out.printf("%-10s| Which action would you like to perform? |", "");
+				System.out.printf("%-10s| ======================================= |", "");
+				System.out.printf("%-10s|                                         |", "");
+				System.out.printf("%-10s|         1. Complete payment             |", "");
+				System.out.printf("%-10s|         2. Cancel payment               |", "");
+				System.out.printf("%-10s|                                         |", "");
+				System.out.printf("%-10s-------------------------------------------", "");
+				System.out.print("  Select Choice(Press -1 to exit): ");
+				try{
+					paymentChoice=scanner.nextInt();
+					scanner.nextLine();
+				}
+				catch(InputMismatchException e){
+					invalidInput=1;
+					scanner.nextLine();
+				}
+
+				if((paymentChoice>2)||(paymentChoice==0)||(paymentChoice<-1)||(invalidInput==1)) {
+					System.out.printf("\n%-10sInvalid Choice.\n", "");
+					System.out.printf("%-10sPress enter to try again", "");
+					scanner.nextLine();
+					System.out.println();
 				}
 				else if(paymentChoice==-1) {
 					cancel=-1;
 				}
-			}while((paymentChoice>2)||(paymentChoice==0)|| (paymentChoice<-1));
+			}while((paymentChoice>2)||(paymentChoice==0)||(paymentChoice<-1)||(invalidInput==1));
 			
 			if(cancel!=-1) {
 				if(paymentChoice==2) {
@@ -1894,9 +2127,10 @@ public class ChiKean {
 					returnQuantity(productList, payment.getCart());
 				}
 				else {
-					do {
+					do { 
+						cancel=0;
 						checkMemID=0;
-						System.out.print("Enter Member ID(Enter X if there is no memberID): ");
+						System.out.print("  Enter Member ID(Enter X if there is no memberID): ");
 						memID=scanner.next();
 						if(memID.toUpperCase().equals("X")) {
 							Member member=new Member();
@@ -1907,116 +2141,133 @@ public class ChiKean {
 							memIDNo=Integer.parseInt(memID);
 							checkMemID=Claris.checkMember(memberList, memIDNo);
 							if(checkMemID==-1) {
-								System.out.println("Invalid member ID. Please try again");
+								System.out.printf("\n%-10sMember does not exist.\n", "");
+								System.out.printf("%-10sPress enter to try again", "");
+								scanner.nextLine();
+								System.out.println();
 							}
 							else{
 								payment.memberDiscount(memberList.get(checkMemID));
 							}
 						}
+						else if(memID.equals("-1")) {
+							cancel=-1;
+						}
 						else {
-							System.out.println("Invalid input. Please try again");
 							checkMemID=-1;
+							System.out.printf("\n%-10sInvalid Choice.\n", "");
+							System.out.printf("%-10sPress enter to try again", "");
+							scanner.nextLine();
+							System.out.println();
 						}
 						
 						
 					}while(checkMemID==-1);
 					
-					System.out.printf("Final Payment Amount(RM): %.2f\n", payment.getPaymentAmount());
-					
-					do {
+					if(cancel!=-1) {
+						System.out.printf("Final Payment Amount(RM): %.2f\n", payment.getPaymentAmount());
 						do {
-							paymentMChoice=0;
-							paymentError=0;
-							retryPayment=0;
-							System.out.println("Payment Methods");
-							System.out.println("1. Cash");
-							System.out.println("2. Credit Card");
-							System.out.println("3. Touch N Go E-Wallet");
-							System.out.print("Select Payment Method(Enter -1 to cancel): ");
-							paymentMChoice=scanner.nextInt();
-							scanner.nextLine();
-							
-							if((paymentMChoice>3)||(paymentMChoice==0)||(paymentMChoice<-1)) {
-								System.out.println("Invalid Choice. Please try again");
-							}
-							else if(paymentMChoice==-1) {
-								cancel=-1;
-							}
-						}while((paymentMChoice>3)||(paymentMChoice==0)||(paymentMChoice<-1));
-						
-						if(cancel!=-1) {
 							do {
+								paymentMChoice=0;
 								paymentError=0;
 								retryPayment=0;
-								if(paymentMChoice==1) {
-									
-									System.out.print("Enter Amount received(Enter -1 to cancel): ");
-									receivedAmount=scanner.nextDouble();
+								System.out.println("Payment Methods");
+								System.out.println("1. Cash");
+								System.out.println("2. Credit Card");
+								System.out.println("3. Touch N Go E-Wallet");
+								System.out.print("Select Payment Method(Enter -1 to cancel): ");
+								paymentMChoice=scanner.nextInt();
+								scanner.nextLine();
+								
+								if((paymentMChoice>3)||(paymentMChoice==0)||(paymentMChoice<-1)) {
+									System.out.printf("\n%-10sInvalid Choice.\n", "");
+									System.out.printf("%-10sPress enter to try again", "");
 									scanner.nextLine();
-									
-									if((receivedAmount>-1&&receivedAmount<payment.getPaymentAmount())||(receivedAmount<-1)) {
-										System.out.println("Insufficient Amount");
-										paymentError=1;
-									}
-									else if(receivedAmount==-1) {
-										cancel=-1;
-									}
-									else {
-										paymentMethod="Cash";
-									}
-								}
-								else if(paymentMChoice==2){
-									System.out.print("Enter Credit Card Number(Enter -1 to cancel): ");
-									creditCardNo=scanner.next();
-									scanner.nextLine();
-									if((creditCardNo.length()!=16)&&(creditCardNo.equals("-1")==false)) {
-										System.out.println("Invalid Credit Card Number.");
-										paymentError=1;
-									}
-									else if(creditCardNo.equals("-1")) {
-										cancel=-1;
-									}
-									else {
-										receivedAmount=payment.getPaymentAmount();
-										paymentMethod="Credit Card";
-									}
-								}
-								else if(paymentMChoice==3) {
-									displayQR();
-									scanner.nextLine();
-									receivedAmount=payment.getPaymentAmount();
-									paymentMethod="Touch N Go E-Wallet";
-									
+									System.out.println();
 								}
 								else if(paymentMChoice==-1) {
 									cancel=-1;
 								}
-								
-								if(cancel!=-1) {
-									if(paymentError==1) {
-										System.out.println("Please try again or change payment method");
-										do {
-											System.out.println("1. Retry");
-											System.out.println("2. Change Payment Method");
-											System.out.print("Enter Choice(Enter -1 to cancel): ");
-											retryPayment=scanner.nextInt();
-											scanner.nextLine();
-											
-											if((retryPayment>2)||(retryPayment==0)||(retryPayment<-1)) {
-												System.out.println("Invalid Choice. Please try again");
-											}
-											else if(retryPayment==-1) {
-												cancel=-1;
-											}
-										}while((retryPayment>2)||(retryPayment==0)||(retryPayment<-1));
+							}while((paymentMChoice>3)||(paymentMChoice==0)||(paymentMChoice<-1));
+							
+							if(cancel!=-1) {
+								do {
+									paymentError=0;
+									retryPayment=0;
+									if(paymentMChoice==1) {
+										
+										System.out.print("Enter Amount received(Enter -1 to cancel): ");
+										receivedAmount=scanner.nextDouble();
+										scanner.nextLine();
+										
+										if((receivedAmount>-1&&receivedAmount<payment.getPaymentAmount())||(receivedAmount<-1)) {
+											System.out.println("Insufficient Amount");
+											paymentError=1;
+										}
+										else if(receivedAmount==-1) {
+											cancel=-1;
+										}
+										else {
+											paymentMethod="Cash";
+										}
 									}
-								}
-								
-							}while(retryPayment==1);
-						}
-						
-						
-					}while(retryPayment==2);
+									else if(paymentMChoice==2){
+										System.out.print("Enter Credit Card Number(Enter -1 to cancel): ");
+										creditCardNo=scanner.next();
+										scanner.nextLine();
+										if((creditCardNo.length()!=16)&&(creditCardNo.equals("-1")==false)) {
+											System.out.println("Invalid Credit Card Number.");
+											paymentError=1;
+										}
+										else if(creditCardNo.equals("-1")) {
+											cancel=-1;
+										}
+										else {
+											receivedAmount=payment.getPaymentAmount();
+											paymentMethod="Credit Card";
+										}
+									}
+									else if(paymentMChoice==3) {
+										displayQR();
+										scanner.nextLine();
+										receivedAmount=payment.getPaymentAmount();
+										paymentMethod="Touch N Go E-Wallet";
+										
+									}
+									else if(paymentMChoice==-1) {
+										cancel=-1;
+									}
+									
+									if(cancel!=-1) {
+										if(paymentError==1) {
+											System.out.println("Please try again or change payment method");
+											do {
+												System.out.println("1. Retry");
+												System.out.println("2. Change Payment Method");
+												System.out.print("Enter Choice(Enter -1 to cancel): ");
+												retryPayment=scanner.nextInt();
+												scanner.nextLine();
+												
+												if((retryPayment>2)||(retryPayment==0)||(retryPayment<-1)) {
+													System.out.println("Invalid Choice. Please try again");
+												}
+												else if(retryPayment==-1) {
+													cancel=-1;
+												}
+											}while((retryPayment>2)||(retryPayment==0)||(retryPayment<-1));
+										}
+									}
+									
+								}while(retryPayment==1);
+							}
+							
+							
+						}while(retryPayment==2);
+					}
+					
+					
+					
+					
 					
 					if(cancel!=-1) {
 						payment.setPaymentDetails(receivedAmount, paymentMethod, "Completed");
@@ -2104,7 +2355,7 @@ public class ChiKean {
 				}
 				if(cancel!=-1) {
 					if(product.getQuantity()>0) {
-						System.out.print("Would you like to add this product to cart?(Y=yes) ");
+						System.out.print("  Would you like to add this product to cart?(Y=yes) ");
 						addProdChoice=Character.toUpperCase(scanner.next().charAt(0));
 						scanner.nextLine();
 						
@@ -2116,15 +2367,15 @@ public class ChiKean {
 								}
 							}
 							cart.addProduct(product);
-							System.out.println("Product has been added to cart.");
+							System.out.println("  Product has been added to cart.");
 						}
 					}
 					else {
-						System.out.println("Product not added to cart");
+						System.out.println("  Product not added to cart");
 					}
 					
 					
-					System.out.print("Would you like to add another product?(Y=yes) ");
+					System.out.print("  Would you like to add another product?(Y=yes) ");
 					choice=Character.toUpperCase(scanner.next().charAt(0));
 					scanner.nextLine();
 				}
@@ -2134,18 +2385,18 @@ public class ChiKean {
 				if(cart.getNoOfProducts()>0) {
 					System.out.println(cart.toString());
 					
-					System.out.print("Would you like to edit the items in the cart? (Y=yes) ");
+					System.out.print("  Would you like to edit the items in the cart? (Y=yes) ");
 					editChoice=Character.toUpperCase(scanner.next().charAt(0));
 					scanner.nextLine();
 					if(editChoice=='Y') {
 						editCart(productList, cart);
 					}
 					else {
-						System.out.println("Items in cart are not edited.");
+						System.out.println("  Items in cart are not edited.");
 					}
 					
 					if(cart.getNoOfProducts()>0) {
-						System.out.print("Would you like to proceed with payment? (Y=yes)");
+						System.out.print("  Would you like to proceed with payment? (Y=yes)");
 						paymentChoice=Character.toUpperCase(scanner.next().charAt(0));
 						scanner.nextLine();
 						payment=new Payment(cart, "On-Hold");
@@ -2153,21 +2404,21 @@ public class ChiKean {
 							paymentFunc(payment, memberList, staff, bankAccount, receiptList, productList);
 						}
 						else {
-							System.out.println("Payment has been put on-hold.");
+							System.out.println("  Payment has been put on-hold.");
 						}
 						paymentList.add(payment);
 					}
 					else {
-						System.out.println("Cart is empty");
+						System.out.println("  Cart is empty");
 					}
 				}
 				else {
-					System.out.println("Cart is empty");
+					System.out.println("  Cart is empty");
 				}
 			}
 			
 			System.out.println();
-			System.out.print("Would you like to place another order? (Y=yes) ");
+			System.out.print("  Would you like to place another order? (Y=yes) ");
 			orderChoice=Character.toUpperCase(scanner.next().charAt(0));
 			scanner.nextLine();
 		}while(orderChoice=='Y');	
