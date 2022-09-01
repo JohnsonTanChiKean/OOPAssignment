@@ -2174,8 +2174,9 @@ public class ChiKean {
 								paymentError=0;
 								retryPayment=0;
 								System.out.printf("%-10s-----------------------------------\n","");
-								System.out.printf("%-10s|          Payment Methods        |\n","");
-								System.out.printf("%-10s|          ===============        |\n","");
+								System.out.printf("%-10s|                                 |\n","");
+								System.out.printf("%-10s|         Payment Methods         |\n","");
+								System.out.printf("%-10s|         ===============         |\n","");
 								System.out.printf("%-10s|                                 |\n","");
 								System.out.printf("%-10s|     1. Cash                     |\n","");
 								System.out.printf("%-10s|     2. Credit Card              |\n","");
@@ -2275,12 +2276,15 @@ public class ChiKean {
 									
 									if(cancel!=-1) {
 										if(paymentError==1) {
-											System.out.println("Please try again or change payment method");
+											System.out.println("  Please try again or change payment method");
 											do {
 												invalidInput=0;
-												System.out.printf("%-10s----------------------------", "");
-												System.out.printf("%-10s| 1. Retry                 |", "");
-												System.out.printf("%-10s| 2. Change Payment Method |", "");
+												System.out.printf("%-10s----------------------------\n", "");
+												System.out.printf("%-10s|                          |\n", "");
+												System.out.printf("%-10s| 1. Retry                 |\n", "");
+												System.out.printf("%-10s| 2. Change Payment Method |\n", "");
+												System.out.printf("%-10s|                          |\n", "");
+												System.out.printf("%-10s----------------------------\n", "");
 												System.out.print("  Enter Choice(Enter -1 to cancel): ");
 												try{
 													retryPayment=scanner.nextInt();
