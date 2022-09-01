@@ -2045,7 +2045,7 @@ public class ChiKean {
 	}
 	
 	public static void displayQR() {
-		ImageIcon image=new ImageIcon("C:\\Users\\User\\Documents\\College\\Year 2 Sem 1\\OOP\\Assignment Share Drive\\OOPAssignment\\Assignment\\src\\TNG.jpg");
+		ImageIcon image=new ImageIcon("src\\TNG.jpg");
 		Image tngImage=image.getImage();
 		Image modifiedImage=tngImage.getScaledInstance(500, 700, Image.SCALE_SMOOTH);
 		image=new ImageIcon(modifiedImage);
@@ -2075,7 +2075,7 @@ public class ChiKean {
 	public static void paymentFunc(Payment payment, ArrayList<Member> memberList, Staff staff, BankAccount bankAccount, ArrayList<Receipt> receiptList, ArrayList<Product> productList) {
 		Scanner scanner=new Scanner(System.in);
 		String memID, creditCardNo, paymentMethod = "";
-		int memIDNo, checkMemID, paymentMChoice=0, paymentChoice=0, foundMem=0, retryPayment, paymentError=0, cancel=0, invalidInput=0;;
+		int memIDNo, checkMemID, paymentMChoice=0, paymentChoice=0, foundMem=0, retryPayment, paymentError=0, cancel=0, invalidInput=0, charCount=0;
 		double receivedAmount = 0, balance;
 		Receipt receipt=null;
 		payment.setStaff(staff);
@@ -2092,14 +2092,14 @@ public class ChiKean {
 		else {
 			do {
 				invalidInput=0;
-				System.out.printf("%-10s-------------------------------------------", "");
-				System.out.printf("%-10s| Which action would you like to perform? |", "");
-				System.out.printf("%-10s| ======================================= |", "");
-				System.out.printf("%-10s|                                         |", "");
-				System.out.printf("%-10s|         1. Complete payment             |", "");
-				System.out.printf("%-10s|         2. Cancel payment               |", "");
-				System.out.printf("%-10s|                                         |", "");
-				System.out.printf("%-10s-------------------------------------------", "");
+				System.out.printf("%-10s-------------------------------------------\n", "");
+				System.out.printf("%-10s| Which action would you like to perform? |\n", "");
+				System.out.printf("%-10s| ======================================= |\n", "");
+				System.out.printf("%-10s|                                         |\n", "");
+				System.out.printf("%-10s|         1. Complete payment             |\n", "");
+				System.out.printf("%-10s|         2. Cancel payment               |\n", "");
+				System.out.printf("%-10s|                                         |\n", "");
+				System.out.printf("%-10s-------------------------------------------\n", "");
 				System.out.print("  Select Choice(Press -1 to exit): ");
 				try{
 					paymentChoice=scanner.nextInt();
@@ -2132,6 +2132,7 @@ public class ChiKean {
 						checkMemID=0;
 						System.out.print("  Enter Member ID(Enter X if there is no memberID): ");
 						memID=scanner.next();
+						scanner.nextLine();
 						if(memID.toUpperCase().equals("X")) {
 							Member member=new Member();
 							payment.memberDiscount(member);
@@ -2165,21 +2166,34 @@ public class ChiKean {
 					}while(checkMemID==-1);
 					
 					if(cancel!=-1) {
-						System.out.printf("Final Payment Amount(RM): %.2f\n", payment.getPaymentAmount());
+						System.out.printf("  Final Payment Amount(RM): %.2f\n", payment.getPaymentAmount());
 						do {
 							do {
+								invalidInput=0;
 								paymentMChoice=0;
 								paymentError=0;
 								retryPayment=0;
-								System.out.println("Payment Methods");
-								System.out.println("1. Cash");
-								System.out.println("2. Credit Card");
-								System.out.println("3. Touch N Go E-Wallet");
-								System.out.print("Select Payment Method(Enter -1 to cancel): ");
-								paymentMChoice=scanner.nextInt();
-								scanner.nextLine();
+								System.out.printf("%-10s-----------------------------------\n","");
+								System.out.printf("%-10s|          Payment Methods        |\n","");
+								System.out.printf("%-10s|          ===============        |\n","");
+								System.out.printf("%-10s|                                 |\n","");
+								System.out.printf("%-10s|     1. Cash                     |\n","");
+								System.out.printf("%-10s|     2. Credit Card              |\n","");
+								System.out.printf("%-10s|     3. Touch N Go E-Wallet      |\n","");
+								System.out.printf("%-10s|                                 |\n","");
+								System.out.printf("%-10s-----------------------------------\n","");
+								System.out.print("  Select Payment Method(Enter -1 to cancel): ");
+								try{
+									paymentMChoice=scanner.nextInt();
+									scanner.nextLine();
+								}
+								catch(InputMismatchException e){
+									invalidInput=1;
+									scanner.nextLine();
+								}
 								
-								if((paymentMChoice>3)||(paymentMChoice==0)||(paymentMChoice<-1)) {
+								
+								if((paymentMChoice>3)||(paymentMChoice==0)||(paymentMChoice<-1)||(invalidInput==1)) {
 									System.out.printf("\n%-10sInvalid Choice.\n", "");
 									System.out.printf("%-10sPress enter to try again", "");
 									scanner.nextLine();
@@ -2188,35 +2202,56 @@ public class ChiKean {
 								else if(paymentMChoice==-1) {
 									cancel=-1;
 								}
-							}while((paymentMChoice>3)||(paymentMChoice==0)||(paymentMChoice<-1));
+							}while((paymentMChoice>3)||(paymentMChoice==0)||(paymentMChoice<-1)||(invalidInput==1));
 							
 							if(cancel!=-1) {
 								do {
+									charCount=0;
+									invalidInput=0;
 									paymentError=0;
 									retryPayment=0;
 									if(paymentMChoice==1) {
 										
-										System.out.print("Enter Amount received(Enter -1 to cancel): ");
-										receivedAmount=scanner.nextDouble();
-										scanner.nextLine();
+										System.out.print("  Enter Amount received(Enter -1 to cancel): ");
+										try{
+											receivedAmount=scanner.nextDouble();
+											scanner.nextLine();
+										}
+										catch(InputMismatchException e){
+											invalidInput=1;
+											scanner.nextLine();
+										}
+										
 										
 										if((receivedAmount>-1&&receivedAmount<payment.getPaymentAmount())||(receivedAmount<-1)) {
-											System.out.println("Insufficient Amount");
+											System.out.println("  Insufficient Amount");
 											paymentError=1;
 										}
 										else if(receivedAmount==-1) {
 											cancel=-1;
+										}
+										else if(invalidInput==1) {
+											System.out.println("  Invalid Amount entered");
+											paymentError=1;
 										}
 										else {
 											paymentMethod="Cash";
 										}
 									}
 									else if(paymentMChoice==2){
-										System.out.print("Enter Credit Card Number(Enter -1 to cancel): ");
+										System.out.print("  Enter Credit Card Number(Enter -1 to cancel): ");
 										creditCardNo=scanner.next();
 										scanner.nextLine();
-										if((creditCardNo.length()!=16)&&(creditCardNo.equals("-1")==false)) {
-											System.out.println("Invalid Credit Card Number.");
+										for(int i=0; i<creditCardNo.length(); i++) {
+											if(Character.isLetter(creditCardNo.charAt(i))) {
+												charCount++;
+											}
+											else if(!Character.isLetter(creditCardNo.charAt(i))&&!Character.isDigit(creditCardNo.charAt(i))) {
+												charCount++;
+											}
+										}
+										if(((creditCardNo.length()!=16)||(charCount>=1))&&(creditCardNo.equals("-1")==false)) {
+											System.out.println("  Invalid Credit Card Number.");
 											paymentError=1;
 										}
 										else if(creditCardNo.equals("-1")) {
@@ -2242,19 +2277,31 @@ public class ChiKean {
 										if(paymentError==1) {
 											System.out.println("Please try again or change payment method");
 											do {
-												System.out.println("1. Retry");
-												System.out.println("2. Change Payment Method");
-												System.out.print("Enter Choice(Enter -1 to cancel): ");
-												retryPayment=scanner.nextInt();
-												scanner.nextLine();
+												invalidInput=0;
+												System.out.printf("%-10s----------------------------", "");
+												System.out.printf("%-10s| 1. Retry                 |", "");
+												System.out.printf("%-10s| 2. Change Payment Method |", "");
+												System.out.print("  Enter Choice(Enter -1 to cancel): ");
+												try{
+													retryPayment=scanner.nextInt();
+													scanner.nextLine();
+												}
+												catch(InputMismatchException e){
+													invalidInput=1;
+													scanner.nextLine();
+												}
 												
-												if((retryPayment>2)||(retryPayment==0)||(retryPayment<-1)) {
-													System.out.println("Invalid Choice. Please try again");
+												
+												if((retryPayment>2)||(retryPayment==0)||(retryPayment<-1)||(invalidInput==1)) {
+													System.out.printf("\n%-10sInvalid Choice.\n", "");
+													System.out.printf("%-10sPress enter to try again", "");
+													scanner.nextLine();
+													System.out.println();
 												}
 												else if(retryPayment==-1) {
 													cancel=-1;
 												}
-											}while((retryPayment>2)||(retryPayment==0)||(retryPayment<-1));
+											}while((retryPayment>2)||(retryPayment==0)||(retryPayment<-1)||(invalidInput==1));
 										}
 									}
 									
