@@ -1741,34 +1741,40 @@ public class ChiKean {
 	
 	public static void editCart(ArrayList<Product> productList, Cart cart) {
 		Scanner scanner=new Scanner(System.in);
-		int choice, cancel=0;
+		int choice=0, cancel=0, invalidInput=0;;
 		char editChoice='N';
 		
 		
 		do {
 			editChoice='N';
 			if(cart.getNoOfProducts()>0) {
-				System.out.printf("%-15s%-17s%-23s%-13s%s\n", "Product ID", "Product Name", "Price Per Quantity", "Quantity", "Price");
-				System.out.printf("%-15s%-17s%-23s%-13s%s\n", "----------", "------------", "------------------", "--------", "-----");
-				
-				for(int i=0; i<cart.getNoOfProducts(); i++) {
-						System.out.printf("%-15s%-17s%-23.2f%-13d%.2f\n", cart.getProduct()[i].getProductID(), cart.getProduct()[i].getProductName(), cart.getProduct()[i].getPrice(), cart.getProduct()[i].getQuantity(), cart.getPricePerItem()[i]);	
-				}
+				System.out.println(cart.toString());
 				
 				do {
+					invalidInput=0;
 					System.out.println("Which function would you like to perform?");
 					System.out.println("1. Edit Quantity of Item");
 					System.out.println("2. Remove Item from Cart");
 					System.out.print("Please enter your choice(Enter -1 to cancel): ");
-					choice=scanner.nextInt();
-					scanner.nextLine();
-					if((choice>2)||(choice==0)||(choice<-1)) {
-						System.out.println("Invalid choice. Please try again.");
+					try{
+						choice=scanner.nextInt();
+						scanner.nextLine();
+					}
+					catch(InputMismatchException e){
+						invalidInput=1;
+						scanner.nextLine();
+					}
+					
+					if((choice>2)||(choice==0)||(choice<-1)||(invalidInput==1)) {
+						System.out.printf("\n%-10sInvalid Choice.\n", "");
+						System.out.printf("%-10sPress enter to try again", "");
+						scanner.nextLine();
+						System.out.println();
 					}
 					else if(choice==-1) {
 						cancel=-1;
 					}
-				}while((choice>2)||(choice==0)||(choice<-1));
+				}while((choice>2)||(choice==0)||(choice<-1)||(invalidInput==1));
 				
 				if(cancel!=-1) {
 					switch(choice) {
@@ -1925,7 +1931,7 @@ public class ChiKean {
 	public static void onHoldPayment(ArrayList<Payment> paymentList, ArrayList<Member> memberList, Staff staff, ArrayList<Product> productList, ArrayList<Receipt> receiptList, BankAccount bankAccount) {
 		ArrayList<Payment> tempPayment=new ArrayList<Payment>();
 		Scanner scanner=new Scanner(System.in);
-		int choice=0, cancel=0, funcChoice=0, onHold=0, cancel1=0;
+		int choice=0, cancel=0, funcChoice=0, onHold=0, cancel1=0, invalidInput=0;;
 		char paymentChoice='N';
 		Receipt receipt=null;
 		
@@ -1936,42 +1942,51 @@ public class ChiKean {
 		}
 		
 		do {
+			
 			onHold=0;
 			if(tempPayment.size()==0) {
 				System.out.printf("%-30sThere are no On-Hold Payments\n", "");
 			}
 			else {
-				onHold=1;
-				System.out.printf("%-40sList of On-Hold Payments\n", "");
-				System.out.printf("%-40s========================\n", "");
-				for(int i=0; i<tempPayment.size(); i++) {
-					System.out.printf("%-5s%-5d","", (i+1));
-					System.out.printf("-----------------------------------------------------------------------------------\n");
-					System.out.printf("%-10s| %-15s%-17s%-23s%-10s%14s |\n", "","Product ID", "Product Name", "Price Per Quantity", "Quantity", "Price");
-					System.out.printf("%-10s| %-15s%-17s%-23s%-10s%s |\n", "", "----------", "------------", "------------------", "--------", "--------------");
-					for(int j=0; j<tempPayment.get(i).getCart().getNoOfProducts(); j++) {
-						System.out.printf("%-10s| %-15s%-17s%-23.2f%-8d%16.2f |\n", "", tempPayment.get(i).getCart().getProduct()[j].getProductID(), tempPayment.get(i).getCart().getProduct()[j].getProductName(), tempPayment.get(i).getCart().getProduct()[j].getPrice(), tempPayment.get(i).getCart().getProduct()[j].getQuantity(), tempPayment.get(i).getCart().getPricePerItem()[j]);
-					}
-					System.out.printf("%-10s| ------------------------------------------------------------------------------- |\n", "");
-					System.out.printf("%-10s| %65s%14.2f |\n", "", "Subtotal(RM): ", tempPayment.get(i).getCart().getTotalPrice());
-					System.out.printf("%-10s-----------------------------------------------------------------------------------\n\n", "");
-				}
-				
-				
 				do {
-					System.out.printf("%-10sSelect Choice(Enter -1 to cancel): ", "");
-					choice=scanner.nextInt();
-					scanner.nextLine();
+					invalidInput=0;
+					onHold=1;
+					System.out.printf("%-40sList of On-Hold Payments\n", "");
+					System.out.printf("%-40s========================\n", "");
+					for(int i=0; i<tempPayment.size(); i++) {
+						System.out.printf("%-5s%-5d","", (i+1));
+						System.out.printf("-----------------------------------------------------------------------------------\n");
+						System.out.printf("%-10s| %-15s%-17s%-23s%-10s%14s |\n", "","Product ID", "Product Name", "Price Per Quantity", "Quantity", "Price");
+						System.out.printf("%-10s| %-15s%-17s%-23s%-10s%s |\n", "", "----------", "------------", "------------------", "--------", "--------------");
+						for(int j=0; j<tempPayment.get(i).getCart().getNoOfProducts(); j++) {
+							System.out.printf("%-10s| %-15s%-17s%-23.2f%-8d%16.2f |\n", "", tempPayment.get(i).getCart().getProduct()[j].getProductID(), tempPayment.get(i).getCart().getProduct()[j].getProductName(), tempPayment.get(i).getCart().getProduct()[j].getPrice(), tempPayment.get(i).getCart().getProduct()[j].getQuantity(), tempPayment.get(i).getCart().getPricePerItem()[j]);
+						}
+						System.out.printf("%-10s| ------------------------------------------------------------------------------- |\n", "");
+						System.out.printf("%-10s| %65s%14.2f |\n", "", "Subtotal(RM): ", tempPayment.get(i).getCart().getTotalPrice());
+						System.out.printf("%-10s-----------------------------------------------------------------------------------\n\n", "");
+					}
+					System.out.print("  Select Choice(Enter -1 to cancel): ");
+					try{
+						choice=scanner.nextInt();
+						scanner.nextLine();
+					}
+					catch(InputMismatchException e){
+						invalidInput=1;
+						scanner.nextLine();
+					}
 					
-					if((choice>tempPayment.size())||(choice==0)||(choice<-1)) {
-						System.out.printf("%-10sInvalid Choice. Please try again", "");
+					if((choice>tempPayment.size())||(choice==0)||(choice<-1)||(invalidInput==1)) {
+						System.out.printf("\n%-10sInvalid Choice.\n", "");
+						System.out.printf("%-10sPress enter to try again", "");
+						scanner.nextLine();
+						System.out.println();
 					}
 					else if(choice==-1) {
 						cancel1=-1;
 						cancel=-1;
 						break;
 					}
-				}while((choice>tempPayment.size())||(choice==0)||(choice<-1));
+				}while((choice>tempPayment.size())||(choice==0)||(choice<-1)||(invalidInput==1));
 				
 				if(cancel1!=-1) {
 					System.out.printf("%-10s-----------------------------------------------------------------------------------\n", "");
@@ -1987,27 +2002,38 @@ public class ChiKean {
 				}
 					
 					if(cancel!=-1) {
-						System.out.printf("%-30s-------------------------------------------\n", "");
-						System.out.printf("%-30s| Which action would you like to perform? |\n", "");
-						System.out.printf("%-30s| ======================================= |\n", "");
-						System.out.printf("%-30s|                                         |\n", "");
-						System.out.printf("%-30s|        1. Edit items in cart            |\n", "");
-						System.out.printf("%-30s|        2. Proceed with payment          |\n", "");
-						System.out.printf("%-30s|                                         |\n", "");
-						System.out.printf("%-30s-------------------------------------------\n\n", "");
 						
 						do {
-							System.out.printf("%-30sSelect choice(Enter -1 to cancel): ", "");
-							funcChoice=scanner.nextInt();
-							scanner.nextLine();
+							invalidInput=0;
+							System.out.printf("%-10s-------------------------------------------\n", "");
+							System.out.printf("%-10s| Which action would you like to perform? |\n", "");
+							System.out.printf("%-10s| ======================================= |\n", "");
+							System.out.printf("%-10s|                                         |\n", "");
+							System.out.printf("%-10s|        1. Edit items in cart            |\n", "");
+							System.out.printf("%-10s|        2. Proceed with payment          |\n", "");
+							System.out.printf("%-10s|                                         |\n", "");
+							System.out.printf("%-10s-------------------------------------------\n\n", "");
+							System.out.printf("%-10sSelect choice(Enter -1 to cancel): ", "");
+							try{
+								funcChoice=scanner.nextInt();
+								scanner.nextLine();
+							}
+							catch(InputMismatchException e){
+								invalidInput=1;
+								scanner.nextLine();
+							}
 							
-							if((funcChoice>2)||(funcChoice==0)||(funcChoice<-1)) {
-								System.out.printf("%-10sInvalid Choice. Please try again", "");
+							
+							if((funcChoice>2)||(funcChoice==0)||(funcChoice<-1)||(invalidInput==1)) {
+								System.out.printf("\n%-10sInvalid Choice.\n", "");
+								System.out.printf("%-10sPress enter to try again", "");
+								scanner.nextLine();
+								System.out.println();
 							}
 							else if(funcChoice==-1) {
 								cancel=-1;
 							}
-						}while((funcChoice>2)||(funcChoice==0)||(funcChoice<-1));
+						}while((funcChoice>2)||(funcChoice==0)||(funcChoice<-1)||(invalidInput==1));
 						
 					}
 					
