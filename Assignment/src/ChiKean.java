@@ -10,6 +10,7 @@ import java.awt.Image;
 //if payment=cancelled, quantity of all items in the cart must be added back to their respective arraylist counterparts
 // report should show original quantity, current quantity, quantity on-hold and quantity sold
 //onhold list -1 not working
+//Payment class toString
 public class ChiKean {
 	public static String selectProduct(ArrayList<Product> productList) {
 		int prodChoice=0, invalidInput=0;
@@ -1752,10 +1753,15 @@ public class ChiKean {
 				
 				do {
 					invalidInput=0;
-					System.out.println("Which function would you like to perform?");
-					System.out.println("1. Edit Quantity of Item");
-					System.out.println("2. Remove Item from Cart");
-					System.out.print("Please enter your choice(Enter -1 to cancel): ");
+					System.out.printf("%-10s---------------------------------------------\n","");
+					System.out.printf("%-10s| Which function would you like to perform? |\n", "");
+					System.out.printf("%-10s| ========================================= |\n", "");
+					System.out.printf("%-10s|                                           |\n", "");
+					System.out.printf("%-10s|         1. Edit Quantity of Item          |\n", "");
+					System.out.printf("%-10s|         2. Remove Item from Cart          |\n", "");
+					System.out.printf("%-10s|                                           |\n", "");
+					System.out.printf("%-10s---------------------------------------------\n\n","");
+					System.out.print("  Please enter your choice(Enter -1 to cancel): ");
 					try{
 						choice=scanner.nextInt();
 						scanner.nextLine();
@@ -1783,7 +1789,7 @@ public class ChiKean {
 					}
 					
 					if(cart.getNoOfProducts()>0) {
-						System.out.print("Would you like to make anymore modifications to the cart? (Y=yes)");
+						System.out.print("  Would you like to make anymore modifications to the cart? (Y=yes)");
 						editChoice=Character.toUpperCase(scanner.next().charAt(0));
 						scanner.nextLine();
 					}
@@ -1796,49 +1802,74 @@ public class ChiKean {
 	
 	public static void editQuantity(ArrayList<Product> productList, Cart cart) {
 		Scanner scanner = new Scanner(System.in);
-		int itemChoice=0, qty, loopQty, difference, cancel=0;
+		int itemChoice=0, qty=0, loopQty, difference, cancel=0, invalidInput=0;
 		char editConfirm;
-		System.out.printf("%-6s%-15s%-17s%-23s%-13s%s\n", "","Product ID", "Product Name", "Price Per Quantity", "Quantity", "Price");
-		System.out.printf("%-6s%-15s%-17s%-23s%-13s%s\n", "","----------", "------------", "------------------", "--------", "-----");
 		
-		for(int i=0; i<cart.getNoOfProducts(); i++) {
-				System.out.printf("%-6d%-15s%-17s%-23.2f%-13d%.2f\n", (i+1),cart.getProduct()[i].getProductID(), cart.getProduct()[i].getProductName(), cart.getProduct()[i].getPrice(), cart.getProduct()[i].getQuantity(), cart.getPricePerItem()[i]);	
-		}
 		
 		do {
-			System.out.print("Select item to edit(Enter -1 to cancel): ");
-			itemChoice=scanner.nextInt();
-			scanner.nextLine();
+			invalidInput=0;
+			System.out.printf("%-10s-------------------------------------------------------------------------------------\n", "");
+			System.out.printf("%-10s|                                                                                   |\n", "");
+			System.out.printf("%-10s|    %-15s%-17s%-23s%-13s%-10s |\n", "","Product ID", "Product Name", "Price Per Quantity", "Quantity", "Price");
+			System.out.printf("%-10s|    %-15s%-17s%-23s%-13s%-10s |\n", "","----------", "------------", "------------------", "--------", "-----");
 			
-			if((itemChoice>cart.getNoOfProducts())||(itemChoice==0)||(itemChoice<-1)) {
-				System.out.println("Invalid Choice. Please try again");
+			for(int i=0; i<cart.getNoOfProducts(); i++) {
+					System.out.printf("%-5s%-5d|    %-15s%-17s%-23.2f%-13d%-10.2f |\n", "", (i+1),cart.getProduct()[i].getProductID(), cart.getProduct()[i].getProductName(), cart.getProduct()[i].getPrice(), cart.getProduct()[i].getQuantity(), cart.getPricePerItem()[i]);	
+			}
+			System.out.printf("%-10s|                                                                                   |\n", "");
+			System.out.printf("%-10s-------------------------------------------------------------------------------------\n\n", "");
+			System.out.print("  Select item to edit(Enter -1 to cancel): ");
+			try{
+				itemChoice=scanner.nextInt();
+				scanner.nextLine();
+			}
+			catch(InputMismatchException e){
+				invalidInput=1;
+				scanner.nextLine();
+			}
+			
+			if((itemChoice>cart.getNoOfProducts())||(itemChoice==0)||(itemChoice<-1)||(invalidInput==1)) {
+				System.out.printf("\n%-10sInvalid Choice.\n", "");
+				System.out.printf("%-10sPress enter to try again", "");
+				scanner.nextLine();
+				System.out.println();
 			}
 			else if(itemChoice==-1) {
 				cancel=-1;
 			}
-		}while((itemChoice>cart.getNoOfProducts())||(itemChoice==0)||(itemChoice<-1));
+		}while((itemChoice>cart.getNoOfProducts())||(itemChoice==0)||(itemChoice<-1)||(invalidInput==1));
 		
 		if(cancel!=-1) {
 			for(int i=0; i<productList.size(); i++) {
 				if(cart.getProduct()[itemChoice-1].getProductID().equals(productList.get(i).getProductID())) {
 					do {
+						invalidInput=0;
 						loopQty=0;
-						System.out.println("Available Quantity: "+(productList.get(i).getQuantity()+cart.getProduct()[itemChoice-1].getQuantity()));
-						System.out.print("Enter Quantity(Enter -1 to cancel): ");
-						qty=scanner.nextInt();
-						scanner.nextLine();
+						System.out.println("  Available Quantity: "+(productList.get(i).getQuantity()+cart.getProduct()[itemChoice-1].getQuantity()));
+						System.out.print("  Enter Quantity(Enter -1 to cancel): ");
+						try{
+							qty=scanner.nextInt();
+							scanner.nextLine();
+						}
+						catch(InputMismatchException e){
+							invalidInput=1;
+							scanner.nextLine();
+						}
 						
-
 						if(qty>(productList.get(i).getQuantity()+cart.getProduct()[itemChoice-1].getQuantity())) {
-							System.out.println("Entered Quantity exceeds Available Quantity. Please try again");
+							System.out.println("  Entered Quantity exceeds Available Quantity. Please try again");
 							loopQty=1;
 						}
 						else if(qty<-1){
-							System.out.println("Entered Quantity is less than 0. Please try again");
+							System.out.println("  Entered Quantity is less than 0. Please try again");
 							loopQty=1;
 						}
-						else if(qty==0) {
-							System.out.println("Entered Quantity is 0. Please try again");
+						else if((qty==0)&&(invalidInput!=1)) {
+							System.out.println("  Entered Quantity is 0. Please try again");
+							loopQty=1;
+						}
+						else if(invalidInput==1) {
+							System.out.println("  Quantity entered is not valid. Please try again");
 							loopQty=1;
 						}
 						else if(qty==-1) {
@@ -1847,7 +1878,7 @@ public class ChiKean {
 					}while(loopQty==1);
 					
 					if(cancel!=-1) {
-						System.out.print("Are you sure you want to change the quantity of this item? (Y=yes)");
+						System.out.print("  Are you sure you want to change the quantity of this item? (Y=yes) ");
 						editConfirm=Character.toUpperCase(scanner.next().charAt(0));
 						scanner.nextLine();
 						
@@ -1861,7 +1892,7 @@ public class ChiKean {
 								productList.get(i).setQuantity(productList.get(i).getQuantity()+difference);
 							}
 							else {
-								System.out.println("Quantity was not changed.");
+								System.out.println("  Quantity was not changed.");
 							}
 							
 							if(qty!=cart.getProduct()[itemChoice-1].getQuantity()) {
@@ -1870,12 +1901,9 @@ public class ChiKean {
 							
 						}
 						else {
-							System.out.println("Quantity was not changed.");
+							System.out.println(" Quantity was not changed.");
 						}
 					}
-					
-					
-					
 				}
 			}
 		}
@@ -1884,31 +1912,45 @@ public class ChiKean {
 	
 	public static void removeItem(ArrayList<Product> productList, Cart cart) {
 		Scanner scanner=new Scanner(System.in);
-		int itemChoice=0, cancel=0;
+		int itemChoice=0, cancel=0, invalidInput=0;
 		char removeConfirm='N';
-		System.out.printf("%-6s%-15s%-17s%-23s%-13s%s\n", "","Product ID", "Product Name", "Price Per Quantity", "Quantity", "Price");
-		System.out.printf("%-6s%-15s%-17s%-23s%-13s%s\n", "","----------", "------------", "------------------", "--------", "-----");
-		
-		for(int i=0; i<cart.getNoOfProducts(); i++) {
-				System.out.printf("%-6d%-15s%-17s%-23.2f%-13d%.2f\n", (i+1),cart.getProduct()[i].getProductID(), cart.getProduct()[i].getProductName(), cart.getProduct()[i].getPrice(), cart.getProduct()[i].getQuantity(), cart.getPricePerItem()[i]);	
-		}
-		
 		
 		do {
-			System.out.print("Select item to remove(Enter -1 to cancel): ");
-			itemChoice=scanner.nextInt();
-			scanner.nextLine();
+			invalidInput=0;
+			System.out.printf("%-10s-------------------------------------------------------------------------------------\n", "");
+			System.out.printf("%-10s|                                                                                   |\n", "");
+			System.out.printf("%-10s|    %-15s%-17s%-23s%-13s%-10s |\n", "","Product ID", "Product Name", "Price Per Quantity", "Quantity", "Price");
+			System.out.printf("%-10s|    %-15s%-17s%-23s%-13s%-10s |\n", "","----------", "------------", "------------------", "--------", "-----");
+			for(int i=0; i<cart.getNoOfProducts(); i++) {
+				System.out.printf("%-5s%-5d|    %-15s%-17s%-23.2f%-13d%-10.2f |\n", "", (i+1),cart.getProduct()[i].getProductID(), cart.getProduct()[i].getProductName(), cart.getProduct()[i].getPrice(), cart.getProduct()[i].getQuantity(), cart.getPricePerItem()[i]);	
+			}
+			System.out.printf("%-10s|                                                                                   |\n", "");
+			System.out.printf("%-10s-------------------------------------------------------------------------------------\n", "");
 			
-			if((itemChoice>cart.getNoOfProducts())||(itemChoice==0)||(itemChoice<-1)) {
-				System.out.println("Invalid Choice. Please try again");
+			System.out.print("  Select item to remove(Enter -1 to cancel): ");
+			try{
+				itemChoice=scanner.nextInt();
+				scanner.nextLine();
+			}
+			catch(InputMismatchException e){
+				invalidInput=1;
+				scanner.nextLine();
+			}
+			
+			
+			if((itemChoice>cart.getNoOfProducts())||(itemChoice==0)||(itemChoice<-1)||(invalidInput==1)) {
+				System.out.printf("\n%-10sInvalid Choice.\n", "");
+				System.out.printf("%-10sPress enter to try again", "");
+				scanner.nextLine();
+				System.out.println();
 			}
 			else if(itemChoice==-1) {
 				cancel=-1;
 			}
-		}while((itemChoice>cart.getNoOfProducts())||(itemChoice==0)||(itemChoice<-1));
+		}while((itemChoice>cart.getNoOfProducts())||(itemChoice==0)||(itemChoice<-1)||(invalidInput==1));
 		
 		if(cancel!=-1) {
-			System.out.print("Are you sure you want to remove this item? (Y=yes) ");
+			System.out.print("  Are you sure you want to remove this item? (Y=yes) ");
 			removeConfirm=Character.toUpperCase(scanner.next().charAt(0));
 			scanner.nextLine();
 			
@@ -1921,7 +1963,7 @@ public class ChiKean {
 				cart.removeItem(itemChoice-1);
 			}
 			else {
-				System.out.println("Item not removed.");
+				System.out.println("  Item not removed.");
 			}
 		}
 		
@@ -1942,7 +1984,7 @@ public class ChiKean {
 		}
 		
 		do {
-			
+			cancel=0;
 			onHold=0;
 			if(tempPayment.size()==0) {
 				System.out.printf("%-30sThere are no On-Hold Payments\n", "");
@@ -2049,7 +2091,7 @@ public class ChiKean {
 								
 							}
 							else {
-								System.out.printf("%-10sWould you like to proceed with payment? (Y=yes) ");
+								System.out.print("  Would you like to proceed with payment? (Y=yes) ");
 								paymentChoice=Character.toUpperCase(scanner.next().charAt(0));
 								scanner.nextLine();
 								
@@ -2360,7 +2402,7 @@ public class ChiKean {
 		}
 		
 		if(cancel==-1) {
-			System.out.printf("%-10sPayment Process has been cancelled\n", "");
+			System.out.println(" Payment Process has been cancelled\n");
 		}
 		
 	}
