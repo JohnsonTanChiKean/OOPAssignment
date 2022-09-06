@@ -22,16 +22,16 @@ public class BankAccount {
 	public void addPayment(Payment payment) {
 		this.payment[noOfPayments] = payment;
 		noOfPayments++;
-		calcMoney();
+		calcRevenue();
 	}
 	
 	public void addRefund(Refund refund) {
 		this.refund[noOfRefunds] = refund;
 		noOfRefunds++;
-		calcMoney();
+		calcRevenue();
 	}
 
-	public void calcMoney() {
+	private void calcRevenue() {
 		revenue=0;
 		for(int i=0; i<noOfPayments; i++) {
 			revenue+=payment[i].getPaymentAmount();

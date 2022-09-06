@@ -11,6 +11,7 @@ import java.awt.Image;
 // report should show original quantity, current quantity, quantity on-hold and quantity sold
 //onhold list -1 not working
 //Payment class toString
+//work on the toString of BankAccount
 public class ChiKean {
 	public static String selectProduct(ArrayList<Product> productList) {
 		int prodChoice=0, invalidInput=0;
@@ -2202,7 +2203,7 @@ public class ChiKean {
 						memID=scanner.next();
 						scanner.nextLine();
 						if(memID.toUpperCase().equals("X")) {
-							Member member=new Member();
+							Member member=null;
 							payment.memberDiscount(member);
 						}
 						else if((memID.charAt(0)=='M')&&(memID.length()==5)){

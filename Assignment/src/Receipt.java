@@ -7,6 +7,10 @@ public class Receipt {
 	private static int receiptCount;
 	private static int genIdNo=1001;
 	
+	public Receipt() {
+		
+	}
+	
 	public Receipt(Payment payment) {
 		this.payment=payment;
 		this.receiptDate=payment.getPaymentDate();
@@ -14,11 +18,6 @@ public class Receipt {
 		idNo=genIdNo;
 		genIdNo++;
 		receiptCount++;
-	}
-	
-	
-	public void setPayment(Payment payment) {
-		
 	}
 	
 	public String getFullRecID() {
@@ -50,5 +49,19 @@ public class Receipt {
 		}
 		receiptDetails+=String.format("-----------------------------------------------------------------------------------\n");
 		return receiptDetails;
+	}
+	
+	public boolean equals(Object o) {
+		if(o instanceof Receipt) {
+			if(((Receipt)o).idNo==idNo) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
 	}
 }

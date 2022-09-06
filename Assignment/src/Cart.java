@@ -4,7 +4,7 @@ public class Cart {
 	private double[] pricePerItem=new double[100];
 	private double totalPrice;
 	private int noOfProducts;
-	Cart() {
+	public Cart() {
 		
 	}
 	

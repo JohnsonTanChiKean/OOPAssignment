@@ -85,10 +85,6 @@ public class Payment {
 		return paymentAmount;
 	}
 
-	public void setPaymentAmount(double paymentAmount) {
-		this.paymentAmount = paymentAmount;
-	}
-
 	public double getReceivedAmount() {
 		return receivedAmount;
 	}
@@ -115,6 +111,14 @@ public class Payment {
 		return paymentMethod;
 	}
 
+	public double getBalance() {
+		return balance;
+	}
+
+	public double getDiscount() {
+		return discount;
+	}
+	
 	public String toString() {
 		String paymentDetails="";
 		paymentDetails+=String.format("Payment ID  : "+paymentID+idNo+"\n");
@@ -131,19 +135,20 @@ public class Payment {
 		if(paymentMethod.equals("Cash")) {
 			paymentDetails+=String.format("Balance(RM): %.2f\n", balance);
 		}
-		
-		
-		
-		
 		return paymentDetails;
 	}
 
-	public double getBalance() {
-		return balance;
+	public boolean equals(Object o) {
+		if(o instanceof Payment) {
+			if(((Payment)o).idNo==idNo) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
 	}
-
-	public double getDiscount() {
-		return discount;
-	}
-	
 }
