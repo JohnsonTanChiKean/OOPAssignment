@@ -76,7 +76,6 @@ public class ChiKean {
 		
 	}
 	
-	
 	public static void phone(ArrayList<Product> productList, SmartPhone product) {
 		Scanner scanner=new Scanner(System.in);
 		int storageChoice=0, ramChoice=0, colorChoice=0, foundStorage, foundRam, foundColor, tempStorage=0, tempRam=0, quantity=0, loopQuantity=0, cancel=0, invalidInput=0;
