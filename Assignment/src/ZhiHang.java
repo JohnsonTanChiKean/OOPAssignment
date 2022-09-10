@@ -72,7 +72,7 @@ public class ZhiHang {
 			scanner.nextLine();
 			
 			switch(choice) {
-			case 1: ChiKean.cart(staffList,productList,memberList, paymentList, staff, receiptList, bankAccount); loop=1; break;
+			case 1: ChiKean.placeOrder(staffList,productList,memberList, paymentList, staff, receiptList, bankAccount); loop=1; break;
 			case 2: ChiKean.onHoldPayment(paymentList, memberList, staff, productList, receiptList, bankAccount); loop=1; break;
 			case 0: break;
 			}

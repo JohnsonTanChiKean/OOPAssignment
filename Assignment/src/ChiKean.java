@@ -2407,14 +2407,13 @@ public class ChiKean {
 		
 	}
 	
-	
 	public static void genReceipt(ArrayList<Receipt> receiptList, Receipt receipt, Payment payment) {
 		receipt=new Receipt(payment);
 		System.out.println(receipt.toString());
 		receiptList.add(receipt);
 	}
 	
-	public static void cart(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, ArrayList<Payment> paymentList, Staff staff, ArrayList<Receipt> receiptList, BankAccount bankAccount) {
+	public static void placeOrder(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, ArrayList<Payment> paymentList, Staff staff, ArrayList<Receipt> receiptList, BankAccount bankAccount) {
 		int newQty, memIDNo, checkMemID=0, cancel=0;
 		char choice='N', addProdChoice='N', editChoice='N', paymentChoice='N', orderChoice='N';
 		String memID;
