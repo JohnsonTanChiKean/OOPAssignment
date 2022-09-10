@@ -12,6 +12,7 @@ import java.awt.Image;
 //onhold list -1 not working
 //Payment class toString
 //work on the toString of BankAccount
+//report try to do bar chart
 public class ChiKean {
 	public static String selectProduct(ArrayList<Product> productList) {
 		int prodChoice=0, invalidInput=0;
@@ -35,8 +36,6 @@ public class ChiKean {
 				}
 			}
 		}
-		
-		
 		
 		do{
 			invalidInput=0;
@@ -2392,8 +2391,6 @@ public class ChiKean {
 						payment.setPaymentDetails(receivedAmount, paymentMethod, "Completed");
 						System.out.println(payment.toString());
 						bankAccount.addPayment(payment);
-						System.out.println(bankAccount.getRevenue());
-						System.out.println("Generate receipt");
 						genReceipt(receiptList, receipt, payment);
 					}
 				}
@@ -2514,7 +2511,7 @@ public class ChiKean {
 					}
 					
 					if(cart.getNoOfProducts()>0) {
-						System.out.print("  Would you like to proceed with payment? (Y=yes)");
+						System.out.print("  Would you like to proceed with payment? (Y=yes) ");
 						paymentChoice=Character.toUpperCase(scanner.next().charAt(0));
 						scanner.nextLine();
 						payment=new Payment(cart, "On-Hold");

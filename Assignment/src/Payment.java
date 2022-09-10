@@ -89,6 +89,10 @@ public class Payment {
 		return receivedAmount;
 	}
 
+	public String getFullPaymentID() {
+		return paymentID+idNo;
+	}
+	
 	public void setPaymentDetails(double receivedAmount, String paymentMethod, String status) {
 		this.paymentMethod=paymentMethod;
 		this.status=status;
@@ -121,20 +125,36 @@ public class Payment {
 	
 	public String toString() {
 		String paymentDetails="";
-		paymentDetails+=String.format("Payment ID  : "+paymentID+idNo+"\n");
-		paymentDetails+=String.format("Payment Date: "+paymentDate.toString()+"\n");
-		paymentDetails+=String.format("\n");
-		paymentDetails+=String.format(cart.toString()+"\n");
-		if(member.getMemberID()!="null") {
-			paymentDetails+=String.format("Member ID: "+member.getFullMemID()+"\n");
-			paymentDetails+=String.format("Discount : %.0f%%\n", (discount*100));
+		paymentDetails+=String.format("%-10s-----------------------------------------------------------------------------------------\n", "");
+		paymentDetails+=String.format("%-10s|                                                                                       |\n", "");
+		paymentDetails+=String.format("%-10s| Payment ID         : %-64s |\n", "", getFullPaymentID());
+		paymentDetails+=String.format("%-10s| Payment Date       : %-64s |\n", "", paymentDate.toString());
+		paymentDetails+=String.format("%-10s|                                                                                       |\n", "");
+		paymentDetails+=String.format("%-10s|---------------------------------------------------------------------------------------|\n", "");
+		paymentDetails+=String.format("%-10s|                                                                                       |\n", "");
+		paymentDetails+=String.format("%-10s|    %-15s%-17s%-23s%-10s%14s%-3s |\n", "", "Product ID", "Product Name", "Price Per Quantity", "Quantity", "Price", "");
+		paymentDetails+=String.format("%-10s|    %-15s%-17s%-23s%-10s%s%-3s |\n", "", "----------", "------------", "------------------", "--------", "--------------", "");
+		
+		for(int i=0; i<cart.getNoOfProducts(); i++) {
+			paymentDetails+=String.format("%-10s|    %-15s%-17s%-23.2f%-8d%16.2f%-3s |\n", "", cart.getProduct()[i].getProductID(), cart.getProduct()[i].getProductName(), cart.getProduct()[i].getPrice(), cart.getProduct()[i].getQuantity(), cart.getPricePerItem()[i], "");	
 		}
-		paymentDetails+=String.format("Payment Amount(RM): %.2f\n", paymentAmount);
-		paymentDetails+=String.format("Payment Method: "+paymentMethod+"\n");
-		paymentDetails+=String.format("Received Amount(RM): %.2f\n", receivedAmount);
+		paymentDetails+=String.format("%-10s|    -------------------------------------------------------------------------------    |\n", "");
+		paymentDetails+=String.format("%-10s| %67s%15.2f%-3s |\n", "", "Subtotal(RM): ", cart.getTotalPrice(), "");
+		paymentDetails+=String.format("%-10s|                                                                                       |\n", "");
+		paymentDetails+=String.format("%-10s|---------------------------------------------------------------------------------------|\n", "");
+		paymentDetails+=String.format("%-10s|                                                                                       |\n", "");
+		if(member!=null) {
+			paymentDetails+=String.format("%-10s| Member ID          : %-64s |\n", "", member.getFullMemID());
+			paymentDetails+=String.format("%-10s| Discount           : %.0f%-63s |\n", "", (discount*100), "%");
+		}
+		paymentDetails+=String.format("%-10s| Payment Amount(RM) : %-64.2f |\n", "", paymentAmount);
+		paymentDetails+=String.format("%-10s| Payment Method     : %-64s |\n", "", paymentMethod);
+		paymentDetails+=String.format("%-10s| Received Amount(RM): %-64.2f |\n", "", receivedAmount);
 		if(paymentMethod.equals("Cash")) {
-			paymentDetails+=String.format("Balance(RM): %.2f\n", balance);
+			paymentDetails+=String.format("%-10s| Balance(RM)        : %-64.2f |\n", "", balance);
 		}
+		paymentDetails+=String.format("%-10s|                                                                                       |\n", "");
+		paymentDetails+=String.format("%-10s-----------------------------------------------------------------------------------------\n", "");
 		return paymentDetails;
 	}
 
