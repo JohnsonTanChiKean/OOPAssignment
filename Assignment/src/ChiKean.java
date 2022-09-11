@@ -91,7 +91,7 @@ public class ChiKean {
 				phoneList.add((SmartPhone) productList.get(i));
 			}
 		}
-
+		
 		for(int i=0; i<phoneList.size(); i++) {
 			foundStorage=0;
 			if(phoneList.get(i).getQuantity()>0) {
@@ -106,8 +106,6 @@ public class ChiKean {
 					storage.remove(Integer.valueOf(0));
 					storage.add(tempStorage);
 				}
-				
-				
 			}
 		}
 		
@@ -2537,5 +2535,53 @@ public class ChiKean {
 			orderChoice=Character.toUpperCase(scanner.next().charAt(0));
 			scanner.nextLine();
 		}while(orderChoice=='Y');	
+	}
+
+	public static void report(ArrayList<Receipt> receiptList) {
+		ArrayList<Integer> quantity=new ArrayList<Integer>();
+		int hpQty=0, epQty=0, tabQty=0, friQty=0, priQty=0, scaQty=0, mwQty=0, swQty=0;
+		for(int i=0; i<receiptList.size(); i++) {
+			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
+				if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof SmartPhone) {
+					hpQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+				}
+				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Earphone) {
+					epQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+				}
+				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Tablet) {
+					tabQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+				}
+				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Refrigerator) {
+					friQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+				}
+				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Printer) {
+					priQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+				}
+				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Scanners) {
+					scaQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+				}
+				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Microwave) {
+					mwQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+				}
+				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof SmartWatch) {
+					swQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+				}
+			}
+		}
+		
+		quantity.add(hpQty);
+		quantity.add(epQty);
+		quantity.add(tabQty);
+		quantity.add(friQty);
+		quantity.add(priQty);
+		quantity.add(scaQty);
+		quantity.add(mwQty);
+		quantity.add(swQty);
+		
+	}
+	
+	public static void tableReport(ArrayList<Integer> quantity) {
+		System.out.println("  Total quantity sold of each product.");
+		System.out.printf("%-10s", "");
 	}
 }
