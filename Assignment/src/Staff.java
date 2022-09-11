@@ -18,6 +18,9 @@ public class Staff extends Person{
 		setIdNo(idNo);
 		staffCount++;
 	}
+	public Staff(String password) {
+		this.password=password;
+	}
 	
 	public Staff(String name, String icNo, String birthDate, String staffID, int idNo, String password, String position, double salary, String joinDate, String status) {
 		super(name, icNo, birthDate);
@@ -44,6 +47,15 @@ public class Staff extends Person{
 	
 	public void setStaffID(String staffID) {
 		this.staffID = staffID;
+		if(staffID.equals("manager")) {
+			salary=2500;
+		}
+		else if(staffID.equals("executive")) {
+			salary=2000;
+		}
+		else if(staffID.equals("cashier")) {
+			salary=1700;
+		}
 	}
 	public String getPosition() {
 		return position;
@@ -81,5 +93,14 @@ public class Staff extends Person{
 		String staffDetails="";
 		staffDetails+=String.format("%s", getFullStaffID());
 		return staffDetails;
+	}
+	public String appendStaff() {
+		String staffFile="";
+		staffFile+=String.format("%s,%s,%s,S,%s,%d,%s,%s,%.2f,%s,%s\n",getName(),getIcNo(),getBirthDate(),staffID,idNo,password,position,salary,joinDate,status);
+		return staffFile;
+	}
+	public boolean equals(Object o) {
+		Staff acc=(Staff) o;
+		return acc.equals(acc.getPassword());
 	}
 }

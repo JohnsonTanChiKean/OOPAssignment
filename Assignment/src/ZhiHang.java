@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -54,6 +58,8 @@ public class ZhiHang {
 		}while(loop==0);
 		
 	}
+	
+	
 	
 	public static void mainMenu(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, Staff staff, ArrayList<Receipt> receiptList, ArrayList<Payment> paymentList, BankAccount bankAccount, ArrayList<Refund> refundList) {
 		Scanner scanner=new Scanner(System.in);
@@ -113,75 +119,67 @@ public class ZhiHang {
 		
 	}
 	
+	
 	public static void AddStaff() {
-		/*private String staffID, position, password;
-	private int idNo;
-	private double salary;
-	private GetDate joinDate;
-	private String status;
-	private static int staffCount;
-	private static int genIDNo;*/
-		Scanner scanner=new Scanner(System.in);
-		String staffName,icNo,staffPosition;
-		int staffID;
-		String staffPassword,valiPassword;
-		double salary;
-		String ContinueAdd;
-		int genIDNo;
-		int countIC=0,countName=0;
+		
+		  String addStaff="";
+		  boolean getStaffname = false;
+		do {
+		 Scanner scanner=new Scanner(System.in);
+		 String staffName,icNo,staffPosition;
+		 String staffID = null;
+		 String birthDate = null;
+		 String staffPassword,valiPassword;	
+		 String ContinueAdd;
+		 String joinDate = null;
+		 String status = null;
+		 double salary = 0;
+         int genIDNo;
+		 int countIC=0,countName=0;
+	     int countEnter;
+	     int idNo = 0;
+	   boolean checkname;
+	    String getConfirm;
+	   
 		
 		//Birthday and generated add time and date
 		//Enter Name
 		
-		do {
+		do { 
+		
 			System.out.print("Enter Name :");
 			staffName=scanner.nextLine();
 			scanner.nextLine();
-			countName=0;
-			for(int j=0;j<staffName.length();j++) {
-				char seeChaName=staffName.charAt(j);
-				if(Character.isDigit(staffName.charAt(j))) {
-					countName++;
-				}
-				else if(!Character.isLetter(seeChaName)&&!Character.isWhitespace(seeChaName)){
-	         		countName++;
-	         	}
-			}
-			if(countName!=0) {
+			checkname=valiName(staffName);
+			if(checkname==false) {
 				System.out.println("Name Format Invalid");
 				System.out.println("Please Try Again");
 			}
-		}while(countName!=0);
+		}while(checkname==false);
 		
-		//Enter IC +Validation
-		
-		System.out.print("Enter IC No :");
-		
-		icNo=scanner.nextLine();
-		countIC=0;
-		if(icNo.length()==12) {
-			for(int i=0;i<icNo.length();i++) {
 	
-				if(Character.isDigit(icNo.charAt(i))) {
-				  if(!icNo.substring(2,3).equals("01")&&!icNo.substring(2,3).equals("02")&&!icNo.substring(2,3).equals("03")&&!icNo.substring(2,3).equals("04")
-				  &&!icNo.substring(2,3).equals("05")&&!icNo.substring(2,3).equals("06")&&!icNo.substring(2,3).equals("07")&&!icNo.substring(2,3).equals("08")
-				  &&!icNo.substring(2,3).equals("09")&&!icNo.substring(2,3).equals("10")&&!icNo.substring(2,3).equals("11")&&!icNo.substring(2,3).equals("12")){
-				    	boolean getMonth=false; 	
-				  }
-				  countIC++;
-				}	
-			}
-		
-			if(countIC!=12) {
-				System.out.println("IC Format Invalid");
-				System.out.println("Please Try Again");
-			}
-		
+		boolean checkIC;
+		//Enter IC +Validation
+		do {	
+			
+			System.out.print("Enter IC No :");
+			
+			icNo=scanner.nextLine();
+			checkIC=checkIC(icNo);
+			
+			if(checkIC==false) {
+					System.out.println("IC Format Invalid");
+					System.out.println("Please Try Again");
+				
+				}
+		}while(checkIC==false);
+		boolean getPosition;
 			do {
 				System.out.print("Enter Position:");
 				staffPosition="";
 				staffPosition=scanner.nextLine();
-				staffPosition.toLowerCase();
+				staffPosition=staffPosition.toLowerCase();
+				
 				if(!staffPosition.equals("cashier")&&!staffPosition.equals("manager")&&!staffPosition.equals("executive")) { 
 					System.out.println("Position is Invalid");
 				    System.out.println("Please Enter Again");
@@ -189,67 +187,178 @@ public class ZhiHang {
 			}while(!staffPosition.equals("cashier")&&!staffPosition.equals("manager")&&!staffPosition.equals("executive"));
 		        
 		
-			int countPassword=0;
-			int getNumAlp=0;
-			int getNumValue=0;
-			int countPass=0;
+		
+			boolean checkPassword=false;
 			do {		
-				getNumAlp=0;
-				getNumValue=0;
-				countPass=0;
+		
 				System.out.print("Enter Password :");
 				staffPassword=scanner.nextLine();
 				scanner.nextLine();
 				System.out.print("Enter Password Again :");
 				valiPassword=scanner.nextLine();
-
+                Staff pass1=new Staff(staffPassword);
+                Staff pass2=new Staff(valiPassword);
+                System.out.println("Entered First Password :"+pass1);
+                System.out.println("Entered Second Password :"+pass2);
+                System.out.println(pass1.equals(pass2));
 				if(valiPassword.equals(staffPassword)) {
-					if(valiPassword.length()>6) {
-						for(int i=0;i<valiPassword.length();i++){
-							if(Character.isLetter(valiPassword.charAt(i))) {
-								getNumAlp++;
-							}
-							else if(Character.isDigit(valiPassword.charAt(i))){
-								getNumValue++;
-							}
-							else if(!Character.isLetter(valiPassword.charAt(i))&&!Character.isDigit(valiPassword.charAt(i))){
-								countPass++;
-							}		
-							
-							if(getNumAlp>=1&&getNumValue>=1&&countPass>=1){
+				
+					checkPassword=checkPassword(valiPassword);
+					
+						if(checkPassword==true){
 								System.out.println("Valid Password");
 							}
 							else {
 								System.out.println("Invalid Password");
-								System.out.println("Please Ensure The Password Format Is CORRECT");
+								System.out.println("Please Check Through These Critiral");
+								System.out.println("1)Please Ensure The Password Format Is CORRECT");
+								System.out.println("2)Please Ensure The Password is at least 7 characters long");
 							}
-						}
-					}
-				    else {
-						System.out.println("Invalid Password");
-						System.out.println("Please Ensure The Password is at least 7 characters long");
-				    }
 				}
 				else {
 					System.out.println("Invalid Password");
 					System.out.println("Passwords Entered do not match");
 				}
 			
-			}while((valiPassword.length()<=6)||(!valiPassword.equals(staffPassword))||(getNumAlp<1&&getNumValue<1&&countPass<1));
-		}
+			}while(checkPassword==false);
+			countEnter=0;
+			 getConfirm="";
+				System.out.print("Do You Want To Add This Staff ?(Y=Yes) :");
+				addStaff=scanner.nextLine();
+		    	addStaff=addStaff.toUpperCase();
+		    	if(addStaff.equals("Y")) {
+		    		try {
+		    			Staff newStaff=new Staff(staffName,icNo,birthDate, staffID,idNo,valiPassword,staffPosition,salary,joinDate,status);
+		    		//
+		    			
+		    			FileWriter writer=new FileWriter("src\\staff.txt");
+		    			writer.append(newStaff.appendStaff());
+		    		}
+		    		catch(IOException e) {
+		    			e.printStackTrace();
+		    		}
+		    	}
+		    	else {
+					System.out.print("Staff Is Not Added");
+		    	}
+				
+			System.out.print("Do You Want To Continue Add Staff ?(Y=Yes) :");
+			 getConfirm=scanner.nextLine();
+			 getConfirm=addStaff.toUpperCase();
+	    	
+	    	
+	    	System.out.println("The Number Of Staff Added is "+countEnter);
+	    		
+			}while(addStaff.equals(("Y")));
+		
 }
 
-	private static boolean parseInt(String substring) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-		
-		
-		
-		
-		
 
+public static boolean valiName(String name) {
+		int countName=0;
+		boolean nameresult;
+		for(int j=0;j<name.length();j++) {
+			char seeChaName=name.charAt(j);
+			if(Character.isDigit(name.charAt(j))) {
+				countName++;
+			}
+			else if(!Character.isLetter(seeChaName)&&!Character.isWhitespace(seeChaName)){
+         		countName++;
+         	}
+		}
+		if(countName!=0) {
+			
+			return false;
+		}
+		else {
+			
+			return true;
+		}
+	}
+
+	public static boolean checkIC(String ic) {
+		int countIC=0;
+		int receiveMonth=0;
+		int receiveDay=0;
+		int receiveYear=0;
+		boolean getMonth=true;
+		boolean getDay=true;
+		boolean getYear=true;
 	
+		if(ic.length()==12) {
+
+					receiveMonth=Integer.parseInt(ic.substring(2,4));
+					receiveDay=Integer.parseInt(ic.substring(4,6));
+					receiveYear=Integer.parseInt(ic.substring(0,2));
+					  if(receiveMonth>12){
+						 
+					     getMonth=false; 	
+					     return false;
+				  }
+					  else if((receiveMonth==1||receiveMonth==3||receiveMonth==5||receiveMonth==7||receiveMonth==8||receiveMonth==10||receiveMonth==12)&&(receiveDay>31)) {	//day
+						  getDay=false;
+						 return false;
+					  }
+					  else if((receiveMonth==4||receiveMonth==6||receiveMonth==9||receiveMonth==11)&&receiveDay>30) {
+						  getDay=false; 
+						  return false;
+					  }
+					  else if((receiveMonth==2)&&receiveYear%4==0&&receiveDay>29) {
+						  getDay=false; 
+						  return false;
+					  }
+					  else if((receiveMonth==2)&&receiveYear%4!=0&&receiveDay>28) {
+						  getDay=false; 
+						  return false;
+					  }
+					
+					  else {
+						  getMonth=true;
+						  getDay=true;
+						  return true;
+					  }
+				
+				}	
+		else {
+			return false;
+		}
+		
+		
+	}
+	public static boolean checkPassword(String password){
+		int getNumAlp=0;
+		int getNumValue=0;
+		int countPass=0;
+		if(password.length()>6) {
+			for(int i=0;i<password.length();i++){
+				if(Character.isLetter(password.charAt(i))) {
+					getNumAlp++;
+				}
+				else if(Character.isDigit(password.charAt(i))){
+					getNumValue++;
+				}
+				else if(!Character.isLetter(password.charAt(i))&&!Character.isDigit(password.charAt(i))){
+					countPass++;
+				}		
+				
+				
+		}
+			if(getNumAlp>=1&&getNumValue>=1&&countPass>=1){
+				
+					return true;
+				}
+				else {
+			
+					return false;
+				}
+		}
+	    else {
+			return false;
+	    }
+	
+
+
+	}
 	
 }
 
