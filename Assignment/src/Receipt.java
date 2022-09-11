@@ -1,24 +1,22 @@
 
 public class Receipt {
-	private String receiptID;
+	private String receiptID="R";
 	private int idNo;
 	private Payment payment;
 	private GetDate receiptDate;
 	private static int receiptCount;
 	private static int genIdNo=1001;
 	
+	public Receipt() {
+		
+	}
+	
 	public Receipt(Payment payment) {
 		this.payment=payment;
 		this.receiptDate=payment.getPaymentDate();
-		receiptID="R";
 		idNo=genIdNo;
 		genIdNo++;
 		receiptCount++;
-	}
-	
-	
-	public void setPayment(Payment payment) {
-		
 	}
 	
 	public String getFullRecID() {
@@ -27,9 +25,20 @@ public class Receipt {
 	
 	public String toString() {
 		String receiptDetails="";
-		receiptDetails+=String.format("-----------------------------------------------------------------------------------\n");
-		receiptDetails+=String.format("| Receipt ID: %-67s |\n", getFullRecID());
-		receiptDetails+=String.format("| Receipt Date: %-65s |\n", receiptDate);
+		receiptDetails+=String.format("%-10s-----------------------------------------------------------------------------------------\n", "");
+		receiptDetails+=String.format("%-10s|                                                                                       |\n", "");
+		receiptDetails+=String.format("%-10s|                       _______     __     __     _____________                         |\n", "");
+		receiptDetails+=String.format("%-10s|                      /  _____|   |  \\   |  |   |             |                        |\n", "");
+		receiptDetails+=String.format("%-10s|                     /  /         |   \\  |  |   |____     ____|                        |\n", "");
+		receiptDetails+=String.format("%-10s|                    /  /          |    \\ |  |        |   |                             |\n", "");
+		receiptDetails+=String.format("%-10s|                   /  /           |     \\|  |        |   |                             |\n", "");
+		receiptDetails+=String.format("%-10s|                   \\  \\           |  |\\     |        |   |                             |\n", "");
+		receiptDetails+=String.format("%-10s|                    \\  \\          |  | \\    |        |   |                             |\n", "");
+		receiptDetails+=String.format("%-10s|                     \\  \\_____    |  |  \\   |        |   |                             |\n", "");
+		receiptDetails+=String.format("%-10s|                      \\_______|   |__|   \\__|        |___|                             |\n", "");
+		receiptDetails+=String.format("%-10s|                                                                                       |\n", "");
+		receiptDetails+=String.format("%-10s| Receipt ID: %-67s |\n", "", getFullRecID());
+		receiptDetails+=String.format("%-10s| Receipt Date: %-65s |\n", "", receiptDate);
 		receiptDetails+=String.format("| Handled By: %-68s|\n", payment.getStaff().getFullStaffID());
 		receiptDetails+=String.format("| %-15s%-17s%-23s%-10s%14s |\n", "Product ID", "Product Name", "Price Per Quantity", "Quantity", "Price");
 		receiptDetails+=String.format("| %-15s%-17s%-23s%-10s%s |\n", "----------", "------------", "------------------", "--------", "--------------");
@@ -38,7 +47,7 @@ public class Receipt {
 		}
 		receiptDetails+=String.format("| ------------------------------------------------------------------------------- |\n");
 		receiptDetails+=String.format("| %65s%14.2f |\n", "Subtotal(RM): ", payment.getCart().getTotalPrice());
-		if(payment.getMember().getMemberID()!="null") {
+		if(payment.getMember()!=null) {
 			receiptDetails+=String.format("| Member ID: %-68s |\n", payment.getMember().getFullMemID());
 			receiptDetails+=String.format("| Discount : %.0f%%%-66s |\n", (payment.getDiscount()*100), "");
 		}
@@ -50,5 +59,19 @@ public class Receipt {
 		}
 		receiptDetails+=String.format("-----------------------------------------------------------------------------------\n");
 		return receiptDetails;
+	}
+	
+	public boolean equals(Object o) {
+		if(o instanceof Receipt) {
+			if(((Receipt)o).idNo==idNo) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
 	}
 }
