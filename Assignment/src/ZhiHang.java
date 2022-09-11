@@ -227,7 +227,7 @@ public class ZhiHang {
 				addStaff=scanner.nextLine();
 		    	addStaff=addStaff.toUpperCase();
 		    	if(addStaff.equals("Y")) {
-		    		try {
+		    		/*try {
 		    			Staff newStaff=new Staff(staffName,icNo,birthDate, staffID,idNo,valiPassword,staffPosition,salary,joinDate,status);
 		    		//
 		    			
@@ -236,7 +236,9 @@ public class ZhiHang {
 		    		}
 		    		catch(IOException e) {
 		    			e.printStackTrace();
-		    		}
+		    		}*/
+		    		
+		    		
 		    	}
 		    	else {
 					System.out.print("Staff Is Not Added");
@@ -254,7 +256,7 @@ public class ZhiHang {
 }
 
 
-public static boolean valiName(String name) {
+	public static boolean valiName(String name) {
 		int countName=0;
 		boolean nameresult;
 		for(int j=0;j<name.length();j++) {
