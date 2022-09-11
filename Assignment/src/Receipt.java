@@ -27,6 +27,15 @@ public class Receipt {
 		String receiptDetails="";
 		receiptDetails+=String.format("%-10s-----------------------------------------------------------------------------------------\n", "");
 		receiptDetails+=String.format("%-10s|                                                                                       |\n", "");
+		receiptDetails+=String.format("%-10s|                       _______     __     __     _____________                         |\n", "");
+		receiptDetails+=String.format("%-10s|                      /  _____|   |  \\   |  |   |             |                        |\n", "");
+		receiptDetails+=String.format("%-10s|                     /  /         |   \\  |  |   |____     ____|                        |\n", "");
+		receiptDetails+=String.format("%-10s|                    /  /          |    \\ |  |        |   |                             |\n", "");
+		receiptDetails+=String.format("%-10s|                   /  /           |     \\|  |        |   |                             |\n", "");
+		receiptDetails+=String.format("%-10s|                   \\  \\           |  |\\     |        |   |                             |\n", "");
+		receiptDetails+=String.format("%-10s|                    \\  \\          |  | \\    |        |   |                             |\n", "");
+		receiptDetails+=String.format("%-10s|                     \\  \\_____    |  |  \\   |        |   |                             |\n", "");
+		receiptDetails+=String.format("%-10s|                      \\_______|   |__|   \\__|        |___|                             |\n", "");
 		receiptDetails+=String.format("%-10s|                                                                                       |\n", "");
 		receiptDetails+=String.format("%-10s| Receipt ID: %-67s |\n", "", getFullRecID());
 		receiptDetails+=String.format("%-10s| Receipt Date: %-65s |\n", "", receiptDate);
