@@ -15,6 +15,4 @@ public class Refund {
 		return refundAmount;
 	}
 	
-	
-	
 }

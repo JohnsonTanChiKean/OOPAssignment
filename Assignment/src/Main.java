@@ -9,6 +9,7 @@ import java.util.Scanner;
 //On hold cart not done 
 //Report
 //ask Mr Choo about the access modifiers for the local functions
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -22,14 +23,32 @@ public class Main {
 		readProduct(productList);
 		readStaff(staffList);
 		readMember(memberList, staffList);
-		ZhiHang.AddStaff();
+		
 		GetDate date=new GetDate();
 		
+		logo();
 		System.out.println(date.toString());
 		ZhiHang.login(staffList, productList, memberList, paymentList, receiptList, bankAccount, refundList);
 		
 
 	}
+	
+	public static void logo() {
+		System.out.println("      ___________       ____         ____        _______________________");
+		System.out.println("     /          |      |     \\      |    |      |                       |");
+		System.out.println("    /    _______|      |      \\     |    |      |                       |");
+		System.out.println("   /    /              |       \\    |    |      |________       ________|");
+		System.out.println("  /    /               |        \\   |    |               |     |");
+		System.out.println(" /    /                |    |\\   \\  |    |               |     |");
+		System.out.println("/    /                 |    | \\   \\ |    |               |     |");
+		System.out.println("\\    \\                 |    |  \\   \\|    |               |     |");
+		System.out.println(" \\    \\                |    |   \\        |               |     |");
+		System.out.println("  \\    \\               |    |    \\       |               |     |");
+		System.out.println("   \\    \\_______       |    |     \\      |               |     |");
+		System.out.println("    \\           |      |    |      \\     |               |     |");
+		System.out.println("     \\__________|      |____|       \\____|               |_____|");
+	}
+	
 	public static void readProduct(ArrayList<Product> productList) {
 		String file="src\\product.txt";
 		BufferedReader reader=null;
