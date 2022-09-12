@@ -10,7 +10,6 @@ import java.awt.Image;
 //if payment=cancelled, quantity of all items in the cart must be added back to their respective arraylist counterparts
 // report should show original quantity, current quantity, quantity on-hold and quantity sold
 //onhold list -1 not working
-//Payment class toString
 //work on the toString of BankAccount
 //report try to do bar chart
 public class ChiKean {
@@ -2578,10 +2577,23 @@ public class ChiKean {
 		quantity.add(mwQty);
 		quantity.add(swQty);
 		
+		tableReport(quantity);
+		
 	}
 	
 	public static void tableReport(ArrayList<Integer> quantity) {
 		System.out.println("  Total quantity sold of each product.");
-		System.out.printf("%-10s", "");
+		System.out.printf("%-10s--------------------------------------\n", "");
+		System.out.printf("%-10s|  Product Name   |  Quantity Sold   |\n", "");
+		System.out.printf("%-10s|-----------------+------------------|\n", "");
+		System.out.printf("%-10s|   Meta Phone    |       %-5d      |\n", "", quantity.get(0));
+		System.out.printf("%-10s|    Meta Pod     |       %-5d      |\n", "", quantity.get(1));
+		System.out.printf("%-10s|   Meta Tablet   |       %-5d      |\n", "", quantity.get(2));
+		System.out.printf("%-10s|   Meta Fridge   |       %-5d      |\n", "", quantity.get(3));
+		System.out.printf("%-10s|   Meta Printer  |       %-5d      |\n", "", quantity.get(4));
+		System.out.printf("%-10s|   Meta Scanner  |       %-5d      |\n", "", quantity.get(5));
+		System.out.printf("%-10s|   Meta Wave     |       %-5d      |\n", "", quantity.get(6));
+		System.out.printf("%-10s|   Meta Watch    |       %-5d      |\n", "", quantity.get(7));
+		System.out.printf("%-10s--------------------------------------\n", "");
 	}
 }
