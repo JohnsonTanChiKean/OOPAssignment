@@ -4,7 +4,7 @@ public class Cart {
 	private double[] pricePerItem=new double[100];
 	private double totalPrice;
 	private int noOfProducts;
-	Cart() {
+	public Cart() {
 		
 	}
 	
@@ -63,7 +63,7 @@ public class Cart {
 		for(int i=0; i<noOfProducts; i++) {
 			cartDetails+=String.format("%-10s|    %-15s%-17s%-23.2f%-8d%16.2f%-3s |\n", "", getProduct()[i].getProductID(), getProduct()[i].getProductName(), getProduct()[i].getPrice(), getProduct()[i].getQuantity(), getPricePerItem()[i], "");	
 		}
-		cartDetails+=String.format("%-10s|   --------------------------------------------------------------------------------    |\n", "");
+		cartDetails+=String.format("%-10s|    -------------------------------------------------------------------------------    |\n", "");
 		cartDetails+=String.format("%-10s| %67s%15.2f%-3s |\n", "", "Subtotal(RM): ", totalPrice, "");
 		cartDetails+=String.format("%-10s|                                                                                       |\n", "");
 		cartDetails+=String.format("%-10s-----------------------------------------------------------------------------------------\n", "");

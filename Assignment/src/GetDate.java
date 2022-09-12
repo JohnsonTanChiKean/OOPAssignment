@@ -3,7 +3,6 @@ import java.text.SimpleDateFormat;
 public class GetDate {
 	private String fullDateTime;
 	
-	
 	public GetDate() {
 		this.fullDateTime=setFullDateTime();
 	}
@@ -29,4 +28,17 @@ public class GetDate {
 		return fullDateTime;
 	}
 	
+	public boolean equals(Object o) {
+		if(o instanceof GetDate) {
+			if(((GetDate)o).fullDateTime.equals(fullDateTime)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
 }
