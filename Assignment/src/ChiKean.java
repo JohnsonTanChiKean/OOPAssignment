@@ -2596,4 +2596,121 @@ public class ChiKean {
 		System.out.printf("%-10s|   Meta Watch    |       %-5d      |\n", "", quantity.get(7));
 		System.out.printf("%-10s--------------------------------------\n", "");
 	}
+	
+	public static void graphReport() {
+		System.out.println("            /|\\");
+		System.out.println("             |");
+		//Print phone graph(start)
+		  System.out.print("             |");
+		  printUnderscore(calculation(10));
+		System.out.println();
+		  System.out.print("Meta Phone   |");
+		  printUnderscore(calculation(10));
+		
+		System.out.println("|");
+		//print phone graph end
+		//print earphone graph start
+		  System.out.print("             |");
+		  printUnderscore(calculation(100));
+		  System.out.println();
+		  System.out.print("Meta Pod     |");
+		  printUnderscore(calculation(100));
+		  System.out.println("|");
+		//print earphone graph end
+		//print tablet graph start
+		  System.out.print("             |");
+		  printUnderscore(calculation(499));
+		  System.out.println();
+		  System.out.print("Meta Tablet  |");
+		  printUnderscore(calculation(499));
+		  System.out.println("|");
+		//print tablet graph end
+		//print fridge graph start
+		  System.out.print("             |");
+		  printUnderscore(calculation(10));
+		  System.out.println();
+		  System.out.print("Meta Fridge  |");
+		  printUnderscore(calculation(10));
+		  System.out.println("|");
+		//print fridge graph end
+		//print printer graph start
+		  System.out.print("             |");
+		  printUnderscore(calculation(10));
+		  System.out.println();
+		  System.out.print("Meta Printer |");
+		  printUnderscore(calculation(10));
+		  System.out.println("|");
+		//print printer graph end
+		//print scanner graph start
+		  System.out.print("             |");
+		  printUnderscore(calculation(10));
+		  System.out.println();
+		  System.out.print("Meta Scanner |");
+		  printUnderscore(calculation(10));
+		  System.out.println("|");
+		//print scanner graph end
+		//print microwave graph start
+		  System.out.print("             |");
+		  printUnderscore(calculation(10));
+		  System.out.println();
+		  System.out.print("Meta Wave    |");
+		  printUnderscore(calculation(10));
+		  System.out.println("|");
+		//print microwave graph end
+		//print smartwatch graph start
+		  System.out.print("             |");
+		  printUnderscore(calculation(20));
+		  System.out.println();
+		  System.out.print("Meta Watch   |");
+		  printUnderscore(calculation(20));
+		  System.out.println("|");
+		//print smartwatch graph end
+		  System.out.println("             |");
+		  System.out.print("             |");
+		  printXAxis();
+	}
+	
+	public static int calculation(int value) {
+		int count=0;
+		if(value%10!=0) {
+			count=(value/10);
+		}
+		else if(value%10==0) {
+			count=(value/10)-1;
+		}
+		return count;
+	}
+	
+	public static void printUnderscore(int count) {
+		for(int i=0; i<count; i++) {
+			 System.out.print("_");
+		}
+	}
+	
+	public static void printSpace(int count) {
+		for(int i=0; i<count; i++) {
+			 System.out.print(" ");
+		}
+	}
+	
+	public static void printXAxis() {
+		
+		for(int i=0; i<10; i++) {
+			printUnderscore(9);
+			System.out.print("|");
+		}
+		System.out.println("_\\");
+		System.out.print("              ");
+		for(int i=0; i<10; i++) {
+			printSpace(9);
+			System.out.print("|");
+		}
+		
+		System.out.println(" /");
+		System.out.print("               ");
+		for(int i=100; i<=1000; i+=100) {
+			printSpace(7);
+			System.out.print(i);
+		}
+	}
 }

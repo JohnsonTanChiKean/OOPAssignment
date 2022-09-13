@@ -40,6 +40,7 @@ public class Receipt {
 		receiptDetails+=String.format("%-10s|                      \\  \\          |  | \\    |        |   |                           |\n", "");
 		receiptDetails+=String.format("%-10s|                       \\  \\_____    |  |  \\   |        |   |                           |\n", "");
 		receiptDetails+=String.format("%-10s|                        \\_______|   |__|   \\__|        |___|                           |\n", "");
+		receiptDetails+=String.format("%-10s|                     ============================================                      |\n", "");
 		receiptDetails+=String.format("%-10s|                                                                                       |\n", "");
 		receiptDetails+=String.format("%-10s|                                                                                       |\n", "");
 		receiptDetails+=String.format("%-10s| Receipt ID         : %-64s |\n", "", getFullRecID());
