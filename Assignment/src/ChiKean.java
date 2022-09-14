@@ -2568,21 +2568,18 @@ public class ChiKean {
 			}
 		}
 		
-		quantity.add(hpQty);
-		quantity.add(epQty);
-		quantity.add(tabQty);
-		quantity.add(friQty);
-		quantity.add(priQty);
-		quantity.add(scaQty);
-		quantity.add(mwQty);
-		quantity.add(swQty);
+
 		
-		//tableReport(quantity);
+		tableReport(receiptList);
 		
 	}
 	
-	public static void tableReport(ArrayList<Integer> quantity, ArrayList<Receipt> receiptList) {
+	public static void tableReport(ArrayList<Receipt> receiptList) {
 		int qtyCount=0, discount2=0, discount3=0, discount5=0;
+		System.out.println("  Total quantity sold of each product.");
+		System.out.printf("%-10s--------------------------------------------------------------------------------------\n", "");
+		System.out.printf("%-10s|  Product Name   |  Quantity Sold   |  2%% discount  |  3%% discount  |  5%% discount  |\n", "");
+		System.out.printf("%-10s|-----------------+------------------+---------------+---------------+----------------\n", "");
 		for(int i=0; i<receiptList.size(); i++) {
 			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
 				if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof SmartPhone) {
@@ -2597,30 +2594,11 @@ public class ChiKean {
 						discount5+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
 					}
 				}
-				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Earphone) {
-					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
-				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Tablet) {
-					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
-				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Refrigerator) {
-					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
-				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Printer) {
-					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
-				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Scanners) {
-					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
-				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Microwave) {
-					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
-				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof SmartWatch) {
-					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
 			}
 		}
 		
+		System.out.printf("%-10s|   Meta Phone    |       %-5d      |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, discount2, discount3, discount5);
+		qtyCount=0; discount2=0; discount3=0; discount5=0;
 		for(int i=0; i<receiptList.size(); i++) {
 			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
 				if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Earphone) {
@@ -2637,23 +2615,120 @@ public class ChiKean {
 				}
 			}
 		}
+		System.out.printf("%-10s|    Meta Pod     |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
 		
+		qtyCount=0; discount2=0; discount3=0; discount5=0;
 		for(int i=0; i<receiptList.size(); i++) {
 			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
-				
+				if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Tablet) {
+					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					if(receiptList.get(i).getPayment().getDiscount()==0.02) {
+						discount2+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+					else if(receiptList.get(i).getPayment().getDiscount()==0.03) {
+						discount3+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+					else if(receiptList.get(i).getPayment().getDiscount()==0.05) {
+						discount5+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
 			}
 		}
-		System.out.println("  Total quantity sold of each product.");
-		System.out.printf("%-10s----------------------------------------------------------------------------------------\n", "");
-		System.out.printf("%-10s|  Product Name   |  Quantity Sold   |  2%% discount  |  3%% discount  |  5%% discount  |\n", "");
-		System.out.printf("%-10s|-----------------+------------------+--------------+--------------+--------------------\n", "");
-		System.out.printf("%-10s|   Meta Phone    |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
-		System.out.printf("%-10s|    Meta Pod     |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
+		
 		System.out.printf("%-10s|   Meta Tablet   |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
+		qtyCount=0; discount2=0; discount3=0; discount5=0;
+		for(int i=0; i<receiptList.size(); i++) {
+			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
+				if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Refrigerator) {
+					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					if(receiptList.get(i).getPayment().getDiscount()==0.02) {
+						discount2+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+					else if(receiptList.get(i).getPayment().getDiscount()==0.03) {
+						discount3+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+					else if(receiptList.get(i).getPayment().getDiscount()==0.05) {
+						discount5+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+			}
+		}
+		
 		System.out.printf("%-10s|   Meta Fridge   |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
+		qtyCount=0; discount2=0; discount3=0; discount5=0;
+		for(int i=0; i<receiptList.size(); i++) {
+			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
+				if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Printer) {
+					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					if(receiptList.get(i).getPayment().getDiscount()==0.02) {
+						discount2+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+					else if(receiptList.get(i).getPayment().getDiscount()==0.03) {
+						discount3+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+					else if(receiptList.get(i).getPayment().getDiscount()==0.05) {
+						discount5+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+			}
+		}
+		
 		System.out.printf("%-10s|   Meta Printer  |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
+		qtyCount=0; discount2=0; discount3=0; discount5=0;
+		for(int i=0; i<receiptList.size(); i++) {
+			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
+				if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Scanners) {
+					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					if(receiptList.get(i).getPayment().getDiscount()==0.02) {
+						discount2+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+					else if(receiptList.get(i).getPayment().getDiscount()==0.03) {
+						discount3+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+					else if(receiptList.get(i).getPayment().getDiscount()==0.05) {
+						discount5+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+			}
+		}
+		
 		System.out.printf("%-10s|   Meta Scanner  |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
+		qtyCount=0; discount2=0; discount3=0; discount5=0;
+		for(int i=0; i<receiptList.size(); i++) {
+			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
+				if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Microwave) {
+					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					if(receiptList.get(i).getPayment().getDiscount()==0.02) {
+						discount2+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+					else if(receiptList.get(i).getPayment().getDiscount()==0.03) {
+						discount3+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+					else if(receiptList.get(i).getPayment().getDiscount()==0.05) {
+						discount5+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+			}
+		}
+		
 		System.out.printf("%-10s|   Meta Wave     |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
+		qtyCount=0; discount2=0; discount3=0; discount5=0;
+		for(int i=0; i<receiptList.size(); i++) {
+			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
+				if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof SmartWatch) {
+					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					if(receiptList.get(i).getPayment().getDiscount()==0.02) {
+						discount2+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+					else if(receiptList.get(i).getPayment().getDiscount()==0.03) {
+						discount3+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+					else if(receiptList.get(i).getPayment().getDiscount()==0.05) {
+						discount5+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+			}
+		}
 		System.out.printf("%-10s|   Meta Watch    |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
 		System.out.printf("%-10s----------------------------------------------------------------------------------------\n", "");
 	}
