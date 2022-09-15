@@ -2,14 +2,13 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class JiaHui {
-	public static void processRefund(ArrayList<Receipt> receiptList, ArrayList<Product> productList, Cart cart ,BankAccount bankAcc) {
+	public static void processRefund(ArrayList<Receipt> receiptList, ArrayList<Product> productList, BankAccount bankAcc, ArrayList<Refund> refundList) {
 		Scanner input = new Scanner(System.in);
 		
 		int index;
 		index=findReceipt(receiptList);
 		System.out.println(receiptList.get(index).toString());
-		Refund refund = new Refund();
-		Payment payment = new Payment();
+		Refund refund = new Refund(receiptList.get(index));
 
 		int rfOption;
 		char otherProd;
@@ -17,9 +16,9 @@ public class JiaHui {
 		
 		
 		do {
-			productDetails(cart,refund);
-			rfOption = SelectedProd(productList,cart);
-			pricePerItem = refundQuantity(cart,rfOption,payment,refund,bankAcc);
+			productDetails(receiptList.get(index).getPayment().getCart(),refund);
+			rfOption = SelectedProd(productList,receiptList.get(index).getPayment().getCart());
+			refundQuantity(receiptList.get(index).getPayment().getCart(),rfOption,receiptList.get(index).getPayment(),refund,bankAcc);
 
 
 			do { 
@@ -74,7 +73,7 @@ public class JiaHui {
 		for(int i=0; i<cart.getNoOfProducts(); i++) {
 			for(int j =0; j<refund.getNoOfProducts(); j++) {
 				if(cart.getProduct()[i].getProductID().equals(refund.getRefundProduct()[j].getProductID())) {
-					System.out.printf("%-5s%-5d|    %-15s%-17s%-23.2f%-13d%-10.2f |\n", "", (i+1),cart.getProduct()[i].getProductID(), cart.getProduct()[i].getProductName(), cart.getProduct()[i].getPrice(),( cart.getProduct()[i].getQuantity() - refund.getRefundProduct()[j].getQuantity() ), ( cart.getPricePerItem()[i] - refund.getPricePerItem()[j]) );	
+					System.out.printf("%-5s%-5d|    %-15s%-17s%-23.2f%-13d%-10.2f |\n", "", (i+1),cart.getProduct()[i].getProductID(), cart.getProduct()[i].getProductName(), cart.getProduct()[i].getPrice(),( cart.getProduct()[i].getQuantity() - refund.getRefundProduct()[j].getQuantity() ), (cart.getPricePerItem()[i] - refund.getPricePerItem()[j]) );	
 					
 				}
 			}
@@ -119,7 +118,7 @@ public class JiaHui {
 	}
 	
 	
-	public static double refundQuantity(Cart cart, int rfOption, Payment payment, Refund refund, BankAccount bankAcc) {
+	public static void refundQuantity(Cart cart, int rfOption, Payment payment, Refund refund, BankAccount bankAcc) {
 		Scanner refundInput = new Scanner(System.in);
 		
 		double pricePerItem=0;
@@ -207,7 +206,7 @@ public class JiaHui {
 					prod.setCategory(cart.getProduct()[rfOption].getCategory());
 					prod.setType(cart.getProduct()[rfOption].getType());
 					prod.setPrice(cart.getProduct()[rfOption].getPrice());
-					prod.setQuantity(cart.getProduct()[rfOption].getQuantity());
+					prod.setQuantity(rQuantity);
 					prod.setColor(cart.getProduct()[rfOption].getColor());
 					
 					refund.addRefund(prod, 
@@ -224,7 +223,6 @@ public class JiaHui {
 				System.out.println();
 			}
 		}while(validQty == 0);
-		return pricePerItem;
 	}
 	
 	

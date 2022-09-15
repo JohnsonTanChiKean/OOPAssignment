@@ -20,11 +20,11 @@ public class Refund {
 	private int noOfProducts;
 	private int genRefundID=1001;
 	
-	public void Refund() {
+	public Refund() {
 		
 	}
 	
-	public void Refund(Receipt receipt) {
+	public Refund(Receipt receipt) {
 		this.receipt=receipt;
 	}
 
