@@ -2538,7 +2538,7 @@ public class ChiKean {
 
 	public static void report(ArrayList<Receipt> receiptList) {
 		tableReport(receiptList);
-		
+		graphReport(receiptList);
 	}
 	
 	public static void tableReport(ArrayList<Receipt> receiptList) {
@@ -2700,73 +2700,169 @@ public class ChiKean {
 		System.out.printf("%-10s------------------------------------------------------------------------------------------------------\n", "");
 	}
 	
-	public static void graphReport() {
+	public static void graphReport(ArrayList<Receipt> receiptList) {
+		int qtyCount=0;
 		System.out.println("            /|\\");
 		System.out.println("             |");
 		//Print phone graph(start)
+		for(int i=0; i<receiptList.size(); i++) {
+			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
+				if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof SmartPhone) {
+					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+				}
+			}
+		}
 		  System.out.print("             |");
-		  printUnderscore(calculation(10));
+		  printUnderscore(calculation(qtyCount));
 		System.out.println();
 		  System.out.print("Meta Phone   |");
-		  printUnderscore(calculation(10));
+		  printUnderscore(calculation(qtyCount));
 		
-		System.out.println("|");
+		  if(qtyCount<=10) {
+			  System.out.println(qtyCount);
+		  }
+		  else {
+			  System.out.println("|"+qtyCount);
+		  }
 		//print phone graph end
+		  qtyCount=0;
 		//print earphone graph start
+	  for(int i=0; i<receiptList.size(); i++) {
+			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
+				if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Earphone) {
+					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+				}
+			}
+	  }
 		  System.out.print("             |");
-		  printUnderscore(calculation(100));
+		  printUnderscore(calculation(qtyCount));
 		  System.out.println();
 		  System.out.print("Meta Pod     |");
-		  printUnderscore(calculation(100));
-		  System.out.println("|");
+		  printUnderscore(calculation(qtyCount));
+		  if(qtyCount<=10) {
+			  System.out.println(qtyCount);
+		  }
+		  else {
+			  System.out.println("|"+qtyCount);
+		  }
 		//print earphone graph end
+		  qtyCount=0;
 		//print tablet graph start
+		  for(int i=0; i<receiptList.size(); i++) {
+				for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
+					if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Tablet) {
+						qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+		  }
 		  System.out.print("             |");
-		  printUnderscore(calculation(499));
+		  printUnderscore(calculation(qtyCount));
 		  System.out.println();
 		  System.out.print("Meta Tablet  |");
-		  printUnderscore(calculation(499));
-		  System.out.println("|");
+		  printUnderscore(calculation(qtyCount));
+		  if(qtyCount<=10) {
+			  System.out.println(qtyCount);
+		  }
+		  else {
+			  System.out.println("|"+qtyCount);
+		  }
 		//print tablet graph end
 		//print fridge graph start
 		  System.out.print("             |");
-		  printUnderscore(calculation(10));
+		  printUnderscore(calculation(qtyCount));
 		  System.out.println();
 		  System.out.print("Meta Fridge  |");
-		  printUnderscore(calculation(10));
-		  System.out.println("|");
+		  printUnderscore(calculation(qtyCount));
+		  if(qtyCount<=10) {
+			  System.out.println(qtyCount);
+		  }
+		  else {
+			  System.out.println("|"+qtyCount);
+		  }
 		//print fridge graph end
+		  qtyCount=0;
 		//print printer graph start
+		  for(int i=0; i<receiptList.size(); i++) {
+				for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
+					if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Printer) {
+						qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+		  }
 		  System.out.print("             |");
-		  printUnderscore(calculation(10));
+		  printUnderscore(calculation(qtyCount));
 		  System.out.println();
 		  System.out.print("Meta Printer |");
-		  printUnderscore(calculation(10));
-		  System.out.println("|");
+		  printUnderscore(calculation(qtyCount));
+		  if(qtyCount<=10) {
+			  System.out.println(qtyCount);
+		  }
+		  else {
+			  System.out.println("|"+qtyCount);
+		  }
 		//print printer graph end
+		  qtyCount=0;
 		//print scanner graph start
+		  for(int i=0; i<receiptList.size(); i++) {
+				for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
+					if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Scanners) {
+						qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+		  }
 		  System.out.print("             |");
-		  printUnderscore(calculation(10));
+		  printUnderscore(calculation(qtyCount));
 		  System.out.println();
 		  System.out.print("Meta Scanner |");
-		  printUnderscore(calculation(10));
-		  System.out.println("|");
+		  printUnderscore(calculation(qtyCount));
+		  if(qtyCount<=10) {
+			  System.out.println(qtyCount);
+		  }
+		  else {
+			  System.out.println("|"+qtyCount);
+		  }
 		//print scanner graph end
+		  qtyCount=0;
 		//print microwave graph start
+		  for(int i=0; i<receiptList.size(); i++) {
+				for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
+					if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Microwave) {
+						qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+		  }
 		  System.out.print("             |");
-		  printUnderscore(calculation(10));
+		  printUnderscore(calculation(qtyCount));
 		  System.out.println();
 		  System.out.print("Meta Wave    |");
-		  printUnderscore(calculation(10));
-		  System.out.println("|");
+		  printUnderscore(calculation(qtyCount));
+		  if(qtyCount<=10) {
+			  System.out.println(qtyCount);
+		  }
+		  else {
+			  System.out.println("|"+qtyCount);
+		  }
 		//print microwave graph end
+		  qtyCount=0;
 		//print smartwatch graph start
+		  for(int i=0; i<receiptList.size(); i++) {
+				for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
+					if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof SmartWatch) {
+						qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+		  }
 		  System.out.print("             |");
-		  printUnderscore(calculation(20));
+		  printUnderscore(calculation(qtyCount));
 		  System.out.println();
 		  System.out.print("Meta Watch   |");
-		  printUnderscore(calculation(20));
-		  System.out.println("|");
+		  printUnderscore(calculation(qtyCount));
+		  if(qtyCount<=10) {
+			  System.out.println(qtyCount);
+		  }
+		  else {
+			  System.out.println("|"+qtyCount);
+		  }
 		//print smartwatch graph end
 		  System.out.println("             |");
 		  System.out.print("             |");
@@ -2815,5 +2911,6 @@ public class ChiKean {
 			printSpace(7);
 			System.out.print(i);
 		}
+		System.out.println();
 	}
 }
