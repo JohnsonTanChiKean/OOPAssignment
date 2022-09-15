@@ -2408,7 +2408,7 @@ public class ChiKean {
 	}
 	
 	public static void placeOrder(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, ArrayList<Payment> paymentList, Staff staff, ArrayList<Receipt> receiptList, BankAccount bankAccount) {
-		int newQty, memIDNo, checkMemID=0, cancel=0;
+		int newQty, memIDNo, checkMemID=0, cancel=0, found=0;
 		char choice='N', addProdChoice='N', editChoice='N', paymentChoice='N', orderChoice='N';
 		String memID;
 		Scanner scanner=new Scanner(System.in);
@@ -2424,6 +2424,7 @@ public class ChiKean {
 				choice='N';
 				addProdChoice='N';
 				cancel=0;
+				found=0;
 				String prodChoice=selectProduct(productList);
 				if(prodChoice.equals("Smart Phone")) {
 					product=new SmartPhone();
@@ -2478,7 +2479,15 @@ public class ChiKean {
 									productList.get(i).setQuantity(newQty);
 								}
 							}
-							cart.addProduct(product);
+							for(int i=0; i<cart.getNoOfProducts()&&found!=1; i++) {
+								if(cart.getProduct()[i].getProductID().equals(product.getProductID())) {
+									found=1;
+									cart.modifyQuantity(i, cart.getProduct()[i].getQuantity()+product.getQuantity());
+								}
+							}
+							if(found!=1) {
+								cart.addProduct(product);
+							}
 							System.out.println("  Product has been added to cart.");
 						}
 					}
