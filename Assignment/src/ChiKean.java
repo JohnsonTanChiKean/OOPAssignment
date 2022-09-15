@@ -2195,7 +2195,7 @@ public class ChiKean {
 						cancel=0;
 						checkMemID=0;
 						System.out.print("  Enter Member ID(Enter X if there is no memberID): ");
-						memID=scanner.next();
+						memID=scanner.next().toUpperCase();
 						scanner.nextLine();
 						if(memID.toUpperCase().equals("X")) {
 							Member member=null;
@@ -2537,39 +2537,6 @@ public class ChiKean {
 	}
 
 	public static void report(ArrayList<Receipt> receiptList) {
-		ArrayList<Integer> quantity=new ArrayList<Integer>();
-		int hpQty=0, epQty=0, tabQty=0, friQty=0, priQty=0, scaQty=0, mwQty=0, swQty=0;
-		for(int i=0; i<receiptList.size(); i++) {
-			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
-				if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof SmartPhone) {
-					hpQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
-				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Earphone) {
-					epQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
-				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Tablet) {
-					tabQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
-				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Refrigerator) {
-					friQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
-				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Printer) {
-					priQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
-				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Scanners) {
-					scaQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
-				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Microwave) {
-					mwQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
-				else if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof SmartWatch) {
-					swQty+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
-				}
-			}
-		}
-		
-
-		
 		tableReport(receiptList);
 		
 	}
@@ -2577,9 +2544,9 @@ public class ChiKean {
 	public static void tableReport(ArrayList<Receipt> receiptList) {
 		int qtyCount=0, discount2=0, discount3=0, discount5=0;
 		System.out.println("  Total quantity sold of each product.");
-		System.out.printf("%-10s--------------------------------------------------------------------------------------\n", "");
-		System.out.printf("%-10s|  Product Name   |  Quantity Sold   |  2%% discount  |  3%% discount  |  5%% discount  |\n", "");
-		System.out.printf("%-10s|-----------------+------------------+---------------+---------------+----------------\n", "");
+		System.out.printf("%-10s------------------------------------------------------------------------------------------------------\n", "");
+		System.out.printf("%-10s|  Product Name   |  Quantity Sold   |  Full Price   |  2%% discount  |  3%% discount  |  5%% discount  |\n", "");
+		System.out.printf("%-10s|-----------------+------------------+---------------+---------------+---------------+---------------|\n", "");
 		for(int i=0; i<receiptList.size(); i++) {
 			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
 				if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof SmartPhone) {
@@ -2597,7 +2564,7 @@ public class ChiKean {
 			}
 		}
 		
-		System.out.printf("%-10s|   Meta Phone    |       %-5d      |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, discount2, discount3, discount5);
+		System.out.printf("%-10s|   Meta Phone    |       %-5d      |       %-5d   |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, qtyCount-discount2-discount3-discount5, discount2, discount3, discount5);
 		qtyCount=0; discount2=0; discount3=0; discount5=0;
 		for(int i=0; i<receiptList.size(); i++) {
 			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
@@ -2615,7 +2582,7 @@ public class ChiKean {
 				}
 			}
 		}
-		System.out.printf("%-10s|    Meta Pod     |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
+		System.out.printf("%-10s|    Meta Pod     |       %-5d      |       %-5d   |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, qtyCount-discount2-discount3-discount5, discount2, discount3, discount5);
 		
 		qtyCount=0; discount2=0; discount3=0; discount5=0;
 		for(int i=0; i<receiptList.size(); i++) {
@@ -2635,7 +2602,7 @@ public class ChiKean {
 			}
 		}
 		
-		System.out.printf("%-10s|   Meta Tablet   |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
+		System.out.printf("%-10s|   Meta Tablet   |       %-5d      |       %-5d   |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, qtyCount-discount2-discount3-discount5, discount2, discount3, discount5);
 		qtyCount=0; discount2=0; discount3=0; discount5=0;
 		for(int i=0; i<receiptList.size(); i++) {
 			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
@@ -2654,7 +2621,7 @@ public class ChiKean {
 			}
 		}
 		
-		System.out.printf("%-10s|   Meta Fridge   |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
+		System.out.printf("%-10s|   Meta Fridge   |       %-5d      |       %-5d   |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, qtyCount-discount2-discount3-discount5, discount2, discount3, discount5);
 		qtyCount=0; discount2=0; discount3=0; discount5=0;
 		for(int i=0; i<receiptList.size(); i++) {
 			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
@@ -2673,7 +2640,7 @@ public class ChiKean {
 			}
 		}
 		
-		System.out.printf("%-10s|   Meta Printer  |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
+		System.out.printf("%-10s|   Meta Printer  |       %-5d      |       %-5d   |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, qtyCount-discount2-discount3-discount5, discount2, discount3, discount5);
 		qtyCount=0; discount2=0; discount3=0; discount5=0;
 		for(int i=0; i<receiptList.size(); i++) {
 			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
@@ -2692,7 +2659,7 @@ public class ChiKean {
 			}
 		}
 		
-		System.out.printf("%-10s|   Meta Scanner  |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
+		System.out.printf("%-10s|   Meta Scanner  |       %-5d      |       %-5d   |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, qtyCount-discount2-discount3-discount5, discount2, discount3, discount5);
 		qtyCount=0; discount2=0; discount3=0; discount5=0;
 		for(int i=0; i<receiptList.size(); i++) {
 			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
@@ -2711,7 +2678,7 @@ public class ChiKean {
 			}
 		}
 		
-		System.out.printf("%-10s|   Meta Wave     |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
+		System.out.printf("%-10s|   Meta Wave     |       %-5d      |       %-5d   |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, qtyCount-discount2-discount3-discount5, discount2, discount3, discount5);
 		qtyCount=0; discount2=0; discount3=0; discount5=0;
 		for(int i=0; i<receiptList.size(); i++) {
 			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
@@ -2729,8 +2696,8 @@ public class ChiKean {
 				}
 			}
 		}
-		System.out.printf("%-10s|   Meta Watch    |       %-5d      |       %-5d      |       %-5d      |       %-5d      |\n", "", qtyCount, discount2, discount3, discount5);
-		System.out.printf("%-10s----------------------------------------------------------------------------------------\n", "");
+		System.out.printf("%-10s|   Meta Watch    |       %-5d      |       %-5d   |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, qtyCount-discount2-discount3-discount5, discount2, discount3, discount5);
+		System.out.printf("%-10s------------------------------------------------------------------------------------------------------\n", "");
 	}
 	
 	public static void graphReport() {

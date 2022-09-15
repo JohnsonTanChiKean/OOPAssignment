@@ -5,10 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//no bank account yet
-//On hold cart not done 
-//Report
-//ask Mr Choo about the access modifiers for the local functions
 
 public class Main {
 
@@ -30,7 +26,6 @@ public class Main {
 		System.out.println(date.toString());
 		ZhiHang.login(staffList, productList, memberList, paymentList, receiptList, bankAccount, refundList);
 		
-
 	}
 	
 	public static void logo() {
@@ -105,7 +100,7 @@ public class Main {
 			reader=new BufferedReader(new FileReader(file));
 			while((line=reader.readLine())!=null) {
 				String[] row=line.split(",");
-				Staff tempStaff=new Staff(row[0], row[1], row[2], row[3], Integer.parseInt(row[4]), row[5], row[6], Double.parseDouble(row[7]), row[8], row[9]);
+				Staff tempStaff=new Staff(row[0], row[1], row[2], row[3], row[4], Integer.parseInt(row[5]), row[6], row[7], Double.parseDouble(row[8]), row[9], row[10]);
 				staffList.add(tempStaff);
 			}
 		} catch (Exception e) {
@@ -124,8 +119,8 @@ public class Main {
 				while((line=reader.readLine())!=null) {
 					String[] row=line.split(",");
 					for(int i=0; i<staffList.size(); i++) {
-						if(staffList.get(i).getFullStaffID().equals(row[6])) {
-							Member tempMember=new Member(row[0], row[1], row[2], row[3], Integer.parseInt(row[4]), row[5], staffList.get(i), row[7]);
+						if(staffList.get(i).getFullStaffID().equals(row[9])) {
+							Member tempMember=new Member(row[0], row[1], row[2], row[3], row[4], Integer.parseInt(row[5]), row[6], row[7], row[8], staffList.get(i), row[10]);
 							memberList.add(tempMember);
 						}
 					}
@@ -136,8 +131,6 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
-		
 	}
 	
 

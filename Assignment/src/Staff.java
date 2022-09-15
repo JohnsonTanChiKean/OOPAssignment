@@ -19,8 +19,8 @@ public class Staff extends Person{
 		staffCount++;
 	}
 	
-	public Staff(String name, String icNo, String birthDate, String staffID, int idNo, String password, String position, double salary, String joinDate, String status) {
-		super(name, icNo, birthDate);
+	public Staff(String name, String icNo, String birthDate, String contactNum, String staffID, int idNo, String password, String position, double salary, String joinDate, String status) {
+		super(name, icNo, birthDate, contactNum);
 		setStaffID(staffID);
 		setIdNo(idNo);
 		setPosition(position);
