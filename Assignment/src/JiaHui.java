@@ -234,7 +234,7 @@ public class JiaHui {
 			}
 			
 			else {
-				System.out.println(rQuantity + " had exceeded the quantity purchased " + cart.getProduct()[rfOption].getQuantity() + ".");
+				System.out.println(rQuantity + " had exceeded the available refund quantity " + (receipt.getPayment().getCart().getProduct()[rfOption].getQuantity()-refundQty) + ".");
 				System.out.println("Please reenter the quantity.");
 				System.out.println();
 			}
