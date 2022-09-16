@@ -16,7 +16,7 @@ public class JiaHui {
 		
 		
 		do {
-			productDetails(receiptList.get(index).getPayment().getCart(),refund);
+			productDetails(receiptList.get(index), refundList, refund);
 			rfOption = SelectedProd(productList,receiptList.get(index).getPayment().getCart());
 			refundQuantity(receiptList.get(index).getPayment().getCart(),rfOption,receiptList.get(index).getPayment(),refund,bankAcc);
 
@@ -28,7 +28,6 @@ public class JiaHui {
 			}while(otherProd == 'Y');
 			
 		}while(otherProd == 'Y');
-
 	}
 	
 	public static int findReceipt(ArrayList<Receipt> receiptList) {
@@ -63,30 +62,184 @@ public class JiaHui {
 	}
 	
 	
-	public static void productDetails(Cart cart, Refund refund) {
+	public static void productDetails(Receipt receipt, ArrayList<Refund> refundList, Refund refund, BankAccount bankAcc) {
+		Scanner refundInput=new Scanner(System.in);
+		int refundQty=0;
+		double refundPrice=0;
 		
 		System.out.printf("%-10s-------------------------------------------------------------------------------------\n", "");
 		System.out.printf("%-10s|                                                                                   |\n", "");
 		System.out.printf("%-10s|    %-15s%-17s%-23s%-13s%-10s |\n", "","Product ID", "Product Name", "Price Per Quantity", "Quantity", "Price");
 		System.out.printf("%-10s|    %-15s%-17s%-23s%-13s%-10s |\n", "","----------", "------------", "------------------", "--------", "-----");
 		
-		for(int i=0; i<cart.getNoOfProducts(); i++) {
-			for(int j =0; j<refund.getNoOfProducts(); j++) {
-				if(cart.getProduct()[i].getProductID().equals(refund.getRefundProduct()[j].getProductID())) {
-					System.out.printf("%-5s%-5d|    %-15s%-17s%-23.2f%-13d%-10.2f |\n", "", (i+1),cart.getProduct()[i].getProductID(), cart.getProduct()[i].getProductName(), cart.getProduct()[i].getPrice(),( cart.getProduct()[i].getQuantity() - refund.getRefundProduct()[j].getQuantity() ), (cart.getPricePerItem()[i] - refund.getPricePerItem()[j]) );	
-					
+		for(int i=0; i<receipt.getPayment().getCart().getNoOfProducts(); i++) {
+			refundQty=0;
+			refundPrice=0;
+			for(int j =0; j<refundList.size(); j++) {
+				if((receipt.getFullRecID().equals(refundList.get(j).getReceipt().getFullRecID()))&&refundList.get(j).getStatus().equals("approved")) {
+					for(int k=0; k<refundList.get(j).getNoOfProducts(); i++) {
+						if(receipt.getPayment().getCart().getProduct()[i].getProductID().equals(refundList.get(j).getRefundProduct()[k].getProductID())) {
+							refundQty+=refundList.get(j).getRefundProduct()[k].getQuantity();
+							refundPrice+=refundList.get(j).getPricePerItem()[k];
+						}
+					}
+				}
+			}
+			for(int j=0; j<refund.getNoOfProducts(); j++) {
+				if(receipt.getPayment().getCart().getProduct()[i].getProductID().equals(refund.getRefundProduct()[j].getProductID())) {
+					refundQty+=refund.getRefundProduct()[j].getQuantity();
+					refundPrice+=refund.getPricePerItem()[j];
+				}
+			}
+			
+			System.out.printf("%-5s%-5d|    %-15s%-17s%-23.2f%-13d%-10.2f |\n", "", (i+1),receipt.getPayment().getCart().getProduct()[i].getProductID(), receipt.getPayment().getCart().getProduct()[i].getProductName(), receipt.getPayment().getCart().getProduct()[i].getPrice(),( receipt.getPayment().getCart().getProduct()[i].getQuantity() - refundQty ), (receipt.getPayment().getCart().getPricePerItem()[i] - refundPrice) );	
+		}
+		System.out.printf("%-10s|                                                                                   |\n", "");
+		System.out.printf("%-10s-------------------------------------------------------------------------------------\n\n", "");
+		
+		//taken from SelectedProd
+		System.out.println("Please enter your choice for refund: ");
+		int rfOption = refundInput.nextInt();
+		refundInput.nextLine();
+		
+		rfOption = rfOption -1;
+		refundQty=0;
+		refundPrice=0;
+		System.out.println();
+		System.out.printf("%-10s-------------------------------------------------------------------------------------\n", "");
+		System.out.printf("%-10s|                                                                                   |\n", "");
+		System.out.printf("%-10s|    %-15s%-17s%-23s%-13s%-10s |\n", "","Product ID", "Product Name", "Price Per Quantity", "Quantity", "Price");
+		System.out.printf("%-10s|    %-15s%-17s%-23s%-13s%-10s |\n", "","----------", "------------", "------------------", "--------", "-----");
+		for(int i=0; i<refundList.size(); i++) {
+			if((receipt.getFullRecID().equals(refundList.get(i).getReceipt().getFullRecID()))&&refundList.get(i).getStatus().equals("approved")) {
+				for(int j=0; j<refundList.get(i).getNoOfProducts(); i++) {
+					if(receipt.getPayment().getCart().getProduct()[rfOption].getProductID().equals(refundList.get(i).getRefundProduct()[j].getProductID())) {
+						refundQty+=refundList.get(i).getRefundProduct()[j].getQuantity();
+						refundPrice+=refundList.get(i).getPricePerItem()[j];
+					}
 				}
 			}
 		}
 		
+		for(int i=0; i<refund.getNoOfProducts(); i++) {
+			if(receipt.getPayment().getCart().getProduct()[rfOption].getProductID().equals(refund.getRefundProduct()[i].getProductID())) {
+				refundQty+=refund.getRefundProduct()[i].getQuantity();
+				refundPrice+=refund.getPricePerItem()[i];
+			}
+		}
+		System.out.printf("%-5s%-5d|    %-15s%-17s%-23.2f%-13d%-10.2f |\n", 
+				rfOption + 1, 
+				receipt.getPayment().getCart().getProduct()[rfOption].getProductID(), 
+				receipt.getPayment().getCart().getProduct()[rfOption].getProductName(), 
+				receipt.getPayment().getCart().getProduct()[rfOption].getPrice(), 
+				(receipt.getPayment().getCart().getProduct()[rfOption].getQuantity()-refundQty), 
+				(receipt.getPayment().getCart().getPricePerItem()[rfOption]-refundPrice));	
 		System.out.printf("%-10s|                                                                                   |\n", "");
 		System.out.printf("%-10s-------------------------------------------------------------------------------------\n\n", "");
-
 		
+		double pricePerItem=0;
+		double afterDiscount;
+		int validQty = 0;
+		int rQuantity;
+		double discount;
+		
+		char confirm = 'N';
+		Product prod = new Product();
+		
+		do {
+			validQty = 0;
+			
+			System.out.println("\nPlease enter the QUANTITY of product(refund):");
+			rQuantity = refundInput.nextInt();
+			refundInput.nextLine();
+			
+			if((rQuantity <= (receipt.getPayment().getCart().getProduct()[rfOption].getQuantity()-refundQty))&&(rQuantity>0)) {
+				
+				validQty = 1;
+				
+				pricePerItem = rQuantity * receipt.getPayment().getCart().getProduct()[rfOption].getPrice();
+				
+				
+				//need check output display
+				System.out.println();
+				System.out.printf("%-10s-------------------------------------------------------------------------------------\n", "");
+				System.out.printf("%-10s|                                                                                   |\n", "");
+				System.out.printf("%-10s|    %-15s%-17s%-23s%-13s%-10s |\n", "","Product ID", "Product Name", "Price Per Quantity", "Quantity", "Total Price", "Discount", "Refund Price");
+				System.out.printf("%-10s|    %-15s%-17s%-23s%-13s%-10s |\n", "","----------", "------------", "------------------", "--------", "-----------", "--------", "------------");
+				
+				System.out.printf("%-5s%-5d|    %-15s%-17s%-23.2f%-13d %.2f %.2f %-10.2f |\n", 
+						rfOption + 1, 
+						receipt.getPayment().getCart().getProduct()[rfOption].getProductID(), 
+						receipt.getPayment().getCart().getProduct()[rfOption].getProductName(), 
+						receipt.getPayment().getCart().getProduct()[rfOption].getPrice(), 
+						rQuantity, 
+						pricePerItem,
+						refund.getDiscount(),
+						refund.getRefundAmount());
+							
+				System.out.printf("%-10s|                                                                                   |\n", "");
+				System.out.printf("%-10s-------------------------------------------------------------------------------------\n\n", "");
+				
+				rfReason(refund);
+				verifyReason(refund);
+				
+				if(refund.getStatus() == "approved") {
+					do {
+						System.out.printf("Do you confirm to refund this product? (y=yes) ");
+						
+						confirm = refundInput.next().toUpperCase().charAt(0);
+						refundInput.nextLine();
+						
+						if(confirm == 'Y') {
+							prod.setProductID(receipt.getPayment().getCart().getProduct()[rfOption].getProductID());
+							prod.setProductName(receipt.getPayment().getCart().getProduct()[rfOption].getProductName());
+							prod.setCategory(receipt.getPayment().getCart().getProduct()[rfOption].getCategory());
+							prod.setType(receipt.getPayment().getCart().getProduct()[rfOption].getType());
+							prod.setPrice(receipt.getPayment().getCart().getProduct()[rfOption].getPrice());
+							prod.setQuantity(rQuantity);
+							prod.setColor(receipt.getPayment().getCart().getProduct()[rfOption].getColor());
+							
+							
+							refund.addRefund(prod, 
+									pricePerItem, 
+									refund.getStatus(), 
+									refund.getReason());
+							bankAcc.addRefund(refund);
+						}
+						
+						else if(confirm != 'N' && confirm !='Y'){
+							System.out.println("Invalid input. Please try again.");
 
+						}
+						
+					}while(confirm != 'N' && confirm !='Y');
+					
+					
+				}
+				else if(refund.getStatus() == "rejected") {
+					prod.setProductID(receipt.getPayment().getCart().getProduct()[rfOption].getProductID());
+					prod.setProductName(receipt.getPayment().getCart().getProduct()[rfOption].getProductName());
+					prod.setCategory(receipt.getPayment().getCart().getProduct()[rfOption].getCategory());
+					prod.setType(receipt.getPayment().getCart().getProduct()[rfOption].getType());
+					prod.setPrice(receipt.getPayment().getCart().getProduct()[rfOption].getPrice());
+					prod.setQuantity(rQuantity);
+					prod.setColor(receipt.getPayment().getCart().getProduct()[rfOption].getColor());
+					
+					refund.addRefund(prod, 
+							pricePerItem,  
+							refund.getStatus(), 
+							refund.getReason());
+				}
+				
+			}
+			
+			else {
+				System.out.println(rQuantity + " had exceeded the quantity purchased " + cart.getProduct()[rfOption].getQuantity() + ".");
+				System.out.println("Please reenter the quantity.");
+				System.out.println();
+			}
+		}while(validQty == 0);
 	}
-	
-	
 	
 	public static int SelectedProd(ArrayList<Product> productList, Cart cart) {
 		Scanner refundInput = new Scanner(System.in);
