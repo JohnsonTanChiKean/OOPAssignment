@@ -16,10 +16,7 @@ public class JiaHui {
 		
 		
 		do {
-			productDetails(receiptList.get(index), refundList, refund);
-			rfOption = SelectedProd(productList,receiptList.get(index).getPayment().getCart());
-			refundQuantity(receiptList.get(index).getPayment().getCart(),rfOption,receiptList.get(index).getPayment(),refund,bankAcc);
-
+			productDetails(receiptList.get(index), refundList, refund, bankAcc);
 
 			do { 
 				System.out.println("Do you want to refund another product? (y=yes)");
@@ -240,144 +237,7 @@ public class JiaHui {
 			}
 		}while(validQty == 0);
 	}
-	
-	public static int SelectedProd(ArrayList<Product> productList, Cart cart) {
-		Scanner refundInput = new Scanner(System.in);
-		
-		ArrayList<Product> prodList = productList;
-		
-		System.out.println("Please enter your choice for refund: ");
-		int rfOption = refundInput.nextInt();
-		refundInput.nextLine();
-		
-		rfOption = rfOption -1;
-		
-		System.out.println();
-		System.out.printf("%-10s-------------------------------------------------------------------------------------\n", "");
-		System.out.printf("%-10s|                                                                                   |\n", "");
-		System.out.printf("%-10s|    %-15s%-17s%-23s%-13s%-10s |\n", "","Product ID", "Product Name", "Price Per Quantity", "Quantity", "Price");
-		System.out.printf("%-10s|    %-15s%-17s%-23s%-13s%-10s |\n", "","----------", "------------", "------------------", "--------", "-----");
-		
-		System.out.printf("%-5s%-5d|    %-15s%-17s%-23.2f%-13d%-10.2f |\n", 
-				rfOption + 1, 
-				cart.getProduct()[rfOption].getProductID(), 
-				cart.getProduct()[rfOption].getProductName(), 
-				cart.getProduct()[rfOption].getPrice(), 
-				cart.getProduct()[rfOption].getQuantity(), 
-				cart.getPricePerItem()[rfOption]);	
-		System.out.printf("%-10s|                                                                                   |\n", "");
-		System.out.printf("%-10s-------------------------------------------------------------------------------------\n\n", "");
-		return rfOption;
-	}
-	
-	
-	public static void refundQuantity(Cart cart, int rfOption, Payment payment, Refund refund, BankAccount bankAcc) {
-		Scanner refundInput = new Scanner(System.in);
-		
-		double pricePerItem=0;
-		double afterDiscount;
-		int validQty = 0;
-		int rQuantity;
-		double discount;
-		
-		char confirm = 'N';
-		Product prod = new Product();
-		
-		do {
-			validQty = 0;
-			
-			System.out.println("\nPlease enter the QUANTITY of product(refund):");
-			rQuantity = refundInput.nextInt();
-			refundInput.nextLine();
-			
-			if(rQuantity <= cart.getProduct()[rfOption].getQuantity()) {
-				
-				validQty = 1;
-				
-				pricePerItem = rQuantity * cart.getProduct()[rfOption].getPrice();
-				
-				
-				//need check output display
-				System.out.println();
-				System.out.printf("%-10s-------------------------------------------------------------------------------------\n", "");
-				System.out.printf("%-10s|                                                                                   |\n", "");
-				System.out.printf("%-10s|    %-15s%-17s%-23s%-13s%-10s |\n", "","Product ID", "Product Name", "Price Per Quantity", "Quantity", "Total Price", "Discount", "Refund Price");
-				System.out.printf("%-10s|    %-15s%-17s%-23s%-13s%-10s |\n", "","----------", "------------", "------------------", "--------", "-----------", "--------", "------------");
-				
-				System.out.printf("%-5s%-5d|    %-15s%-17s%-23.2f%-13d %.2f %.2f %-10.2f |\n", 
-						rfOption + 1, 
-						cart.getProduct()[rfOption].getProductID(), 
-						cart.getProduct()[rfOption].getProductName(), 
-						cart.getProduct()[rfOption].getPrice(), 
-						rQuantity, 
-						pricePerItem,
-						refund.getDiscount(),
-						refund.getRefundAmount());
-							
-				System.out.printf("%-10s|                                                                                   |\n", "");
-				System.out.printf("%-10s-------------------------------------------------------------------------------------\n\n", "");
-				
-				rfReason(refund);
-				verifyReason(refund);
-				
-				if(refund.getStatus() == "approved") {
-					do {
-						System.out.printf("Do you confirm to refund this product? (y=yes) ");
-						
-						confirm = refundInput.next().toUpperCase().charAt(0);
-						refundInput.nextLine();
-						
-						if(confirm == 'Y') {
-							prod.setProductID(cart.getProduct()[rfOption].getProductID());
-							prod.setProductName(cart.getProduct()[rfOption].getProductName());
-							prod.setCategory(cart.getProduct()[rfOption].getCategory());
-							prod.setType(cart.getProduct()[rfOption].getType());
-							prod.setPrice(cart.getProduct()[rfOption].getPrice());
-							prod.setQuantity(cart.getProduct()[rfOption].getQuantity());
-							prod.setColor(cart.getProduct()[rfOption].getColor());
-							
-							
-							refund.addRefund(prod, 
-									pricePerItem, 
-									refund.getStatus(), 
-									refund.getReason());
-							bankAcc.addRefund(refund);
-						}
-						
-						else if(confirm != 'N' && confirm !='Y'){
-							System.out.println("Invalid input. Please try again.");
 
-						}
-						
-					}while(confirm != 'N' && confirm !='Y');
-					
-					
-				}
-				else if(refund.getStatus() == "rejected") {
-					prod.setProductID(cart.getProduct()[rfOption].getProductID());
-					prod.setProductName(cart.getProduct()[rfOption].getProductName());
-					prod.setCategory(cart.getProduct()[rfOption].getCategory());
-					prod.setType(cart.getProduct()[rfOption].getType());
-					prod.setPrice(cart.getProduct()[rfOption].getPrice());
-					prod.setQuantity(rQuantity);
-					prod.setColor(cart.getProduct()[rfOption].getColor());
-					
-					refund.addRefund(prod, 
-							pricePerItem,  
-							refund.getStatus(), 
-							refund.getReason());
-				}
-				
-			}
-			
-			else {
-				System.out.println(rQuantity + " had exceeded the quantity purchased " + cart.getProduct()[rfOption].getQuantity() + ".");
-				System.out.println("Please reenter the quantity.");
-				System.out.println();
-			}
-		}while(validQty == 0);
-	}
-	
 	
 	public static void rfReason(Refund refund) {
 		Scanner refundInput = new Scanner(System.in);
@@ -461,10 +321,6 @@ public class JiaHui {
 			refund.setStatus("rejected");
 		}
 	}
-	
-	
-	
-	
 	
 	//report
 	public static void rfReportMenu() {
