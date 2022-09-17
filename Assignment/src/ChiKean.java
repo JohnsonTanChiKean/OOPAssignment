@@ -2571,11 +2571,11 @@ public class ChiKean {
 	}
 
 	public static void report(ArrayList<Receipt> receiptList, ArrayList<Refund> refundList) {
-		tableReport(receiptList);
-		graphReport(receiptList);
+		tableReport(receiptList, refundList);
+		graphReport(receiptList, refundList);
 	}
 	
-	public static void tableReport(ArrayList<Receipt> receiptList) {
+	public static void tableReport(ArrayList<Receipt> receiptList, ArrayList<Refund> refundList) {
 		int qtyCount=0, discount2=0, discount3=0, discount5=0;
 		System.out.println("  Total quantity sold of each product.");
 		System.out.printf("%-10s------------------------------------------------------------------------------------------------------\n", "");
@@ -2598,6 +2598,24 @@ public class ChiKean {
 			}
 		}
 		
+		for(int i=0; i<refundList.size(); i++) {
+			for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+				if(refundList.get(i).getStatus().equals("approved")) {
+					if(refundList.get(i).getRefundProduct()[j] instanceof SmartPhone) {
+						qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.02) {
+							discount2-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.03) {
+							discount3-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.05) {
+							discount5-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+					}
+				}
+			}
+		}
 		System.out.printf("%-10s|   Meta Phone    |       %-5d      |       %-5d   |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, qtyCount-discount2-discount3-discount5, discount2, discount3, discount5);
 		qtyCount=0; discount2=0; discount3=0; discount5=0;
 		for(int i=0; i<receiptList.size(); i++) {
@@ -2612,6 +2630,25 @@ public class ChiKean {
 					}
 					else if(receiptList.get(i).getPayment().getDiscount()==0.05) {
 						discount5+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+			}
+		}
+		
+		for(int i=0; i<refundList.size(); i++) {
+			for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+				if(refundList.get(i).getStatus().equals("approved")) {
+					if(refundList.get(i).getRefundProduct()[j] instanceof Earphone) {
+						qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.02) {
+							discount2-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.03) {
+							discount3-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.05) {
+							discount5-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
 					}
 				}
 			}
@@ -2636,6 +2673,24 @@ public class ChiKean {
 			}
 		}
 		
+		for(int i=0; i<refundList.size(); i++) {
+			for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+				if(refundList.get(i).getStatus().equals("approved")) {
+					if(refundList.get(i).getRefundProduct()[j] instanceof Tablet) {
+						qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.02) {
+							discount2-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.03) {
+							discount3-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.05) {
+							discount5-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+					}
+				}
+			}
+		}
 		System.out.printf("%-10s|   Meta Tablet   |       %-5d      |       %-5d   |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, qtyCount-discount2-discount3-discount5, discount2, discount3, discount5);
 		qtyCount=0; discount2=0; discount3=0; discount5=0;
 		for(int i=0; i<receiptList.size(); i++) {
@@ -2650,6 +2705,25 @@ public class ChiKean {
 					}
 					else if(receiptList.get(i).getPayment().getDiscount()==0.05) {
 						discount5+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+			}
+		}
+		
+		for(int i=0; i<refundList.size(); i++) {
+			for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+				if(refundList.get(i).getStatus().equals("approved")) {
+					if(refundList.get(i).getRefundProduct()[j] instanceof Refrigerator) {
+						qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.02) {
+							discount2-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.03) {
+							discount3-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.05) {
+							discount5-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
 					}
 				}
 			}
@@ -2674,6 +2748,24 @@ public class ChiKean {
 			}
 		}
 		
+		for(int i=0; i<refundList.size(); i++) {
+			for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+				if(refundList.get(i).getStatus().equals("approved")) {
+					if(refundList.get(i).getRefundProduct()[j] instanceof Printer) {
+						qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.02) {
+							discount2-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.03) {
+							discount3-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.05) {
+							discount5-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+					}
+				}
+			}
+		}
 		System.out.printf("%-10s|   Meta Printer  |       %-5d      |       %-5d   |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, qtyCount-discount2-discount3-discount5, discount2, discount3, discount5);
 		qtyCount=0; discount2=0; discount3=0; discount5=0;
 		for(int i=0; i<receiptList.size(); i++) {
@@ -2693,6 +2785,24 @@ public class ChiKean {
 			}
 		}
 		
+		for(int i=0; i<refundList.size(); i++) {
+			for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+				if(refundList.get(i).getStatus().equals("approved")) {
+					if(refundList.get(i).getRefundProduct()[j] instanceof Scanners) {
+						qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.02) {
+							discount2-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.03) {
+							discount3-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.05) {
+							discount5-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+					}
+				}
+			}
+		}
 		System.out.printf("%-10s|   Meta Scanner  |       %-5d      |       %-5d   |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, qtyCount-discount2-discount3-discount5, discount2, discount3, discount5);
 		qtyCount=0; discount2=0; discount3=0; discount5=0;
 		for(int i=0; i<receiptList.size(); i++) {
@@ -2712,6 +2822,24 @@ public class ChiKean {
 			}
 		}
 		
+		for(int i=0; i<refundList.size(); i++) {
+			for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+				if(refundList.get(i).getStatus().equals("approved")) {
+					if(refundList.get(i).getRefundProduct()[j] instanceof Microwave) {
+						qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.02) {
+							discount2-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.03) {
+							discount3-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.05) {
+							discount5-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+					}
+				}
+			}
+		}
 		System.out.printf("%-10s|   Meta Wave     |       %-5d      |       %-5d   |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, qtyCount-discount2-discount3-discount5, discount2, discount3, discount5);
 		qtyCount=0; discount2=0; discount3=0; discount5=0;
 		for(int i=0; i<receiptList.size(); i++) {
@@ -2730,11 +2858,30 @@ public class ChiKean {
 				}
 			}
 		}
+		
+		for(int i=0; i<refundList.size(); i++) {
+			for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+				if(refundList.get(i).getStatus().equals("approved")) {
+					if(refundList.get(i).getRefundProduct()[j] instanceof SmartWatch) {
+						qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.02) {
+							discount2-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.03) {
+							discount3-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+						else if(refundList.get(i).getReceipt().getPayment().getDiscount()==0.05) {
+							discount5-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+					}
+				}
+			}
+		}
 		System.out.printf("%-10s|   Meta Watch    |       %-5d      |       %-5d   |       %-5d   |       %-5d   |       %-5d   |\n", "", qtyCount, qtyCount-discount2-discount3-discount5, discount2, discount3, discount5);
 		System.out.printf("%-10s------------------------------------------------------------------------------------------------------\n", "");
 	}
 	
-	public static void graphReport(ArrayList<Receipt> receiptList) {
+	public static void graphReport(ArrayList<Receipt> receiptList, ArrayList<Refund> refundList) {
 		int qtyCount=0;
 		System.out.println("            /|\\");
 		System.out.println("             |");
@@ -2743,6 +2890,16 @@ public class ChiKean {
 			for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
 				if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof SmartPhone) {
 					qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+				}
+			}
+		}
+		
+		for(int i=0; i<refundList.size(); i++) {
+			for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+				if(refundList.get(i).getStatus().equals("approved")) {
+					if(refundList.get(i).getRefundProduct()[j] instanceof SmartPhone) {
+						qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+					}
 				}
 			}
 		}
@@ -2768,6 +2925,15 @@ public class ChiKean {
 				}
 			}
 	  }
+	  for(int i=0; i<refundList.size(); i++) {
+			for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+				if(refundList.get(i).getStatus().equals("approved")) {
+					if(refundList.get(i).getRefundProduct()[j] instanceof Earphone) {
+						qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+					}
+				}
+			}
+		}
 		  System.out.print("             |");
 		  printUnderscore(calculation(qtyCount));
 		  System.out.println();
@@ -2789,6 +2955,16 @@ public class ChiKean {
 					}
 				}
 		  }
+		  
+		  for(int i=0; i<refundList.size(); i++) {
+				for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+					if(refundList.get(i).getStatus().equals("approved")) {
+						if(refundList.get(i).getRefundProduct()[j] instanceof Tablet) {
+							qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+					}
+				}
+			}
 		  System.out.print("             |");
 		  printUnderscore(calculation(qtyCount));
 		  System.out.println();
@@ -2801,7 +2977,25 @@ public class ChiKean {
 			  System.out.println("|"+qtyCount);
 		  }
 		//print tablet graph end
+		  qtyCount=0;
 		//print fridge graph start
+		  for(int i=0; i<receiptList.size(); i++) {
+				for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
+					if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Refrigerator) {
+						qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+		  }
+		  
+		  for(int i=0; i<refundList.size(); i++) {
+				for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+					if(refundList.get(i).getStatus().equals("approved")) {
+						if(refundList.get(i).getRefundProduct()[j] instanceof Refrigerator) {
+							qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+					}
+				}
+		  }
 		  System.out.print("             |");
 		  printUnderscore(calculation(qtyCount));
 		  System.out.println();
@@ -2820,6 +3014,16 @@ public class ChiKean {
 				for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
 					if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof Printer) {
 						qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+		  }
+		  
+		  for(int i=0; i<refundList.size(); i++) {
+				for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+					if(refundList.get(i).getStatus().equals("approved")) {
+						if(refundList.get(i).getRefundProduct()[j] instanceof Printer) {
+							qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
 					}
 				}
 		  }
@@ -2844,6 +3048,16 @@ public class ChiKean {
 					}
 				}
 		  }
+		  
+		  for(int i=0; i<refundList.size(); i++) {
+				for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+					if(refundList.get(i).getStatus().equals("approved")) {
+						if(refundList.get(i).getRefundProduct()[j] instanceof Scanners) {
+							qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+					}
+				}
+		  }
 		  System.out.print("             |");
 		  printUnderscore(calculation(qtyCount));
 		  System.out.println();
@@ -2865,6 +3079,16 @@ public class ChiKean {
 					}
 				}
 		  }
+		  
+		  for(int i=0; i<refundList.size(); i++) {
+				for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+					if(refundList.get(i).getStatus().equals("approved")) {
+						if(refundList.get(i).getRefundProduct()[j] instanceof Microwave) {
+							qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
+					}
+				}
+		  }
 		  System.out.print("             |");
 		  printUnderscore(calculation(qtyCount));
 		  System.out.println();
@@ -2883,6 +3107,16 @@ public class ChiKean {
 				for(int j=0; j<receiptList.get(i).getPayment().getCart().getNoOfProducts(); j++) {
 					if(receiptList.get(i).getPayment().getCart().getProduct()[j] instanceof SmartWatch) {
 						qtyCount+=receiptList.get(i).getPayment().getCart().getProduct()[j].getQuantity();
+					}
+				}
+		  }
+		  
+		  for(int i=0; i<refundList.size(); i++) {
+				for(int j=0; j<refundList.get(i).getNoOfProducts(); j++) {
+					if(refundList.get(i).getStatus().equals("approved")) {
+						if(refundList.get(i).getRefundProduct()[j] instanceof SmartWatch) {
+							qtyCount-=refundList.get(i).getRefundProduct()[j].getQuantity();
+						}
 					}
 				}
 		  }

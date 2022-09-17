@@ -75,7 +75,7 @@ public class ZhiHang {
 			switch(choice) {
 			case 1: ChiKean.placeOrder(staffList,productList,memberList, paymentList, staff, receiptList, bankAccount); loop=1; break;
 			case 2: ChiKean.onHoldPayment(paymentList, memberList, staff, productList, receiptList, bankAccount); loop=1; break;
-			case 3: ChiKean.report(receiptList); loop=1; break;
+			case 3: ChiKean.report(receiptList, refundList); loop=1; break;
 			case 0: break;
 			}
 			
