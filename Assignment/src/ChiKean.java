@@ -13,6 +13,20 @@ import java.awt.Image;
 //work on the toString of BankAccount
 //report try to do bar chart
 public class ChiKean {
+	public static void orderMenu(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, ArrayList<Payment> paymentList, Staff staff, ArrayList<Receipt> receiptList, BankAccount bankAccount) {
+		Scanner scanner=new Scanner(System.in);
+		System.out.printf("%-10s------------------------------------\n", "");
+		System.out.printf("%-10s|     Order and Payment Module     |\n", "");
+		System.out.printf("%-10s|    ==========================    |\n", "");
+		System.out.printf("%-10s|                                  |\n", "");
+		System.out.printf("%-10s|    1. Place Order                |\n", "");
+		System.out.printf("%-10s|    2. Process On-Hold Payment    |\n", "");
+		System.out.printf("%-10s|                                  |\n", "");
+		System.out.printf("%-10s------------------------------------\n", "");
+		
+		System.out.println("  Which action would you like to perform(Enter -1 to exit)");
+	}
+	
 	public static String selectProduct(ArrayList<Product> productList) {
 		int prodChoice=0, invalidInput=0;
 		Scanner scanner=new Scanner(System.in);
@@ -35,42 +49,48 @@ public class ChiKean {
 				}
 			}
 		}
-		
-		do{
-			invalidInput=0;
-			System.out.printf("%-10s---------------------------\n", "");
-			System.out.printf("%-10s| Available Product Types |\n", "");
-			System.out.printf("%-10s| ======================= |\n", "");
-			System.out.printf("%-10s|                         |\n", "");
-			for(int i =0; i<prodSelectList.size(); i++) {
-				
-				System.out.printf("%-10s|     %d%-3s%-15s |\n", "", (i+1), ".", prodSelectList.get(i));
-				
-			}
-			System.out.printf("%-10s|                         |\n", "");
-			System.out.printf("%-10s---------------------------\n\n", "");
-			System.out.printf("%-2sSelect product type(Enter -1 to quit): ", "");
-			try {
-				prodChoice=scanner.nextInt();
-				scanner.nextLine();
-			}
-			catch(InputMismatchException e) {
-				invalidInput=1;
-				scanner.nextLine();
-			}
-			if((prodChoice>prodSelectList.size())||(prodChoice==0)||(prodChoice<-1)||(invalidInput==1)) {
-				System.out.printf("%-10sInvalid choice.\n","");
-				System.out.printf("%-10sPress enter to try again\n","");
-				scanner.nextLine();
-			}
-		}while((prodChoice>prodSelectList.size())||(prodChoice==0)||(prodChoice<-1)||(invalidInput==1));
-		
-		if(prodChoice==-1) {
-			return "Cancel";
+		if(prodSelectList.get(0).equals("null")) {
+			System.out.println("  All Products have been sold out. Please wait for them to be restocked.");
+			System.out.println("                        Press enter to continue                         ");
+			scanner.nextLine();
+			return "Sold Out";
 		}
 		else {
-			return prodSelectList.get(prodChoice-1);
+			do{
+				invalidInput=0;
+				System.out.printf("%-10s---------------------------\n", "");
+				System.out.printf("%-10s| Available Product Types |\n", "");
+				System.out.printf("%-10s| ======================= |\n", "");
+				System.out.printf("%-10s|                         |\n", "");
+				for(int i =0; i<prodSelectList.size(); i++) {
+					System.out.printf("%-10s|     %d%-3s%-15s |\n", "", (i+1), ".", prodSelectList.get(i));
+				}
+				System.out.printf("%-10s|                         |\n", "");
+				System.out.printf("%-10s---------------------------\n\n", "");
+				System.out.printf("%-2sSelect product type(Enter -1 to quit): ", "");
+				try {
+					prodChoice=scanner.nextInt();
+					scanner.nextLine();
+				}
+				catch(InputMismatchException e) {
+					invalidInput=1;
+					scanner.nextLine();
+				}
+				if((prodChoice>prodSelectList.size())||(prodChoice==0)||(prodChoice<-1)||(invalidInput==1)) {
+					System.out.printf("%-10sInvalid choice.\n","");
+					System.out.printf("%-10sPress enter to try again\n","");
+					scanner.nextLine();
+				}
+			}while((prodChoice>prodSelectList.size())||(prodChoice==0)||(prodChoice<-1)||(invalidInput==1));
+			
+			if(prodChoice==-1) {
+				return "Cancel";
+			}
+			else {
+				return prodSelectList.get(prodChoice-1);
+			}
 		}
+		
 		
 	}
 	
@@ -2408,7 +2428,7 @@ public class ChiKean {
 	}
 	
 	public static void placeOrder(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, ArrayList<Payment> paymentList, Staff staff, ArrayList<Receipt> receiptList, BankAccount bankAccount) {
-		int newQty, memIDNo, checkMemID=0, cancel=0, found=0;
+		int newQty, memIDNo, checkMemID=0, cancel=0, found=0, soldOut=0;
 		char choice='N', addProdChoice='N', editChoice='N', paymentChoice='N', orderChoice='N';
 		String memID;
 		Scanner scanner=new Scanner(System.in);
@@ -2417,7 +2437,6 @@ public class ChiKean {
 		Payment payment=null;
 		System.out.println("Staff Name: "+ staff.getName());
 		
-		
 		do {
 			Cart cart=new Cart();
 			do {
@@ -2425,17 +2444,16 @@ public class ChiKean {
 				addProdChoice='N';
 				cancel=0;
 				found=0;
+				soldOut=0;
 				String prodChoice=selectProduct(productList);
 				if(prodChoice.equals("Smart Phone")) {
 					product=new SmartPhone();
 					phone(productList, (SmartPhone)product);
 				}
-				
 				else if(prodChoice.equals("Earphone")) {
 					product=new Earphone();
 					earphone(productList, (Earphone)product);
 				}
-				
 				else if(prodChoice.equals("Tablet")) {
 					product=new Tablet();
 					tablet(productList, (Tablet)product);
@@ -2462,6 +2480,10 @@ public class ChiKean {
 				}
 				else if(prodChoice.equals("Cancel")) {
 					cancel=-1;
+				}
+				else if(prodChoice.equals("Sold Out")) {
+					cancel=-1;
+					soldOut=1;
 				}
 				else {
 					product=new Product();
@@ -2539,13 +2561,16 @@ public class ChiKean {
 			}
 			
 			System.out.println();
-			System.out.print("  Would you like to place another order? (Y=yes) ");
-			orderChoice=Character.toUpperCase(scanner.next().charAt(0));
-			scanner.nextLine();
+			if(soldOut!=1) {
+				System.out.print("  Would you like to place another order? (Y=yes) ");
+				orderChoice=Character.toUpperCase(scanner.next().charAt(0));
+				scanner.nextLine();
+			}
+			
 		}while(orderChoice=='Y');	
 	}
 
-	public static void report(ArrayList<Receipt> receiptList) {
+	public static void report(ArrayList<Receipt> receiptList, ArrayList<Refund> refundList) {
 		tableReport(receiptList);
 		graphReport(receiptList);
 	}

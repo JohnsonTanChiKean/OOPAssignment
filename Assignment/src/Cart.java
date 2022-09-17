@@ -59,7 +59,6 @@ public class Cart {
 		cartDetails+=String.format("%-10s|                                                                                       |\n", "");
 		cartDetails+=String.format("%-10s|    %-15s%-17s%-23s%-10s%14s%-3s |\n", "", "Product ID", "Product Name", "Price Per Quantity", "Quantity", "Price", "");
 		cartDetails+=String.format("%-10s|    %-15s%-17s%-23s%-10s%s%-3s |\n", "", "----------", "------------", "------------------", "--------", "--------------", "");
-		
 		for(int i=0; i<noOfProducts; i++) {
 			cartDetails+=String.format("%-10s|    %-15s%-17s%-23.2f%-8d%16.2f%-3s |\n", "", getProduct()[i].getProductID(), getProduct()[i].getProductName(), getProduct()[i].getPrice(), getProduct()[i].getQuantity(), getPricePerItem()[i], "");	
 		}
