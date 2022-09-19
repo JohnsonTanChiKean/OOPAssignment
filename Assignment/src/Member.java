@@ -13,9 +13,11 @@ public class Member extends Person{
 		idNo = 0;
 	}
 	
-	public Member(String name, String icNo, String membership, Staff staff) {
-		super(name, icNo);
+	public Member(String name, String icNo, String contactNum, String membership, String activePeriod, Staff staff) {
+		super(name, icNo, contactNum);
 		this.membership = membership;
+		this.activePeriod=activePeriod;
+		mbrStatus="active";
 		this.registeredBy = staff;
 		idNo = genIDNo;
 		genIDNo++;
@@ -33,11 +35,11 @@ public class Member extends Person{
 	
 	public Member(String name, String icNo, String birthDate, String contactNum, String memberID, int idNo, String membership, String activePeriod, String mbrStatus, Staff registeredBy, String registrationDate) {
 		super(name, icNo, birthDate, contactNum);
-		this.memberID=memberID;
-		this.membership=membership;
-		this.activePeriod=activePeriod;
-		this.mbrStatus=mbrStatus;
-		this.idNo=idNo;
+		setMemberID(memberID);
+		setMembership(membership);
+		setActivePeriod(activePeriod);
+		this.mbrStatus = mbrStatus;
+		setIdNo(idNo);
 		this.registeredBy = registeredBy;
 		this.registrationDate = new GetDate(registrationDate);
 		this.genIDNo = idNo;
@@ -89,11 +91,11 @@ public class Member extends Person{
 	public String toString() {
 		String memberDetails = "";
 		memberDetails += String.format("%-10s----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
-		memberDetails += String.format("%-10s|                                                                                                                                                                             |\n", "");
-		memberDetails += String.format("%-10s|          %-17s%-15s%-17s%-15s%-15s%-21s%-13s%-15s%-15s%-15s          |\n", "", "Member ID", "Name", "Identification Number", "Birth Date", "Contact Number", "Membership", "Active Period", "Member Status", "Registered By", "Registration Date\n");
-		memberDetails += String.format("%-10s|          %-17s%-15s%-17s%-15s%-15s%-21s%-13s%-15s%-15s%-15s          |\n", "", "---------", "----", "---------------------", "----------", "--------------", "----------", "-------------", "-------------", "-------------", "-----------------\n");
-		memberDetails += String.format("%-10s|          %-17s%-15s%-17s%-15s%-15s%-21s%-13s%-15s%-15s%-15s          |\n", "", super.getName(), super.getIcNo(), super.getBirthDate(), getContactNum(), getFullMemID(), getMembership(), getActivePeriod(), getMbrStatus(), registeredBy.getFullStaffID(), registrationDate);
-		memberDetails += String.format("%-10s|                                                                                                                                                                             |\n", "");
+		memberDetails += String.format("%-10s|                                                                                                                                                                                                  |\n", "");
+		memberDetails += String.format("%-10s|   %-17s%-30s%-25s%-15s%-18s%-13s%-17s%-17s%-17s%-19s   |\n", "", "Member ID", "Name", "Identification Number", "Birth Date", "Contact Number", "Membership", "Active Period", "Member Status", "Registered By", "Registration Date");
+		memberDetails += String.format("%-10s|   %-17s%-30s%-25s%-15s%-18s%-13s%-17s%-17s%-17s%-19s   |\n", "", "---------", "----", "---------------------", "----------", "--------------", "----------", "-------------", "-------------", "-------------", "-----------------");
+		memberDetails += String.format("%-10s|   %-17s%-30s%-25s%-15s%-18s%-13s%-17s%-17s%-17s%-19s   |\n", "", getFullMemID(), super.getName(), super.getIcNo(), super.getBirthDate(), getContactNum(), getMembership(), getActivePeriod(), getMbrStatus(), registeredBy.getFullStaffID(), registrationDate);
+		memberDetails += String.format("%-10s|                                                                                                                                                                                                  |\n", "");
 		memberDetails += String.format("%-10s----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
 		return memberDetails;
 	}

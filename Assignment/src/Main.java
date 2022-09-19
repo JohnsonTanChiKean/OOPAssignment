@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		ArrayList<Product> productList=new ArrayList<Product>();
 		ArrayList<Staff> staffList=new ArrayList<Staff>();
 		ArrayList<Member> memberList=new ArrayList<Member>();
@@ -29,19 +29,19 @@ public class Main {
 	}
 	
 	public static void logo() {
-		System.out.println("      ___________       ____         ____        _______________________");
-		System.out.println("     /          |      |     \\      |    |      |                       |");
-		System.out.println("    /    _______|      |      \\     |    |      |                       |");
-		System.out.println("   /    /              |       \\    |    |      |________       ________|");
-		System.out.println("  /    /               |        \\   |    |               |     |");
-		System.out.println(" /    /                |    |\\   \\  |    |               |     |");
-		System.out.println("/    /                 |    | \\   \\ |    |               |     |");
-		System.out.println("\\    \\                 |    |  \\   \\|    |               |     |");
-		System.out.println(" \\    \\                |    |   \\        |               |     |");
-		System.out.println("  \\    \\               |    |    \\       |               |     |");
-		System.out.println("   \\    \\_______       |    |     \\      |               |     |");
-		System.out.println("    \\           |      |    |      \\     |               |     |");
-		System.out.println("     \\__________|      |____|       \\____|               |_____|");
+		System.out.println("      _____________       ____         ____        _______________________");
+		System.out.println("     /            |      |     \\      |    |      |                       |");
+		System.out.println("    /    _________|      |      \\     |    |      |                       |");
+		System.out.println("   /    /                |       \\    |    |      |________       ________|");
+		System.out.println("  /    /                 |        \\   |    |               |     |");
+		System.out.println(" /    /                  |    |\\   \\  |    |               |     |");
+		System.out.println("/    /                   |    | \\   \\ |    |               |     |");
+		System.out.println("\\    \\                   |    |  \\   \\|    |               |     |");
+		System.out.println(" \\    \\                  |    |   \\        |               |     |");
+		System.out.println("  \\    \\                 |    |    \\       |               |     |");
+		System.out.println("   \\    \\_________       |    |     \\      |               |     |");
+		System.out.println("    \\             |      |    |      \\     |               |     |");
+		System.out.println("     \\____________|      |____|       \\____|               |_____|");
 	}
 	
 	public static void readProduct(ArrayList<Product> productList) {
@@ -126,6 +126,7 @@ public class Main {
 					}
 					
 				}
+				Claris.monthsDiff(memberList);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

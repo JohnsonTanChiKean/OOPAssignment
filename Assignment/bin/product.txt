@@ -114,14 +114,14 @@ MM32B,Meta Wave,255,Household Appliances,Microwave,97,25x18x40,Smart microwaves,
 MM25R,Meta Wave,238,Household Appliances,Microwave,95,24x16x35.6,Smart microwaves,25,Red
 MM32R,Meta Wave,255,Household Appliances,Microwave,64,25x18x40,Smart microwaves,32,Red
 MW8B,Meta Watch,1749,Accessories,Smart Watch,121,41,352x430,8,Up to 18 hours,50,Blue
-MW8B,Meta Watch,1749,Accessories,Smart Watch,172,45,396x484,8,Up to 18 hours,50,Blue
+MW8BB,Meta Watch,1749,Accessories,Smart Watch,172,45,396x484,8,Up to 18 hours,50,Blue
 MW8M,Meta Watch,1749,Accessories,Smart Watch,142,41,352x431,8,Up to 18 hours,50,Midnight
-MW8M,Meta Watch,1749,Accessories,Smart Watch,166,45,396x485,8,Up to 18 hours,50,Midnight
+MW8BM,Meta Watch,1749,Accessories,Smart Watch,166,45,396x485,8,Up to 18 hours,50,Midnight
 MW8T,Meta Watch,1749,Accessories,Smart Watch,163,41,352x432,8,Up to 18 hours,50,Starlight
-MW8T,Meta Watch,1749,Accessories,Smart Watch,67,45,396x486,8,Up to 18 hours,50,Starlight
+MW8BT,Meta Watch,1749,Accessories,Smart Watch,67,45,396x486,8,Up to 18 hours,50,Starlight
 MW8G,Meta Watch,1749,Accessories,Smart Watch,141,41,352x433,8,Up to 18 hours,50,Green
-MW8G,Meta Watch,1749,Accessories,Smart Watch,127,45,396x487,8,Up to 18 hours,50,Green
+MW8BG,Meta Watch,1749,Accessories,Smart Watch,127,45,396x487,8,Up to 18 hours,50,Green
 MW8O,Meta Watch,1749,Accessories,Smart Watch,83,41,352x434,8,Up to 18 hours,50,Gold
 MW8BO,Meta Watch,1749,Accessories,Smart Watch,98,45,396x488,8,Up to 18 hours,50,Gold
 MW8I,Meta Watch,1749,Accessories,Smart Watch,106,41,352x435,8,Up to 18 hours,50,Silver
-MW8I,Meta Watch,1749,Accessories,Smart Watch,144,45,396x489,8,Up to 18 hours,50,Silver
+MW8BI,Meta Watch,1749,Accessories,Smart Watch,144,45,396x489,8,Up to 18 hours,50,Silver

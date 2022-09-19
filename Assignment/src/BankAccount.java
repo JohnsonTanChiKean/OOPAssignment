@@ -1,8 +1,8 @@
 
 public class BankAccount {
 	private String accountNo;
-	private Payment[] payment =new Payment[1000];
-	private Refund[] refund=new Refund[1000];
+	private Payment[] payment =new Payment[10000];
+	private Refund[] refund=new Refund[10000];
 	private int noOfPayments;
 	private int noOfRefunds;
 	private double revenue;
@@ -42,10 +42,13 @@ public class BankAccount {
 		}
 	}
 	
-	
 	public double getRevenue() {
 		return revenue;
 	}
 
-
+	public String toString() {
+		String bankAccountDetails="";
+		bankAccountDetails+=String.format("");
+		return bankAccountDetails;
+	}
 }

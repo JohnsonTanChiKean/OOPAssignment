@@ -6,9 +6,11 @@ public class Person {
 		
 	}
 	
-	public Person(String name, String icNo) {
+	public Person(String name, String icNo, String contactNum) {
 		this.name = name;
 		this.icNo = icNo;
+		genBirthDate();
+		this.contactNum=contactNum;
 	}
 	
 	public Person(String name, String icNo, String birthDate, String contactNum) {
@@ -88,6 +90,17 @@ public class Person {
 			month = "XXX";
 		}
 		
-		birthDate = icNo.substring(4, 6) + "-" + month + "-" + icNo.substring(0, 2);
+		int year = Integer.parseInt(icNo.substring(0, 2));
+		String newYear = "";
+		
+		if(year >= 0 && year <= 22) {
+			newYear = "20" + icNo.substring(0, 2);
+		}
+		else {
+			newYear = "19" + icNo.substring(0, 2);
+		}
+		
+		
+		birthDate = icNo.substring(4, 6) + "-" + month + "-" + newYear;
 	}
 }
