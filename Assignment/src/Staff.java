@@ -12,17 +12,9 @@ public class Staff extends Person{
 		
 	}
 	
-	public Staff(String name, String staffID, int idNo) {
-		super.setName(name);
-		setStaffID(staffID);
-		setIdNo(idNo);
-		staffCount++;
-	}
-	public Staff(String password) {
-		this.password=password;
-	}
-	public Staff(String name,String icNo,String password,String position) {
-		super(name, icNo, contactNum);
+
+	public Staff(String name,String icNo,String contactNum,String password,String position) {
+		super(name, icNo,contactNum);
 	
 		this.password=password;
 		this.position=position;
@@ -36,7 +28,7 @@ public class Staff extends Person{
 		
 		}
 	
-	public Staff(String name, String icNo, String birthDate, String contactNum, String staffID, int idNo, String password, String position, double salary, String joinDate, String status) {
+	public Staff(String name, String icNo, String birthDate,String contactNum, String staffID, int idNo, String password, String position, double salary, String joinDate, String status) {
 		
 		super(name,icNo,birthDate,contactNum);
 		setStaffID(staffID);
@@ -50,7 +42,10 @@ public class Staff extends Person{
 		this.genIDNo++;
 		staffCount++;
 	}
-	
+
+	public GetDate getJoinDate() {
+		return joinDate;
+	}
 	public String getFullStaffID() {
 		return staffID+idNo;
 	}
@@ -117,11 +112,14 @@ public class Staff extends Person{
 		if(reply.equals("Y")&&status.equals("Active")) {
 			status="Resign";
 		}
-		else if(reply.equals("Y")&&status.equals("Resign")){
+		else if(reply.equals("Resign")&&status.equals("Resign")){
 			status="Active";
 		}
 		else if(reply.equals("Deactivate")) {
 			status="Deactivate";
+		}
+		else if(reply.equals("Activate")) {
+			status="Active";
 		}
 	}
 	public String getStatus() {

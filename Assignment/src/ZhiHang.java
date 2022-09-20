@@ -7,288 +7,603 @@ import java.io.*;
 
 public class ZhiHang {
 	public static void login(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, ArrayList<Payment> paymentList, ArrayList<Receipt> receiptList, BankAccount bankAccount, ArrayList<Refund> refundList) {
-		int countPassWrong=5;
-		int found=0, loop=0;
-		char choice;
 		Scanner scanner=new Scanner(System.in);
-		int idNo=0;
-		Staff staff;
+		int found=0, loop=0;
+		char choice='N';
 		String staffID;
-		int getNumStaff=0;
 		String password;
+		int cancel=1;
+		int locked=0;
+		int index=0;
+		int wrongCount=0;
+		int valid=0;
 		
 		do {
-			System.out.println("Welcome to Connect POS System");
+			cancel=0;
+			wrongCount=0;
+			loop=0;
+			valid=0;
+			index=0;
+			Main.logo();
+			System.out.println();
+			
+			System.out.printf("%-25sWelcome to Connect Point Of Sales System\n", "");
 			
 			do {
-				System.out.print("Enter staff ID: ");
-			 staffID=scanner.next();
+				locked=0;
+				choice='N';
+				System.out.printf("\n%-25sEnter staff ID (Press X to exit) : ", "");
+				staffID=scanner.next();
 				scanner.nextLine();
 				staffID=staffID.toUpperCase();
-				if(staffID.length()!=5) {
-					System.out.println("Invalid Staff ID! Staff ID must have 5 digits");
+				found=0;
+				
+				if((staffID.length()!=5)&&(!staffID.equals("X"))) {
+					System.out.println();
+					System.out.printf("%-22sInvalid Staff ID! Staff ID must have 5 digits\n\n", "");
+					choice='Y';
+				}
+				else if(staffID.equals("X")) {
+					cancel=1;
 				}
 				else {
-					idNo=Integer.parseInt(staffID.replace("S", ""));
-					for(Staff i: staffList) {
-						if(idNo==i.getIdNo()) {
+					for(int i=0; i<staffList.size()&&found!=1; i++) {
+						if(staffList.get(i).getFullStaffID().equals(staffID)) {
 							found=1;
+							index=i;
+							if(staffList.get(i).getStatus().equals("Deactivate")) {
+								System.out.println();
+								System.out.printf("%-17sLogin Failed. Staff Account %s has been deactivated\n", "", staffList.get(i).getFullStaffID());
+								System.out.println();
+								locked=1;
+							}
+							else if(staffList.get(i).getStatus().equals("Resign")){
+								System.out.println();
+								System.out.printf("%-26sLogin Failed. Staff %s has resigned\n\n", "", staffList.get(i).getFullStaffID());
+								locked =1;
+							}
+						}
+					}
+					
+					if(found==0) {
+						System.out.printf("\n%-24sLogin Failed. Staff Account does not exist\n\n", "");
+					}
+					
+					if(found==0 || locked == 1) {
+						System.out.printf("%-25sWould you like to try again? (Y=yes) ", "");
+						choice=Character.toUpperCase(scanner.next().charAt(0));
+						scanner.nextLine();
+						if(choice!='Y') {
+							cancel=1;
 						}
 					}
 				}
-				if(found==0) {
-					System.out.println("Staff ID not found. Please try again");
-					System.out.print("Would you like to try again? (Y=yes) ");
-					choice=Character.toUpperCase(scanner.next().charAt(0));
+				
+				
+			}while(choice=='Y');
+			
+			do {
+				choice='N';
+				if(found==1 && cancel != 1 && locked != 1) {
+					System.out.printf("\n%-25sEnter Password(Press X to cancel): ", "");
+					password=scanner.next().toUpperCase();
 					scanner.nextLine();
-				}
-				
-			}while(found==0);
-			
-			if(found==1) {
-				System.out.print("Enter Password: ");
-				 password=scanner.next();
-				scanner.nextLine();
-				
-				for(int i=0; i<staffList.size(); i++) {
-					if(idNo==staffList.get(i).getIdNo()&&password.equals(staffList.get(i).getPassword())&&(!staffList.get(i).getStatus().equals("Deactivate")&&!staffList.get(i).getStatus().equals("Resign"))) {
-						
-						System.out.println("Successful login");
-						System.out.println("Welcome "+staffList.get(i).getName());
-						if(!staffList.get(i).getStatus().equals("Deactivate")&&idNo==staffList.get(i).getIdNo()&&password.equals(staffList.get(i).getPassword())) {
-							countPassWrong=5;
+					
+					if(staffList.get(index).getFullStaffID().equals(staffID) && staffList.get(index).getPassword().equals(password)) {
+						System.out.println();
+						System.out.printf("%-40sSuccessful login\n\n", "");
+						if(staffList.get(index).getName().length()>=10&&staffList.get(index).getName().length()<=15) {
+							System.out.printf("%-38sWelcome %s\n\n", "", staffList.get(index).getName());
 						}
-						mainMenu(staffList, productList, memberList, staffList.get(i), receiptList, paymentList, bankAccount, refundList);
+						else if(staffList.get(index).getName().length()>15&&staffList.get(index).getName().length()<20) {
+							System.out.printf("%-35sWelcome %s\n\n", "", staffList.get(index).getName());
+						}
+						else if(staffList.get(index).getName().length()>=20) {
+							System.out.printf("%-33sWelcome %s\n\n", "", staffList.get(index).getName());
+						}
+						else {
+							System.out.printf("%-38sWelcome %s\n\n", "", staffList.get(index).getName());
+						}
+						
+						mainMenu(staffList, productList, memberList, staffList.get(index), receiptList, paymentList, bankAccount, refundList);
+						valid=1;
+						loop=1;
 					}
-					if(idNo==staffList.get(i).getIdNo()&&password.equals(staffList.get(i).getPassword())&&!staffList.get(i).getStatus().equals("Resign")) {
-						getNumStaff=i;
+					else if(password.equals("X")) {
+						cancel=1;
+						loop=1;
 					}
-					
 					else {
-			    if(idNo==staffList.get(i).getIdNo()) {
-				countPassWrong--;
-				getNumStaff=i;
-				}
-			
-			}
-				}
-				if(!password.equals(staffList.get(getNumStaff).getPassword())) {
-				System.out.println("StaffID/Password Invalid ");
-				}
-				if(countPassWrong==0&&!(staffList.get(getNumStaff).getName().equals("admin"))) {
-					System.out.println("StaffID "+staffID+" is Deactivate");
-					String deactivate="Deactivate";
-					staffList.get(getNumStaff).setStatus(deactivate);
+						System.out.printf("\n%-25sAccess Denied. Password is incorrect.\n", "");
+						wrongCount++;
+					}
 					
-					
+					if(wrongCount==5) {
+						System.out.println("  You have entered your password incorrectly for 5 consecutive times. Account has been locked. Please contact your superior to deactivate your account");
+						staffList.get(index).setStatus("Deactivate");
+						loop=1;
+					}
+					else if (wrongCount<5&&valid!=1&&cancel!=1){
+						System.out.printf("%-25sWould you like to try again? (Y=yes) ", "");
+						choice=Character.toUpperCase(scanner.next().charAt(0));
+						scanner.nextLine();
+						if(choice!='Y') {
+							System.out.println();
+							System.out.println();
+							loop=1;
+							cancel=1;
+						}
+					}
 				}
-				if(staffList.get(getNumStaff).getStatus().equals("Deactivate")) {
-					System.out.println("5 Time Login Reached");
-					System.out.println("StaffID "+staffID+" is Deactivate");
-					System.out.println("Login Is Denied");
-				}
-			}
-			if(staffList.get(getNumStaff).getStatus().equals("Resign")) {
-				System.out.println("StaffID "+staffID+" is Resigned");
-				System.out.println("Login Is Denied");
-			}
+			}while(choice=='Y');
 			
 			
-		}while(loop==0);
+		}while(loop==1);
 		
 	}
-	
-	
 	
 	public static void mainMenu(ArrayList<Staff> staffList, ArrayList<Product> productList, ArrayList<Member> memberList, Staff staff, ArrayList<Receipt> receiptList, ArrayList<Payment> paymentList, BankAccount bankAccount, ArrayList<Refund> refundList) {
 		Scanner scanner=new Scanner(System.in);
-		int choice=0, loop=0;
+		int choice=0, loop=0, invalid = 0;
 		char quitChoice;
-		System.out.println(staff.getPosition());
 	
-		if(staff.getPosition().equals("cashier")) {
-		do {
+		if(staff.getPosition().equalsIgnoreCase("cashier")) {
+			do {
+			
+				choice=0;
+				loop=0;
+				invalid=0;
+				System.out.printf("%-27s-------------------------------------\n", "");
+				System.out.printf("%-27s|              Main Menu            |\n", "");
+				System.out.printf("%-27s-------------------------------------\n", "");
+				System.out.printf("%-27s|    1. Order and Payment Module    |\n", "");
+				System.out.printf("%-27s|    2. Member Management Module    |\n", "");
+				System.out.printf("%-27s|    3.       Refund Module         |\n", "");	
+				System.out.printf("%-27s|    4.      Change Password        |\n", "");
+				System.out.printf("%-27s|    5.          Report             |\n", "");
+				System.out.printf("%-27s|    0.          Logout             |\n", "");
+				System.out.printf("%-27s-------------------------------------\n\n", "");
+	
+				System.out.printf("%-32sSelect Action to perform: ", "");
+				try {
+					choice=scanner.nextInt();
+					scanner.nextLine();
+				}
+				catch(InputMismatchException e) {
+					scanner.nextLine();
+					invalid=1;
+				}
+				
+				if(choice<0||choice>5||invalid==1) {
+					System.out.printf("%-25sInvalid Choice. Press Enter to try again\n","");
+					scanner.nextLine();
+					loop=1;
+				}
+				else {
+					switch(choice) {
+					case 1: ChiKean.orderMenu(staffList, productList, memberList, paymentList, staff, receiptList, bankAccount); loop=1; break;
+					case 2: Claris.menu(memberList, staff, receiptList, refundList); loop=1; break;
+					case 3: JiaHui.refundMenu(receiptList, productList, bankAccount, refundList, paymentList); loop=1; break;
+					case 4:	editPassword(staffList,staff); loop=1; break;
+					case 5: dailyReport(receiptList,staff);break;
+					case 0: break;
+					}
+				}
+				
+				if(loop==0) {
+					System.out.printf("\n%-24sAre you sure you want to logout? (Y=yes) ", "");
+					quitChoice=Character.toUpperCase(scanner.next().charAt(0));
+					scanner.nextLine();
+					
+					if(quitChoice!='Y') {
+						loop=1;
+					}
+				}
+			}while(loop==1);
 		
-			choice=0;
-			loop=0;
-			System.out.printf("%-10s-------------------------------------\n", "");
-			System.out.printf("%-10s|              Main Menu            |\n", "");
-			System.out.printf("%-10s-------------------------------------\n", "");
-			System.out.printf("%-10s|    1. Order and Payment Module    |\n", "");
-			System.out.printf("%-10s|    2. Member Management Module    |\n", "");
-			System.out.printf("%-10s|    3.      Refund Module          |\n", "");
-			System.out.printf("%-10s|    0.          Logout             |\n", "");
-			System.out.printf("%-10s-------------------------------------\n", "");
+		}
+		
+		else if(staff.getPosition().equalsIgnoreCase("admin")||staff.getPosition().equalsIgnoreCase("executive")||staff.getPosition().equalsIgnoreCase("manager")) {
+			do {
+				
+				choice=0;
+				loop=0;
+				invalid=0;
+				System.out.printf("%-27s-------------------------------------\n", "");
+				System.out.printf("%-27s|              Main Menu            |\n", "");
+				System.out.printf("%-27s-------------------------------------\n", "");
+				System.out.printf("%-27s|    1. Order and Payment Module    |\n", "");
+				System.out.printf("%-27s|    2. Member Management Module    |\n", "");
+				System.out.printf("%-27s|    3.      Refund Module          |\n", "");	
+				System.out.printf("%-27s|    4. Staff Management Module     |\n", "");	
+				System.out.printf("%-27s|    5.      View Reports           |\n", "");
+				System.out.printf("%-27s|    0.         Logout              |\n", "");
+				System.out.printf("%-27s-------------------------------------\n\n", "");
 
-			System.out.print("Select Action to perform: ");
-			choice=scanner.nextInt();
-			scanner.nextLine();
-			
-			switch(choice) {
-			case 1: ChiKean.orderMenu(staffList,productList,memberList, paymentList, staff, receiptList, bankAccount); loop=1; break;
-			case 2: ChiKean.report(productList, receiptList, refundList); loop=1; break;
-			case 0: break;
-			}
-			
-			if(loop==0) {
-				System.out.print("Are you sure you want to logout? (Y=yes)");
-				quitChoice=Character.toUpperCase(scanner.next().charAt(0));
-				scanner.nextLine();
+				System.out.printf("%-32sSelect Action to perform: ", "");
 				
-				if(quitChoice!='Y') {
+				try {
+					choice=scanner.nextInt();
+					scanner.nextLine();
+				}
+				catch(InputMismatchException e) {
+					scanner.nextLine();
+					invalid=1;
+				}
+				
+				if(choice<0||choice>5||invalid==1) {
+					System.out.printf("%-25sInvalid Choice. Press Enter to try again\n","");
+					scanner.nextLine();
 					loop=1;
 				}
-			}
-		}while(loop==1);
-		
-		}
-		else if(staff.getPosition().equals("executive")) {
-			do{
-			choice=0;
-			loop=0;
-			System.out.printf("%-10s------------------------------\n", "");
-			System.out.printf("%-10s|          Main Menu         |\n", "");
-			System.out.printf("%-10s------------------------------\n", "");
-			System.out.printf("%-10s|1. Place Order              |\n", "");
-			System.out.printf("%-10s|2. On-Hold Payment List     |\n", "");
-			System.out.printf("%-10s|3. Edit Password            |\n", "");
-			System.out.printf("%-10s|4. Add Staff                |\n", "");
-			System.out.printf("%-10s|5. Change Position          |\n", "");
-			System.out.printf("%-10s|6. Report                   |\n", "");
-			System.out.printf("%-10s|7. Change Name              |\n", "");
-			System.out.printf("%-10s|8. Change Contact Number    |\n", "");
-			System.out.printf("%-10s|0. Logout                   |\n", "");
-			System.out.printf("%-10s------------------------------\n", "");
-			
-			System.out.print("Select Action to perform: ");
-			choice=scanner.nextInt();
-			scanner.nextLine();
-			
-			switch(choice) {
-			case 1: ChiKean.placeOrder(staffList,productList,memberList, paymentList, staff, receiptList, bankAccount); loop=1; break;
-			case 2: ChiKean.onHoldPayment(paymentList, memberList, staff, productList, receiptList, bankAccount); loop=1; break;
-			case 3: EditPassword( staffList,staff);break;
-			case 4: AddStaff( staffList);break;
-			case 5: ChangeStatus(staffList);break;
-			case 6: ChangePosition(staffList);break;
-			case 0: break;
-			}
-			
-			if(loop==0) {
-				System.out.print("Are you sure you want to logout? (Y=yes)");
-				quitChoice=Character.toUpperCase(scanner.next().charAt(0));
-				scanner.nextLine();
-				
-				if(quitChoice!='Y') {
-					loop=1;
+				else {
+					switch(choice) {
+					case 1: ChiKean.orderMenu(staffList, productList, memberList, paymentList, staff, receiptList, bankAccount); loop=1; break;
+					case 2: Claris.menu(memberList, staff, receiptList, refundList); loop=1; break;
+					case 3: JiaHui.refundMenu(receiptList, productList, bankAccount, refundList, paymentList); loop=1; break;
+					case 4: staffMenu(staffList,staff,receiptList); loop=1; break;
+					case 5: reportMenu(productList, receiptList, refundList, paymentList, memberList, staffList); loop=1; break;
+					case 0: break;
+					}
 				}
-			}
-			
-		}while(loop==1);
-			
-		}
-		else if(staff.getPosition().equals("manager")||staff.getName().equals("admin")) {
-			do{
-			choice=0;
-			loop=0;
-			System.out.printf("%-10s------------------------------\n", "");
-			System.out.printf("%-10s|          Main Menu         |\n", "");
-			System.out.printf("%-10s------------------------------\n", "");
-			System.out.printf("%-10s|1. Place Order              |\n", "");
-			System.out.printf("%-10s|2. On-Hold Payment List     |\n", "");
-			System.out.printf("%-10s|3. Edit Password            |\n", "");
-			System.out.printf("%-10s|4. Add Staff                |\n", "");
-			System.out.printf("%-10s|5. Change Position          |\n", "");
-			System.out.printf("%-10s|6. Report                   |\n", "");
-			System.out.printf("%-10s|7. Change Name              |\n", "");
-			System.out.printf("%-10s|8. Change Contact Number    |\n", "");
-			System.out.printf("%-10s|9. Change Status            |\n", "");
-			System.out.printf("%-10s|0. Logout                   |\n", "");
-			System.out.printf("%-10s------------------------------\n", "");
-			
-			System.out.print("Select Action to perform: ");
-			choice=scanner.nextInt();
-			scanner.nextLine();
-			
-			switch(choice) {
-			case 1: ChiKean.placeOrder(staffList,productList,memberList, paymentList, staff, receiptList, bankAccount); loop=1; break;
-			case 2: ChiKean.onHoldPayment(paymentList, memberList, staff, productList, receiptList, bankAccount); loop=1; break;
-			case 3: EditPassword( staffList,staff);break;
-			case 4: AddStaff( staffList);break;
-			case 5: ChangePosition(staffList);break;
-			case 6: ManagerReport(paymentList);break;
-			case 7:	break;
-			case 8:break;
-			case 9:ChangeStatus(staffList);break;
-			case 0: break;
-			}
-			
-			if(loop==0) {
-				System.out.print("Are you sure you want to logout? (Y=yes)");
-				quitChoice=Character.toUpperCase(scanner.next().charAt(0));
-				scanner.nextLine();
 				
-				if(quitChoice!='Y') {
-					loop=1;
+				
+				if(loop==0) {
+					System.out.printf("\n%-24sAre you sure you want to logout? (Y=yes) ", "");
+					quitChoice=Character.toUpperCase(scanner.next().charAt(0));
+					scanner.nextLine();
+					
+					if(quitChoice!='Y') {
+						loop=1;
+					}
 				}
+			}while(loop==1);
+			
 			}
-			
-		}while(loop==1);
-			
-		}
-		
-		
 	}
 	
-	public static void staffMenu() {
-		Scanner scanner=new Scanner(System.in);
-		System.out.printf("%-10s==================================\n", "");
-		System.out.printf("%-10sWELCOME TO STAFF MANAGEMENT MODULE\n", "");
-		System.out.printf("%-10s==================================\n\n", "");
+	public static void staffMenu(ArrayList<Staff> staffList,Staff staff,ArrayList<Receipt> receiptList) {
+		if(staff.getPosition().equalsIgnoreCase("manager")||staff.getPosition().equalsIgnoreCase("admin")) {
+			int choice=0, loop=0, invalid=0;
+			char quitChoice;
+			Scanner scanner=new Scanner(System.in);
+			do {
+				invalid=0;
+				choice=0;
+				loop=0;
+				System.out.printf("%-10s==================================\n", "");
+				System.out.printf("%-10sWELCOME TO STAFF MANAGEMENT MODULE\n", "");
+				System.out.printf("%-10s==================================\n\n", "");
+				
+				System.out.printf("%-10s------------------------------\n", "");
+				System.out.printf("%-10s|Staff Management Module Menu|\n", "");
+				System.out.printf("%-10s------------------------------\n", "");
+				System.out.printf("%-10s|  1.      Add Staff         |\n", "");
+				System.out.printf("%-10s|  2. Modify Staff Details   |\n", "");
+				System.out.printf("%-10s|  3.    View All Staff      |\n", "");
+				System.out.printf("%-10s|  0.         Exit           |\n", "");
+				System.out.printf("%-10s------------------------------\n", "");
+				System.out.print("Select Action to perform: ");
+				
+				try {
+					choice=scanner.nextInt();
+					scanner.nextLine();
+				}
+				catch(InputMismatchException e) {
+					scanner.nextLine();
+					invalid=1;
+				}
+				
+				
 		
-		System.out.printf("%-10s------------------------------\n", "");
-		System.out.printf("%-10s|Staff Management Module Menu|\n", "");
-		System.out.printf("%-10s------------------------------\n", "");
-		System.out.printf("%-10s|1. Place Order              |\n", "");
-		System.out.printf("%-10s|2. On-Hold Payment List     |\n", "");
-		System.out.printf("%-10s|3. Edit Password            |\n", "");
-		System.out.printf("%-10s|4. Add Staff                |\n", "");
-		System.out.printf("%-10s|5. Change Position          |\n", "");
-		System.out.printf("%-10s|6. Report                   |\n", "");
-		System.out.printf("%-10s|7. Change Name              |\n", "");
-		System.out.printf("%-10s|8. Change Contact Number    |\n", "");
-		System.out.printf("%-10s|9. Change Status            |\n", "");
-		System.out.printf("%-10s|0. Logout                   |\n", "");
-		System.out.printf("%-10s------------------------------\n", "");
+				switch(choice) {
+				case 1:addStaff(staffList); loop=1; break;
+				case 2: modifyStaffMenu(staffList,staff,receiptList); loop=1; break;
+				case 3:viewStaff(staffList); loop=1; break;
+				case 0: break;
+				default: loop=1; break;
+				}
+				
+			}while(loop==1);
+		}
+		
+			
 	}
-	/*public static void StaffTable(ArrayList<Staff> staffList,Staff staff) {
-		int chooseStaff=2;
+	
+	public static void modifyStaffMenu(ArrayList<Staff> staffList,Staff staff,ArrayList<Receipt> receiptList) {
+		int choice=0, loop=0, invalid=0;;
+		char quitChoice;
 		Scanner scanner=new Scanner(System.in);
 		do {
-		System.out.println("Welcome To Staff Section");
-		System.out.printf("1)Add Staff\n2)Modify Staff Detail\n3)Sale Report\n4)Exit\n");
-		System.out.print("Enter Selection 1-3:");
-		try {
-		chooseStaff=scanner.nextInt();
-		if(chooseStaff!=1||chooseStaff!=2||chooseStaff!=3||chooseStaff!=4) {
-			throw new Exception("Option is Not Valid\nPlease Enter Again:");
-		}
-		}
-		catch(Exception exe) {
-			//Put in the method
-			if(chooseStaff==1) {AddStaff(staffList);}
-			else if(chooseStaff==2) {StaffModification(staffList,staff);}
-			else if(chooseStaff==3) {}
-			else if(chooseStaff==4) {}
-		}
-		if(staff.getPosition().equals("cashier")&&(chooseStaff!=2)) {
-			System.out.print("Cashier Can Only Modify Details");
-		}
-	}while(staff.getPosition().equals("cashier")&&(chooseStaff!=2));
+			
+			choice=0;
+			loop=0;
+			invalid=0;
 		
-	}*/
-	public static void AddStaff(ArrayList<Staff> staffList) {
+			System.out.printf("%-10s------------------------------\n", "");
+			System.out.printf("%-10s| Modify Staff Details Menu  |\n", "");
+			System.out.printf("%-10s------------------------------\n", "");
+			System.out.printf("%-10s|1. Edit Password            |\n", "");
+			System.out.printf("%-10s|2. Change Contact Number    |\n", "");
+			System.out.printf("%-10s|3. Change Position          |\n", "");
+		    System.out.printf("%-10s|4. Change Name              |\n", "");
+		    System.out.printf("%-10s|5. Change Status            |\n", "");
+			System.out.printf("%-10s|0. Exit                     |\n", "");
+			System.out.printf("%-10s------------------------------\n", "");
+			System.out.print("Select Action to perform: ");
+			try {
+				choice=scanner.nextInt();
+				scanner.nextLine();
+			}
+			catch(InputMismatchException e) {
+				scanner.nextLine();
+				invalid=1;
+			}
+			switch(choice) {
+			case 1:editPassword(staffList,staff); loop=1;break;
+			case 2:editContactNumber(staffList);loop=1;break;
+			case 3:changePosition(staffList);loop=1;break;
+			case 4:editName(staffList);loop=1;break;
+			case 5:changeStatus(staffList,staff);loop=1;break;
+			case 0: break;
+			}
+			
+		}while(loop==1);
+	
+	}
+	
+	public static void reportMenu(ArrayList<Product> productList, ArrayList<Receipt> receiptList, ArrayList<Refund> refundList, ArrayList<Payment> paymentList, ArrayList<Member> memberList, ArrayList<Staff> staffList) {
+		Scanner scanner=new Scanner(System.in);
+		int choice=0;
+		int invalid=0;
+		int loop=0;
+		do {
+			choice=0;
+			invalid=0;
+			loop=0;
+			System.out.println();
+			System.out.printf("%-30s          ===========\n", "");
+			System.out.printf("%-30s          REPORT MENU\n", "");
+			System.out.printf("%-30s          ===========\n\n", "");
+			
+			System.out.printf("%-30s-------------------------------\n", "");
+			System.out.printf("%-30s|         Report Menu         |\n", "");
+			System.out.printf("%-30s-------------------------------\n", "");
+			System.out.printf("%-30s|    1.    Sales Report       |\n", "");
+			System.out.printf("%-30s|    2.    Staff Report       |\n", "");
+			System.out.printf("%-30s|    3.    Member Report      |\n", "");
+			System.out.printf("%-30s|    4.    Refund Report      |\n", "");
+			System.out.printf("%-30s|    0.   Exit Report Menu    |\n", "");
+			System.out.printf("%-30s-------------------------------\n\n", "");
+			System.out.printf("%-30s     Select your choice: ", "");
+			try {
+				choice=scanner.nextInt();
+				scanner.nextLine();
+			}
+			catch(InputMismatchException e) {
+				invalid=1;
+				scanner.nextLine();
+			}
+			
+			if((choice>=0&&choice<=4)&&invalid==0) {
+				switch(choice) {
+				case 1: ChiKean.reportMenu(productList, receiptList, refundList);; loop=1; break;
+				case 2: staffReport(receiptList, staffList); loop=1; break;
+				case 3: Claris.displayReport(memberList, receiptList, refundList); loop=1; break;
+				case 4: JiaHui.rfReportMenu(refundList, productList, receiptList, paymentList); loop=1; break;
+				case 0: break;
+				}
+			}
+			else {
+				System.out.println("  Invalid Choice. Press Enter to try again");
+				scanner.nextLine();
+			}
+		}while(choice<0||choice>4||invalid==1||loop==1);
+	}
+	
+	public static void dailyReport( ArrayList<Receipt> receiptList, Staff staff) {
+		int countTransaction=0;
+		System.out.printf("%-10s-------------------------------------------------------\n", "");
+		System.out.printf("%-10s|                  Daily  Report                      |\n", "");
+		System.out.printf("%-10s-------------------------------------------------------\n", "");
+		System.out.printf("%-10s|Staff Name:%-12s                              |\n","",staff.getName());
+		for(int i=0;i<receiptList.size();i++) {
+			if(receiptList.get(i).getPayment().getStaff().getFullStaffID().equals(staff.getFullStaffID())) {
+				countTransaction++;
+			}
+			
+		}
+		System.out.printf("%-10s|You Had Completed %d Order !                          |\n","",countTransaction);                                                            
+		System.out.printf("%-10s|Your Next Target is %d Order !                        |\n","",countTransaction+5);
+		System.out.printf("%-10s|Thank You For Your Constribution !                   |\n","");                     
+		System.out.printf("%-10s------------------------------------------------ -----\n", "");
+	}
+	public static void staffReport( ArrayList<Receipt> receiptList, ArrayList<Staff> staffList) {
+		Scanner scanner=new Scanner(System.in);
+		String getID;
+		int getidNo;
 		
+			String getReenter;
+			for(int i=0;i<staffList.size();i++) {
+				
+					System.out.println("Staff Name:"+staffList.get(i).getName());
+					System.out.println("Staff ID:"+staffList.get(i).getIdNo());
+					System.out.println("Report:");
+					int countTransaction=0;
+					System.out.printf("%-10s--------------------------------------------------\n", "");
+					System.out.printf("%-10s|               Staff Daily  Report              |\n", "");
+					System.out.printf("%-10s--------------------------------------------------\n", "");
+					System.out.printf("%-10s| Name                  Total Transaction Done   |\n", "");
+					System.out.printf("%-10s--------------------------------------------------\n", "");
+
+				for(int k=0;k<staffList.size();k++) {
+					countTransaction=0;
+					
+						for(int j=0;j<receiptList.size();j++) {
+							if(receiptList.get(i).getPayment().getStaff().getFullStaffID().equals(staffList.get(j).getFullStaffID())) {
+								countTransaction++;
+							}
+							
+					}		System.out.printf("%-10s|%-20s            %-2d              |\n","",staffList.get(k).getName(),countTransaction);
+
+						
+					}
+					
+				}
+					
+					System.out.printf("%-10s|         Thank You For Their Constribution !    |\n","");                     
+					System.out.printf("%-10s-------------------------------------------------\n", "");
+					
+				
+				}
+
+	public static void viewStaff(ArrayList<Staff>staffList) {
+		System.out.printf("%-10s------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
+		System.out.printf("%-10s|                               Staff List                                                                                                                       |\n", "");
+		System.out.printf("%-10s------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
+		System.out.printf("%-10s|Name                                    Phone Number                         Birthday            Position                 Salary            Status              |\n", "");
+		System.out.printf("%-10s------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
+		for(int i=0;i<staffList.size();i++) {
+	   System.out.printf("%-10s|%-30s           %-20s                 %-10s        %-10s            %9.2f           %-10s           |\n","",staffList.get(i).getName(),staffList.get(i).getContactNum(),staffList.get(i).getBirthDate(),staffList.get(i).getPosition(),staffList.get(i).getSalary(),staffList.get(i).getStatus());
+		}
+		System.out.printf("%-10s------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
+		
+	}
+		
+	
+	public static void editName(ArrayList<Staff>staffList) {
+		char getChoice;
+		String tryAgain="N";
+	    String getID;
+	    String getFirstS;
+	    int getidNo;
+	    boolean foundStatus;
+	    boolean checkName;
+	    Scanner scanner=new Scanner(System.in);
+	    String staffName;
+		 String getConfirm;
+	    do {
+	    	foundStatus=true;
+	    	System.out.print("Please Enter Staff ID To Be Edit:");
+	    	getID=scanner.nextLine();
+			scanner.nextLine();
+			getID=getID.toUpperCase();
+			if(getID.length()!=5) {
+				System.out.println("Invalid Staff ID Format! Staff ID must have 5 digits SXXXX");
+			}
+			else {
+				getidNo=Integer.parseInt(getID.replace("S", ""));
+				String getReenter;
+				for(int i=0;i<staffList.size();i++) {
+					if(staffList.get(i).getIdNo()==getidNo) {
+						System.out.println("Staff Name:"+staffList.get(i).getName());
+						System.out.println("Staff ID:"+staffList.get(i).getIdNo());
+						foundStatus=true;
+						String newName;
+						do { 
+							
+							System.out.print("Enter New Name :");
+							staffName=scanner.nextLine();
+							scanner.nextLine();
+							checkName=valiName(staffName);
+							if(checkName==false) {
+								System.out.println("Name Format Invalid");
+								System.out.println("Please Try Again");
+							}
+						}while(checkName==false);
+						if(checkName==true) {
+						System.out.print("Do You Sure To Modify This Name?:");
+						getReenter=scanner.nextLine();
+						getReenter=getReenter.toUpperCase();
+						if(getReenter.equals("Y")) {
+						staffList.get(i).setName(staffName);
+						writeTextFile(staffList);
+						System.out.println("Name Modified");
+						}
+						else if(!getReenter.equals("N")||!getReenter.equals("Y")) {
+							System.out.println("Invalid");
+						}
+						else {
+							System.out.println("Name Not Modified And Will Back To Staff Management Page");						
+						}
+					  }
+					}
+				}
+			}
+			if(foundStatus==false) {
+				System.out.println("Staff ID not found. Please try again");
+				System.out.print("Would you like to try again? (Y=yes) ");
+				getChoice=Character.toUpperCase(scanner.next().charAt(0));
+				scanner.nextLine();
+			}
+			
+		}while(foundStatus==false);
+		
+	}
+	public static void editContactNumber(ArrayList<Staff> staffList) {
+		char getChoice;
+		boolean checkPassword=true;
+		String tryAgain="N";
+	    String getID;
+	    String getFirstS;
+	    int getidNo;
+	    boolean foundStatus;
+	    Scanner scanner=new Scanner(System.in);
+	    
+	    do {
+	    	foundStatus=true;
+	    	System.out.print("Please Enter Staff ID To Be Edit:");
+	    	getID=scanner.nextLine();
+			scanner.nextLine();
+			getID=getID.toUpperCase();
+			if(getID.length()!=5) {
+				System.out.println("Invalid Staff ID Format! Staff ID must have 5 digits SXXXX");
+			}
+			else {
+				getidNo=Integer.parseInt(getID.replace("S", ""));
+				String getReenter;
+				for(int i=0;i<staffList.size();i++) {
+					if(staffList.get(i).getIdNo()==getidNo) {
+						System.out.println("Staff Name:"+staffList.get(i).getName());
+						System.out.println("Staff ID:"+staffList.get(i).getIdNo());
+						foundStatus=true;
+						String ModiphoneNum,newPhoneNum;
+						System.out.print("Enter New Phone Number:");
+						ModiphoneNum=scanner.nextLine();
+						newPhoneNum= contactNoValidation(ModiphoneNum);
+						System.out.print("Do You Sure To Modify This Phone Number?:");
+						getReenter=scanner.nextLine();
+						getReenter=getReenter.toUpperCase();
+						if(getReenter.equals("Y")) {
+						staffList.get(i).setContactNum(newPhoneNum);
+						writeTextFile(staffList);
+						System.out.println("Phone Number Modified");
+						foundStatus=true;
+						}
+						else if(!getReenter.equals("N")&&!getReenter.equals("Y")) {
+							System.out.println("Invalid");
+						}
+						else {
+							System.out.println("Phone Number Not Modified And Will Back To Staff Management Page");						
+						}
+					}
+				}
+			}
+			if(foundStatus==false) {
+				System.out.println("Staff ID not found. Please try again");
+				System.out.print("Would you like to try again? (Y=yes) ");
+				getChoice=Character.toUpperCase(scanner.next().charAt(0));
+				scanner.nextLine();
+			}
+			
+		}while(foundStatus==false);
+		
+	   
+	}
+	
+
+	public static void addStaff(ArrayList<Staff> staffList) {
+		    String getConfirm;
 		  String addStaff="";
 		  boolean getStaffname = false;
 		do {
@@ -306,14 +621,14 @@ public class ZhiHang {
 	     int countEnter;
 	     int idNo = 0;
 	   boolean checkname;
-	    String getConfirm;
-	   
+	
+	    getConfirm="N";
 		
 		//Birthday and generated add time and date
 		//Enter Name
 		System.out.print("Welcome to Staff Add Section\n");
 		do { 
-		
+			
 			System.out.print("Enter Name :");
 			staffName=scanner.nextLine();
 			scanner.nextLine();
@@ -398,166 +713,145 @@ public class ZhiHang {
 				addStaff=scanner.nextLine();
 		    	addStaff=addStaff.toUpperCase();
 		    	if(addStaff.equals("Y")) {
-		    		Staff newStaff=new Staff(staffName,icNo,valiPassword,staffPosition);
+		    		Staff newStaff=new Staff(staffName,icNo,newPhoneNum,valiPassword,staffPosition);
 		    		staffList.add(newStaff);
 		    		countEnter++;
-		    		for(int i=0;i<staffList.size();i++) {
-		    			System.out.println(staffList.get(i).getName());
-		    			System.out.println(staffList.get(i).getBirthDate());
-		    			
-		    		}
-		    		/* try {
-		    			
-		    		//
-		    			appendStaff(Staff newStaff);
-		    			FileWriter writer=new FileWriter("src\\staff.txt");
-		    			writer.append(newStaff.appendStaff());
-		    		}
-		    		catch(IOException e) {
-		    			e.printStackTrace();
-		    		}  */
+		    		
+		    		writeTextFile(staffList);
 		    	}
 		    	else {
-					System.out.print("Staff Is Not Added");
+					System.out.println("Staff Is Not Added");
 		    	}
-				
+		   
 			System.out.print("Do You Want To Continue Add Staff ?(Y=Yes) :");
 			 getConfirm=scanner.nextLine();
-			 getConfirm=addStaff.toUpperCase();
+			 getConfirm=getConfirm.toUpperCase();
 	    	
 	    	
 	    	System.out.println("The Number Of Staff Added is "+countEnter);
 	    		
-			}while(addStaff.equals(("Y")));
+			}while(getConfirm.equals(("Y")));
 		
 }
-/*
-public String appendStaff() {
-String staffFile="";
-		staffFile=String.format("%s,%s,%s,S,%s,%d,%s,%s,%.2f,%s,%s\n",getName(),getIcNo(),getBirthDate(),staffID,idNo,password,position,salary,joinDate,status);
-		return staffFile;
-	}
-	*/
 
-	public static void EditPassword(ArrayList<Staff> staffList,Staff staff) {
-
-	String getChoice;
-	boolean checkPassword=true;
-	String tryAgain="N";
-    String getAddPass;
-    String getID;
-    String getFirstS;
-    Scanner scanner=new Scanner(System.in);
-    if(staff.getPosition().equals("cashier")) {
-    	do {
-			System.out.print("Enter New Password :");
-			String newPassword=scanner.nextLine();
-			scanner.nextLine();
-			System.out.print("Enter Password Again :");
-			String newEnterPassword=scanner.nextLine();
-    
-      
-				if(newEnterPassword.equals(newPassword)) {
-			
-				 checkPassword=checkPassword(newEnterPassword);
+	public static void editPassword(ArrayList<Staff> staffList,Staff staff) {
+		String getChoice;
+		boolean checkPassword=true;
+		String tryAgain="N";
+	    String getAddPass;
+	    String getID;
+	    String getFirstS;
+	    Scanner scanner=new Scanner(System.in);
+	    if(staff.getPosition().equals("cashier")) {
+	    	do {
+				System.out.print("Enter New Password :");
+				String newPassword=scanner.nextLine();
+				scanner.nextLine();
+				System.out.print("Enter Password Again :");
+				String newEnterPassword=scanner.nextLine();
+	    
+	      
+					if(newEnterPassword.equals(newPassword)) {
 				
-					if(checkPassword==true){
-							System.out.println("Valid Password");
-							System.out.println(" Password is "+newEnterPassword);
-							staff.setPassword(newEnterPassword);
-							
-							tryAgain.equals("N");
-						}
-						else {
-							System.out.println("Invalid Password");
-							System.out.println("Please Check Through These Critiral");
-							System.out.println("1)Please Ensure The Password Format Is CORRECT");
-							System.out.println("2)Please Ensure The Password is at least 7 characters long");
-						}
-			}
-				else {
-				System.out.println("Invalid Password");
-				System.out.println("Passwords Entered do not match");
-				System.out.println("Do You Want To Try Again?(Press Y)");
-				tryAgain=scanner.nextLine();
-				tryAgain=tryAgain.toUpperCase();
-			}
-				
-			}while(tryAgain.equals("Y"));	
-				
-    }
-
-    if(!staff.getPosition().equals("cashier")) {
-	do {
-
-	System.out.print("Please Enter The ID of Staff:");
-	getID=scanner.nextLine();
-	 getFirstS=getID.substring(0,1);
-	getFirstS=getFirstS.toUpperCase();
-	if(getFirstS.equals("S")) {
-	int getNum=Integer.parseInt(getID.substring(1,5));
+					 checkPassword=checkPassword(newEnterPassword);
+					
+						if(checkPassword==true){
+								System.out.println("Valid Password");
+								System.out.println(" Password is "+newEnterPassword);
+								staff.setPassword(newEnterPassword);
+								writeTextFile(staffList);
+								tryAgain.equals("N");
+							}
+							else {
+								System.out.println("Invalid Password");
+								System.out.println("Please Check Through These Critiral");
+								System.out.println("1)Please Ensure The Password Format Is CORRECT");
+								System.out.println("2)Please Ensure The Password is at least 7 characters long");
+							}
+				}
+					else {
+					System.out.println("Invalid Password");
+					System.out.println("Passwords Entered do not match");
+					System.out.println("Do You Want To Try Again?(Press Y)");
+					tryAgain=scanner.nextLine();
+					tryAgain=tryAgain.toUpperCase();
+				}
+					
+				}while(tryAgain.equals("Y"));	
+					
+	    }
 	
-	for(int i=0;i<staffList.size();i++) {
-		if((staffList.get(i).getIdNo()==getNum&&staffList.get(i).getPosition().equals("cashier"))||(staffList.get(i).getIdNo()==getNum&&staffList.get(i).getPosition().equals("cashier"))) {
+	    if(!staff.getPosition().equals("cashier")) {
+		do {
+	
+		System.out.print("Please Enter The ID of Staff:");
+		getID=scanner.nextLine();
+		 getFirstS=getID.substring(0,1);
+		getFirstS=getFirstS.toUpperCase();
+		if(getFirstS.equals("S")) {
+		int getNum=Integer.parseInt(getID.substring(1,5));
 		
-	}
-		if(staffList.get(i).getIdNo()==getNum) {
-			do {
-			System.out.print("Enter New Password :");
-			String newPassword=scanner.nextLine();
-			scanner.nextLine();
-			System.out.print("Enter Password Again :");
-			String newEnterPassword=scanner.nextLine();
-    
-      
-				if(newEnterPassword.equals(newPassword)) {
+		for(int i=0;i<staffList.size();i++) {
+			if((staffList.get(i).getIdNo()==getNum&&staffList.get(i).getPosition().equals("cashier"))||(staffList.get(i).getIdNo()==getNum&&staffList.get(i).getPosition().equals("cashier"))) {
 			
-				 checkPassword=checkPassword(newEnterPassword);
+		}
+			if(staffList.get(i).getIdNo()==getNum) {
+				do {
+				System.out.print("Enter New Password :");
+				String newPassword=scanner.nextLine();
+				scanner.nextLine();
+				System.out.print("Enter Password Again :");
+				String newEnterPassword=scanner.nextLine();
+	    
+	      
+					if(newEnterPassword.equals(newPassword)) {
 				
-					if(checkPassword==true){
-							System.out.println("Valid Password");
-							System.out.println(" Password is "+newEnterPassword);
-							staffList.get(i).setPassword(newEnterPassword);
-							
-							tryAgain.equals("N");
-						}
-						else {
-							System.out.println("Invalid Password");
-							System.out.println("Please Check Through These Critiral");
-							System.out.println("1)Please Ensure The Password Format Is CORRECT");
-							System.out.println("2)Please Ensure The Password is at least 7 characters long");
-						}
-			}
-				else {
-				System.out.println("Invalid Password");
-				System.out.println("Passwords Entered do not match");
-				System.out.println("Do You Want To Try Again?(Press Y)");
-				tryAgain=scanner.nextLine();
-				tryAgain=tryAgain.toUpperCase();
-				if(checkPassword==true) {
-					tryAgain="N";
+					 checkPassword=checkPassword(newEnterPassword);
+					
+						if(checkPassword==true){
+								System.out.println("Valid Password");
+								System.out.println(" Password is "+newEnterPassword);
+								staffList.get(i).setPassword(newEnterPassword);
+								
+								tryAgain.equals("N");
+							}
+							else {
+								System.out.println("Invalid Password");
+								System.out.println("Please Check Through These Critiral");
+								System.out.println("1)Please Ensure The Password Format Is CORRECT");
+								System.out.println("2)Please Ensure The Password is at least 7 characters long");
+							}
+				}
+					else {
+					System.out.println("Invalid Password");
+					System.out.println("Passwords Entered do not match");
+					System.out.println("Do You Want To Try Again?(Press Y)");
+					tryAgain=scanner.nextLine();
+					tryAgain=tryAgain.toUpperCase();
+					if(checkPassword==true) {
+						tryAgain="N";
+					}
+				}
+					
+				}while(tryAgain.equals("Y"));	
+					
+			
 				}
 			}
-				
-			}while(tryAgain.equals("Y"));	
-				
-		
-			}
 		}
+		
+		        
+		else {
+			System.out.println("Format Invalid");
+		}
+		System.out.print("Do You Want To Modify Password Again?: ");
+		 getChoice=scanner.nextLine();
+		 getChoice=getChoice.toUpperCase();
+		 }while(getChoice.equals("Y"));
+		
+	    }
+	
 	}
-	
-	        
-	else {
-		System.out.println("Format Invalid");
-	}
-	System.out.print("Do You Want To Modify Password Again?: ");
-	 getChoice=scanner.nextLine();
-	 getChoice=getChoice.toUpperCase();
-	 }while(getChoice.equals("Y"));
-	
-    }
-	
-}
 
 	public static boolean checkPassword(String password){
 		int getNumAlp=0;
@@ -574,84 +868,131 @@ String staffFile="";
 				else if(!Character.isLetter(password.charAt(i))&&!Character.isDigit(password.charAt(i))){
 					countPass++;
 				}		
-				
-				
-		}
-			if(getNumAlp>=1&&getNumValue>=1&&countPass>=1){
-				
-					return true;
-				}
-				else {
+			}
 			
-					return false;
-				}
+			if(getNumAlp>=1&&getNumValue>=1&&countPass>=1){
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 	    else {
 			return false;
 	    }
-	
-
-
 	}
 	
-	public static void ChangeStatus(ArrayList<Staff> staffList) {
+	public static void changeStatus(ArrayList<Staff> staffList,Staff staff) {
 		String getChoice;
 		String getID;
 		String getFirstS;
 		int getNum;
 		String tryAgain;
 		int countStaff=0;
+		int invalid=0;
 		Scanner scanner=new Scanner(System.in);
-		do {
-		System.out.print("Please Enter The ID of Staff:");
-		getID=scanner.nextLine();
-		 getFirstS=getID.substring(0,1);
-		getFirstS=getFirstS.toUpperCase();
-		if(getFirstS.equals("S")) {
-		 getNum=Integer.parseInt(getID.substring(1,5));
-		 for(int i=0;i<staffList.size();i++) {
-				
-				if(staffList.get(i).getIdNo()==getNum) {
-					System.out.println("Staff Name:"+staffList.get(i).getName());
-					System.out.println("Staff ID:"+staffList.get(i).getIdNo());
-					System.out.println("Staff Status:"+staffList.get(i).getStatus());
-					System.out.println("Change The Status (Press Y)?:");
-					getChoice=scanner.nextLine();
-					getChoice=getChoice.toUpperCase();
-					
-					if(getChoice.equals("Y")) {
-						staffList.get(i).setStatus("Y");
-						System.out.println("Status:"+staffList.get(i).getStatus());
-					}
-					
-					
-				}
-				
-				else {
-			 countStaff++;
-		 }
-			
-		}
-		 
-		 	
-		
-}
-	else {
-			System.out.println("Format Invalid");
-	}
-		if(countStaff!=staffList.size()-1) {
-			System.out.println("Staff ID Not Found");
-		}
-		System.out.print("Do You Want To Modify Status Again?: ");
-		 getChoice=scanner.nextLine();
-		 getChoice=getChoice.toUpperCase();
-		if(getChoice.equals("Y"))
-		{		 countStaff=0;
-		}
-		}while(getChoice.equals("Y"));
-}
 	
-	public static void ChangePosition(ArrayList<Staff> staffList) {
+		
+		do {
+			invalid=0;
+			System.out.print("Please Enter The ID of Staff:");
+			getID=scanner.nextLine();
+			getFirstS=getID.substring(0,1);
+			getFirstS=getFirstS.toUpperCase();
+			if(getFirstS.equals("S")) {
+				getNum=Integer.parseInt(getID.substring(1,5));
+				for(int i=0;i<staffList.size();i++) {
+				
+					if(staffList.get(i).getIdNo()==getNum) {
+					
+						System.out.println("Staff Name:"+staffList.get(i).getName());
+						System.out.println("Staff ID:"+staffList.get(i).getIdNo());
+						System.out.println("Staff Status:"+staffList.get(i).getStatus());
+					
+						if(staffList.get(i).getStatus().equals("Active")) {
+							System.out.printf("-------------------------------------------\n","");
+							System.out.printf("              Status Selection             \n","");
+							System.out.printf("-------------------------------------------\n","");
+							System.out.println("Change The Status To Resign (Press Y)?:");
+							getChoice=scanner.nextLine();
+							getChoice=getChoice.toUpperCase();
+						
+							if(getChoice.equals("Y")) {
+								staffList.get(i).setStatus("Y");
+								System.out.println("Status:"+staffList.get(i).getStatus());
+								writeTextFile(staffList);
+							}
+						
+						
+						}
+						else if(staffList.get(i).getStatus().equals("Deactivate")) {
+							int selection=0;
+							do {
+								invalid=0;
+								System.out.printf("%-10s-----------------------------------\n","");
+								System.out.printf("%-10s      Status Selection             \n","");
+								System.out.printf("%-10s-----------------------------------\n","");
+								System.out.printf("%-10s|1).Active                        |\n","");
+								System.out.printf("%-10s|2).Resign                        |\n","");
+								System.out.printf("%-10s|0).Quit                          |\n","");
+								System.out.printf("%-10s-----------------------------------\n","");
+								System.out.print("Enter Choice:");
+								try {
+									selection=scanner.nextInt();
+							        scanner.nextLine();
+								}
+								catch(InputMismatchException e) {
+									scanner.nextLine();
+									invalid=1;
+								}
+						        
+						        
+								if(selection==1) {
+									staffList.get(i).setStatus("Activate");
+									System.out.println("Status:"+staffList.get(i).getStatus());
+									writeTextFile(staffList);
+								}
+								if(selection==2) {
+									staffList.get(i).setStatus("Resign");
+									System.out.println("Status:"+staffList.get(i).getStatus());
+									writeTextFile(staffList);
+								}
+								else if(selection==0){
+									System.out.println("You have quit");
+								}
+								else {
+									invalid=1;
+									System.out.println("Invalid Choice. Please try again");
+								}
+							}while(invalid==1);
+							
+						
+						}
+					}
+					else {
+						countStaff++;
+					}
+			
+				}
+			}
+			else {
+				System.out.println("Format Invalid");
+			}
+			if(countStaff!=staffList.size()-1) {
+				System.out.println("Staff ID Not Found");
+			}
+			System.out.print("Do You Want To Modify Status Again?: ");
+			getChoice=scanner.nextLine();
+			scanner.nextLine();
+			getChoice=getChoice.toUpperCase();
+			if(getChoice.equals("Y"))
+			{		
+				countStaff=0;
+			}
+		}while(getChoice.equals("Y"));
+	}
+	
+	public static void changePosition(ArrayList<Staff> staffList) {
 		Scanner scanner=new Scanner(System.in);
 		String getID;
 		String getFirstS;
@@ -686,6 +1027,7 @@ String staffFile="";
 							
 							staffList.get(i).setPosition(getChoice);
 							System.out.println("Status:"+staffList.get(i).getPosition());
+							writeTextFile(staffList);
 						}
 						
 						
@@ -716,7 +1058,7 @@ String staffFile="";
 	
 	}
 	
-	public static void ManagerReport(ArrayList<Payment> paymentList) {
+	public static void managerReport(ArrayList<Receipt> receiptList) {
 		Member getName;
 		String getStatus;
 		int totalCountCash=0;
@@ -725,16 +1067,16 @@ String staffFile="";
 		System.out.printf("------------------------------------------------------------------------\n");
 		System.out.printf("|                       Payment Method Report                          |\n");
 		System.out.printf("------------------------------------------------------------------------\n");
-		for(int i=0;i<paymentList.size();i++) {
+		for(int i=0;i<receiptList.size();i++) {
 		
-		if(paymentList.get(i).getStatus().equals("Cash")) {
+		if(receiptList.get(i).getPayment().getPaymentMethod().equalsIgnoreCase("Cash")) {
 			totalCountCash++;
 		
 		}
-		else if(paymentList.get(i).getStatus().equals("Credit Card")) {
+		else if(receiptList.get(i).getPayment().getPaymentMethod().equalsIgnoreCase("Credit Card")) {
 			totalCountCreditCard++;
 		}
-		else if(paymentList.get(i).getStatus().equals("Touch N Go E-Wallet")) {
+		else if(receiptList.get(i).getPayment().getPaymentMethod().equalsIgnoreCase("Touch N Go E-Wallet")) {
 			totalCountTnG++;
 		}
 		
@@ -849,6 +1191,21 @@ String staffFile="";
 			return contactNo;
 		}
 
+	public static void writeTextFile(ArrayList<Staff> staffList) {
+		File file=new File("src\\staff.txt");
+		FileWriter fw=null;
+		try {
+			fw=new FileWriter(file);
+			for(int i=0;i<staffList.size();i++) {
+				fw.write(staffList.get(i).getName() + "," + staffList.get(i).getIcNo() + "," + staffList.get(i).getBirthDate() + "," + staffList.get(i).getContactNum() + "," + staffList.get(i).getStaffID() + "," + staffList.get(i).getIdNo() + "," + staffList.get(i).getPassword() + "," + staffList.get(i).getPosition() + "," + staffList.get(i).getSalary() + "," + staffList.get(i).getJoinDate().toString() + "," + staffList.get(i).getStatus() + "\n");
+			
+			}
+			fw.close();
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+	}
 }
 
 

@@ -1,7 +1,10 @@
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -37,6 +40,9 @@ public class Claris {
 				case 4:	
 					viewMember(memberList);
 					break;
+				case 5:
+					displayReceipt(receiptList);
+					break;
 				case 0:
 					System.out.println("  You are properly quit!");
 					break;
@@ -69,11 +75,12 @@ public class Claris {
 			System.out.printf("%-10s|2.  Modify Member Details   |\n", "");
 			System.out.printf("%-10s|3.      Search Member       |\n", "");
 			System.out.printf("%-10s|4.     View all Member      |\n", "");
+			System.out.printf("%-10s|5.     Display Receipt      |\n", "");
 			System.out.printf("%-10s|0.          Quit            |\n", "");
 			System.out.printf("%-10s|                            |\n", "");
 			System.out.printf("%-10s------------------------------\n", "");
 			
-			System.out.print("  Enter your choice >> ");
+			System.out.print("  Enter your Choice >> ");
 			
 			invalidInput = 0;
 			
@@ -105,61 +112,110 @@ public class Claris {
 	public static void addMember(ArrayList<Member> memberList, Staff staff) {
 		Scanner scanner = new Scanner(System.in);
 		
+		int cancel = 0;
 		char addYesNo = 'N';
 		char contAdd = 'N';
 		String newMbrIcNo = "";
 		String newMbrName = "";
+		String newContactNum = "";
+		String newMbrshipType = "", newActivePeriod = "";
+		
 		GetDate getDate = new GetDate();
 		boolean validName = false;
 		boolean validIc = false;
 		
 		do {
 			contAdd = 'N';
+			cancel = 0;
 			
 			System.out.println("  Register at (date and time): " + getDate);
 			
-			System.out.print("  Enter Member's Name: ");
+			System.out.print("  Enter Member's Name (Enter -1 to cancel): ");
 			newMbrName = scanner.nextLine();
-			validName = ZhiHang.valiName(newMbrName);
-			while(validName == false) {
-				System.out.print("  Invalid Name. Kindly re-enter again (only alphabets): ");
-				newMbrName = scanner.nextLine();
-				validName = ZhiHang.valiName(newMbrName);	
+			if(!newMbrName.equals("-1")) {
+				validName = ZhiHang.valiName(newMbrName);
+				while(validName == false) {
+					System.out.print("  Invalid Name. Please ensure that your name only has letters (Enter -1 to cancel): ");
+					newMbrName = scanner.nextLine();
+					if(!newMbrName.equals("-1")) {
+						validName = ZhiHang.valiName(newMbrName);
+					}
+					else {
+						cancel = -1;
+						validName = true;
+					}
+				}
+			}
+			else {
+				cancel = -1;
 			}
 			
-			System.out.print("  Enter Member's IC Number: ");
-			newMbrIcNo = scanner.next();
-			scanner.nextLine();
-			validIc = ZhiHang.checkIC(newMbrIcNo);
-			while(validIc == false) {
-				System.out.print("  Invalid IC. Kindly re-enter again: ");
-				newMbrIcNo = scanner.nextLine();
-				validIc = ZhiHang.checkIC(newMbrIcNo);	
+			if(cancel != -1) {
+				System.out.print("\n  Enter Member's IC Number (Enter -1 to cancel): ");
+				newMbrIcNo = scanner.next();
+				if(!newMbrIcNo.equals("-1")) {
+					validIc = ZhiHang.checkIC(newMbrIcNo);
+					scanner.nextLine();
+					while(validIc == false) {
+						System.out.println("  Invalid IC. Please ensure that you IC fulfilled conditions below:");
+						System.out.println("  ================================");
+						System.out.println("  1. Only has numbers.");
+						System.out.println("  2. Has length of 12 digits.");
+						System.out.println("  2. Has valid Day, Month and Year.");
+						System.out.print("\n   Please Try Again (Enter -1 to cancel): ");
+						newMbrIcNo = scanner.nextLine();
+						if(!newMbrIcNo.equals("-1")) {
+							validIc = ZhiHang.checkIC(newMbrIcNo);
+						}
+						else {
+							cancel = -1;
+							validIc = true;
+						}
+					}
+				}
+				else {
+					cancel = -1;
+				}
 			}
 //			newMbrIcNo = icNoValidation(newMbrIcNo);
 			
-			System.out.print("  Enter Member's Contact Number: ");
-			String newContactNum = scanner.next();
-			scanner.nextLine();
-			newContactNum = contactNoValidation(newContactNum);
-			
-			String newMbrshipType = membershipType();
-			
-			String newActivePeriod = mbrActivePeriod(newMbrshipType);
-			
-			System.out.print("  Do you want to add this new member (Y = Yes/N = No)?: ");
-			addYesNo = scanner.next().toUpperCase().charAt(0);
-			scanner.nextLine();
-			
-			if(addYesNo == 'Y') {
-				//String name, String icNo, String birthDate, String contactNum, String memberID, int idNo, String membership, String activePeriod, String mbrStatus, Staff registeredBy, String registrationDate
-				Member m = new Member(newMbrName, newMbrIcNo, newContactNum, newMbrshipType, newActivePeriod, staff);
-				scanner.nextLine();
-				memberList.add(m);
-				textFile(memberList);
+			if(cancel != -1) {
+				System.out.print("\n  Enter Member's Contact Number (Enter -1 to cancel): ");
+				newContactNum = scanner.next();
+				if(!newContactNum.equals("-1")) {
+					newContactNum = contactNoValidation(newContactNum);
+				}
+				else {
+					cancel = -1;
+				}
 			}
 			
-			System.out.print("  Do you want to add more new member (Y = Yes/N = No)?: ");
+			if(cancel != -1) {
+				newMbrshipType = membershipType();
+				if(newMbrshipType.equals("-1")) {
+					cancel = -1;
+				}
+			}
+			
+			if(cancel != -1) {
+				newActivePeriod = mbrActivePeriod(newMbrshipType);
+			}
+			
+			if(cancel != -1) {
+				System.out.print("\n  Do you want to add this new member (Y = Yes)? ");
+				addYesNo = scanner.next().toUpperCase().charAt(0);
+				scanner.nextLine();
+				
+				if(addYesNo == 'Y') {
+					//String name, String icNo, String birthDate, String contactNum, String memberID, int idNo, String membership, String activePeriod, String mbrStatus, Staff registeredBy, String registrationDate
+					Member m = new Member(newMbrName, newMbrIcNo, newContactNum, newMbrshipType, newActivePeriod, staff);
+					scanner.nextLine();
+					memberList.add(m);
+					textFile(memberList);
+				}
+			}
+			
+			System.out.print("  Do you want to add more new member (Y = Yes)? ");
 			contAdd = scanner.next().toUpperCase().charAt(0);
 			scanner.nextLine();
 		} while(Character.toUpperCase(contAdd) == 'Y');
@@ -170,6 +226,7 @@ public class Claris {
 	public static void modifyMember(ArrayList<Member> memberList) {
 		Scanner scanner =  new Scanner(System.in);
 		
+		int cancel = 0;
 		int searchChoice = 0;
 		char contModify = 'N';
 		int choice;
@@ -177,11 +234,14 @@ public class Claris {
 		int invalid = 0;
 		int index = -1;
 		char modify = 'N';
+		boolean validName = false;
 		
-		String tempName, tempContactNum, tempMbrshipType;
+		String tempName, tempContactNum, tempMbrshipType, tempStatus;
+		String tempMbrType; //to compare with tempMbrshipType
 		
 		do {
 			do {
+				cancel = 0;
 				searchChoice = 0;
 				contModify = 'N';
 				invalid = 0;
@@ -194,7 +254,7 @@ public class Claris {
 				System.out.printf("%-10s|2. Member IC   |\n", "");
 				System.out.printf("%-10s-----------------\n", "");
 				
-				System.out.print("  Enter your Choice: ");
+				System.out.print("  Enter your Choice (Enter -1 to cancel): ");
 				try {
 					searchChoice = scanner.nextInt();
 					scanner.nextLine();
@@ -234,6 +294,9 @@ public class Claris {
 						break;
 					}
 				}
+				else if(searchChoice == -1) {
+					cancel = -1;
+				}
 				
 				if(index == -1) {
 					System.out.println("  Member Not Found. Press Enter To Try Again.");
@@ -242,7 +305,7 @@ public class Claris {
 				
 			}while(invalid == -1 || index == -1);
 			
-			if(invalid != -1 && index != -1) {
+			if(invalid != -1 && index != -1 && cancel != -1) {
 				System.out.printf("%-10s----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
 				System.out.printf("%-10s|                                                                                                                                                                                                  |\n", "");
 				System.out.printf("%-10s|   %-17s%-30s%-25s%-15s%-18s%-13s%-17s%-17s%-17s%-19s   |\n", "", "Member ID", "Name", "Identification Number", "Birth Date", "Contact Number", "Membership", "Active Period", "Member Status", "Registered By", "Registration Date");
@@ -254,46 +317,106 @@ public class Claris {
 				tempName = memberList.get(index).getName();
 				tempContactNum = memberList.get(index).getContactNum();
 				tempMbrshipType = memberList.get(index).getMembership();
+				tempMbrType = memberList.get(index).getMembership();
 				
 				choice = modifyDetailMenuM();
 				
 				switch(choice) {
 				case 1:
-					System.out.print("  Enter Member NEW Name: ");
+					System.out.print("  Enter Member NEW Name (Enter -1 to cancel): ");
 					tempName = scanner.nextLine();
-					//tempName = nameValidation(tempName);
+					if(!tempName.equals("-1")) {
+						validName = ZhiHang.valiName(tempName);
+						while(validName == false) {
+							System.out.print("  Invalid Name. Please ensure that your name only has letters (Enter -1 to cancel): ");
+							tempName = scanner.nextLine();
+							if(!tempName.equals("-1")) {
+								validName = ZhiHang.valiName(tempName);
+							}
+							else {
+								cancel = -1;
+								validName = true;
+							}
+						}
+					}
+					else {
+						cancel = -1;
+					}
 					break;
 				case 2:
-					System.out.print("  Enter Member NEW Contact Number: ");
+					System.out.print("  Enter Member NEW Contact Number (Enter -1 to cancel): ");
 					tempContactNum = scanner.nextLine();
-					tempContactNum = contactNoValidation(tempContactNum);
+					if(!tempContactNum.equals("-1")) {
+						tempContactNum = contactNoValidation(tempContactNum);
+					}
+					else {
+						cancel = -1;
+					}
 					break;
 				case 3:
-					tempMbrshipType = membershipType();
+					tempMbrType = membershipType();
+					if(tempMbrType.equals("-1")) {
+						cancel = -1;
+					}
 					break;
 				case 4:
-					System.out.print("  Enter Member NEW Name: ");
+					System.out.print("  Enter Member NEW Name (Enter -1 to cancel): ");
 					tempName = scanner.nextLine();
-					//tempName = nameValidation(tempName);
+					if(!tempName.equals("-1")) {
+						validName = ZhiHang.valiName(tempName);
+						while(validName == false) {
+							System.out.print("  Invalid Name. Please ensure that your name only has letters (Enter -1 to cancel): ");
+							tempName = scanner.nextLine();
+							if(!tempName.equals("-1")) {
+								validName = ZhiHang.valiName(tempName);
+							}
+							else {
+								cancel = -1;
+								validName = true;
+							}
+						}
+					}
+					else {
+						cancel = -1;
+					}
 					
-					System.out.print("  Enter Member NEW Contact Number: ");
-					tempContactNum = scanner.nextLine();
-					tempContactNum = contactNoValidation(tempContactNum);
+					if(cancel != -1) {
+						System.out.print("  Enter Member NEW Contact Number (Enter -1 to cancel): ");
+						tempContactNum = scanner.nextLine();
+						if(!tempContactNum.equals("-1")) {
+							tempContactNum = contactNoValidation(tempContactNum);
+						}
+						else {
+							cancel = -1;
+						}
+					}
 					
-					tempMbrshipType = membershipType();
+					if(cancel != -1) {
+						tempMbrType = membershipType();
+						if(tempMbrType.equals("-1")) {
+							cancel = -1;
+						}
+					}
 					break;
 				case 0:
 					System.out.println("  You Are Quit.");
 					break;
 				}
 				
-				if(choice != 0) {
+				if(choice != 0 && cancel != -1) {
+					if(!tempMbrshipType.equals(tempMbrType)) {
+						tempStatus = "Active";
+					}
+					else {
+						tempStatus = memberList.get(index).getMbrStatus();
+					}
+					
 					System.out.printf("%-10s----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
 					System.out.printf("%-10s|                                                                                                                                                                                                  |\n", "");
 					System.out.printf("%-10s|   %-17s%-30s%-25s%-15s%-18s%-13s%-17s%-17s%-17s%-19s   |\n", "", "Member ID", "Name", "Identification Number", "Birth Date", "Contact Number", "Membership", "Active Period", "Member Status", "Registered By", "Registration Date");
 					System.out.printf("%-10s|   %-17s%-30s%-25s%-15s%-18s%-13s%-17s%-17s%-17s%-19s   |\n", "", "---------", "----", "---------------------", "----------", "--------------", "----------", "-------------", "-------------", "-------------", "-----------------");
 					System.out.printf("%-10s|   %-17s%-30s%-25s%-15s%-18s%-13s%-17s%-17s%-17s%-19s   |\n", "", memberList.get(index).getFullMemID(), tempName, memberList.get(index).getIcNo(), memberList.get(index).getBirthDate(),
-							tempContactNum, tempMbrshipType, mbrActivePeriod(tempMbrshipType), memberList.get(index).getMbrStatus(), memberList.get(index).getRegisteredBy().getFullStaffID(), memberList.get(index).getRegistrationDate());
+							tempContactNum, tempMbrType, mbrActivePeriod(tempMbrType), tempStatus, memberList.get(index).getRegisteredBy().getFullStaffID(), memberList.get(index).getRegistrationDate());
 					System.out.printf("%-10s|                                                                                                                                                                                                  |\n", "");
 					System.out.printf("%-10s----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
 					System.out.print("  Are you sure to Modify? (Y = Yes): ");
@@ -303,8 +426,11 @@ public class Claris {
 					if(modify == 'Y') {
 						memberList.get(index).setName(tempName);
 						memberList.get(index).setContactNum(tempContactNum);
-						memberList.get(index).setMembership(tempMbrshipType);
-						memberList.get(index).setActivePeriod(mbrActivePeriod(tempMbrshipType));
+						if(!tempMbrshipType.equals(tempMbrType)) {
+							memberList.get(index).setMembership(tempMbrType);
+							memberList.get(index).setActivePeriod(mbrActivePeriod(tempMbrType));
+							memberList.get(index).setMbrStatus("Active");
+						}
 						textFile(memberList);
 					}
 					else {
@@ -475,7 +601,7 @@ public class Claris {
 				System.out.println("  Record Doesn't Exist.");
 			}
 			
-			System.out.println("  Would you like to search for another record (Y = Yes)?");
+			System.out.print("  Would you like to search for another record (Y = Yes)? ");
 			contSearch = scanner.next().toUpperCase().charAt(0);
 		} while(contSearch == 'Y' && selectionS != 0);
 	}
@@ -506,7 +632,7 @@ public class Claris {
 		System.out.printf("%-10s|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n", "");
 		
 		for(int i = 0; i < memberList.size(); i++) {
-			System.out.printf("%-10s|   %-8s| %-29s|     %-18s|    %-15s|   %-13s|   %-11s|  %-13s|      %-11s|      %-11s| %-15s |\n",
+			System.out.printf("%-10s|   %-8s| %-29s|     %-18s|    %-15s|   %-13s|   %-11s|   %-12s|     %-12s|      %-11s| %-15s |\n",
 					"", memberList.get(i).getFullMemID(), memberList.get(i).getName(), memberList.get(i).getIcNo(),
 					memberList.get(i).getBirthDate(), memberList.get(i).getContactNum(), memberList.get(i).getMembership(),
 					memberList.get(i).getActivePeriod(), memberList.get(i).getMbrStatus(),
@@ -545,6 +671,8 @@ public class Claris {
 		int valid = 1;
 		
 		do {
+			valid = 1;
+			
 			System.out.println();
 			System.out.printf("%-10s------------------------------------------------------\n", "");
 			System.out.printf("%-10s|       Membership Type      |    Discounts Given    |\n", "");
@@ -555,9 +683,9 @@ public class Claris {
 			System.out.printf("%-10s|3. Platinum                 |         3. 5%%         |\n", "");
 			System.out.printf("%-10s|                            |                       |\n", "");
 			System.out.printf("%-10s------------------------------------------------------\n", "");
-			System.out.printf("  Enter Membership Type: ");
+			System.out.print("  Enter Membership Type (Enter -1 to cancel): ");
 			selectMbrShip = scanner.nextInt();
-			scanner.nextLine();
+			System.out.println();
 			
 			if(selectMbrShip == 1) {
 				mbrShipType = "Silver";
@@ -567,6 +695,9 @@ public class Claris {
 			}
 			else if(selectMbrShip == 3) {
 				mbrShipType = "Platinum";
+			}
+			else if(selectMbrShip == -1) {
+				mbrShipType = "-1";
 			}
 			else {
 				System.out.println();
@@ -607,17 +738,17 @@ public class Claris {
 		do {
 			invalidInput = 0;
 			
-			System.out.printf("%-10s------------------------------\n", "");
-			System.out.printf("%-10s|Modify Member Detail(s) Menu|\n", "");
-			System.out.printf("%-10s------------------------------\n", "");
-			System.out.printf("%-10s|                            |\n", "");
-			System.out.printf("%-10s|1. Name                     |\n", "");
-			System.out.printf("%-10s|2. Contact Number           |\n", "");
-			System.out.printf("%-10s|3. Membership               |\n", "");
-			System.out.printf("%-10s|4. All Details              |\n", "");
-			System.out.printf("%-10s|0. Quit                     |\n", "");
-			System.out.printf("%-10s|                            |\n", "");
-			System.out.printf("%-10s------------------------------\n", "");
+			System.out.printf("%-10s--------------------------------\n", "");
+			System.out.printf("%-10s| Modify Member Detail(s) Menu |\n", "");
+			System.out.printf("%-10s--------------------------------\n", "");
+			System.out.printf("%-10s|                              |\n", "");
+			System.out.printf("%-10s| 1. Name                      |\n", "");
+			System.out.printf("%-10s| 2. Contact Number            |\n", "");
+			System.out.printf("%-10s| 3. Membership                |\n", "");
+			System.out.printf("%-10s| 4. All Details               |\n", "");
+			System.out.printf("%-10s| 0. Quit                      |\n", "");
+			System.out.printf("%-10s|                              |\n", "");
+			System.out.printf("%-10s--------------------------------\n", "");
 			
 			System.out.printf("  Please enter field to modify: ");
 			
@@ -642,7 +773,7 @@ public class Claris {
 		return selectionM;
 	}
 	
-	//5. DISPLAY REPORT
+	//DISPLAY REPORT
 	public static void displayReport(ArrayList<Member> memberList, ArrayList<Receipt> receiptList, ArrayList<Refund> refundList) {
 		//total order made by each customer
 		int totalOrder = 0;
@@ -775,30 +906,192 @@ public class Claris {
 		System.out.printf("%-10s--------------------------------------------------------------------------------------------------------\n\n", "");
 	}
 	
+	//5. DISPLAY RECEIPT
+	public static void displayReceipt(ArrayList<Receipt> receiptList) {
+		Scanner scanner = new Scanner(System.in);
+		ArrayList<Receipt> tempReceipt = new ArrayList<Receipt>();
+		
+		int index = 0;
+		int choice = 0;
+		boolean loop = false;
+		int invalid = 0;
+		
+		System.out.print("  Enter Member ID: ");
+		String memberId = scanner.next().toUpperCase();
+		
+		for(int i = 0; i < receiptList.size(); i++) {
+			if(receiptList.get(i).getPayment().getMember() != null) {
+				if(receiptList.get(i).getPayment().getMember().getFullMemID().equals(memberId)) {
+					tempReceipt.add(receiptList.get(i));
+				}
+			}
+		}
+		
+		if(tempReceipt.size() > 0) {
+			do {
+				loop = false;
+				invalid = 0;
+				
+				System.out.println(tempReceipt.get(index).toString());
+				if(index == 0 && tempReceipt.size() > 1) {
+					do {
+						invalid = 0;
+						
+						System.out.printf("%-10s-------------------\n", "");
+						System.out.printf("%-10s| 1. Next Receipt |\n", "");
+						System.out.printf("%-10s| 0. Exit         |\n", "");
+						System.out.printf("%-10s-------------------\n", "");
+						System.out.print("  Enter your Choice: ");
+
+						try {
+							choice = scanner.nextInt();
+							scanner.nextLine();
+						} catch(InputMismatchException e) {
+							scanner.nextLine();
+							invalid = 1;
+						}
+						
+						if(invalid != 1) {
+							switch(choice) {
+							case 1:
+								index += 1;
+								loop = true;
+								break;
+							}
+						}
+					}while(invalid == 1);
+				}
+				else if(index >= 1 && index < tempReceipt.size() - 1) {
+					do {
+						invalid = 0;
+						
+						System.out.printf("%-10s-----------------------\n", "");
+						System.out.printf("%-10s| 1. Next Receipt     |\n", "");
+						System.out.printf("%-10s| 2. Previous Receipt |\n", "");
+						System.out.printf("%-10s| 0. Exit             |\n", "");
+						System.out.printf("%-10s-----------------------\n", "");
+						System.out.print("  Enter your Choice: ");
+
+						try {
+							choice = scanner.nextInt();
+							scanner.nextLine();
+						} catch(InputMismatchException e) {
+							scanner.nextLine();
+							invalid = 1;
+						}
+						
+						if(invalid != 1) {
+							switch(choice) {
+							case 1:
+								index += 1;
+								loop = true;
+								break;
+							case 2:
+								index -= 1;
+								loop = true;
+								break;
+							}
+						}
+					}while(invalid == 1);
+				}
+				else if(index == tempReceipt.size() - 1 && tempReceipt.size() > 1) {
+					do {
+						invalid = 0;
+						
+						System.out.printf("%-10s-----------------------\n", "");
+						System.out.printf("%-10s| 1. Previous Receipt |\n", "");
+						System.out.printf("%-10s| 0. Exit             |\n", "");
+						System.out.printf("%-10s-----------------------\n", "");
+						System.out.print("  Enter your Choice: ");
+						
+						try {
+							choice = scanner.nextInt();
+							scanner.nextLine();
+						} catch(InputMismatchException e) {
+							scanner.nextLine();
+							invalid = 1;
+						}
+						
+						if(invalid != 1) {
+							switch(choice) {
+							case 1:
+								index -= 1;
+								loop = true;
+								break;
+							}
+						}
+					}while(invalid == 1);
+				}
+				else {
+					System.out.println("  Press Enter to Exit.");
+					scanner.nextLine();
+				}
+			}while(loop == true);
+		}
+		else {
+			System.out.println("  This Member Does Not Have Any Purchases.");
+		}
+	}
+	
 	//VALIDATION
 	//CONTACT NUMBER VALIDATION
 	public static String contactNoValidation(String contactNo) {
 		Scanner scanner = new Scanner(System.in);
+//		Pattern pattern = Pattern.compile("(0)?[1-9][0-9]{10,11}");
+//		List<String> values = new ArrayList<String>();
+//		values.add(contactNo);
+//		for(String value : values) {
+//			Matcher matcher = pattern.matcher(value);
+//			System.out.println(matcher.matches());
+//		}
+		int invalid = 0;
 		
-		int sumOfDigit = 0, sumOfLetter = 0;
-		
-		for(int i = 0; i < contactNo.length(); i++) {
-			if(Character.isDigit(contactNo.charAt(i))) {
-				sumOfDigit++;
+		if(contactNo.substring(0, 3).equals("011") || contactNo.substring(0, 3).equals("015")) {
+			if(contactNo.length() != 11) {
+				invalid = 1;
 			}
-			else if(Character.isLetter(contactNo.charAt(i))) {
-				sumOfLetter++;
-			}
-			else {
-				System.out.println("  Invalid Character.");
+		}
+		else {
+			if(contactNo.length() != 10) {
+				invalid = 1;
 			}
 		}
 		
-		while(sumOfDigit != 10 && sumOfDigit != 11 || sumOfLetter > 0) {
+		for(int i = 0; i < contactNo.length(); i++) {
+			if(Character.isLetter(contactNo.charAt(i))) {
+				invalid = 1;
+			}
+			else if(!Character.isDigit(contactNo.charAt(i)) && !Character.isLetter(contactNo.charAt(i))) {
+				invalid = 1;
+			}
+		}
+		
+		while(invalid == 1) {
+			invalid = 0;
+			
 			System.out.println("  Invalid Contact Number.");
-			System.out.print("  Kindly press enter to re-try (only digits are allowed): ");
+			System.out.print("  Kindly press enter to re-try (only 10/11 digits are allowed): ");
 			contactNo = scanner.nextLine();
-			scanner.nextLine();
+			
+			if(contactNo.substring(0, 3).equals("011") || contactNo.substring(0, 3).equals("015")) {
+				if(contactNo.length() != 11) {
+					invalid = 1;
+				}
+			}
+			else {
+				if(contactNo.length() != 10) {
+					invalid = 1;
+				}
+			}
+			
+			for(int i = 0; i < contactNo.length(); i++) {
+				if(Character.isLetter(contactNo.charAt(i))) {
+					invalid = 1;
+				}
+				else if(!Character.isDigit(contactNo.charAt(i)) && !Character.isLetter(contactNo.charAt(i))) {
+					invalid = 1;
+				}
+			}
 		}
 		
 		return contactNo;
@@ -815,40 +1108,13 @@ public class Claris {
 						+ "," + memberList.get(i).getContactNum() + "," + memberList.get(i).getMemberID()+ ","
 						+ memberList.get(i).getIdNo()+ "," + memberList.get(i).getMembership()+ "," + memberList.get(i).getActivePeriod()
 						+ "," + memberList.get(i).getMbrStatus()+ "," + memberList.get(i).getRegisteredBy().getFullStaffID()
-						+ "," + memberList.get(i).getRegistrationDate().toString()+"\n");
+						+ "," + memberList.get(i).getRegistrationDate().toString()+","+memberList.get(i).getMbrshipStartDate().toString()+"\n");
 			}
 			fw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("An error occurred. Unable to Write member.txt File.");
 			e.printStackTrace();
 		}
 	}
 
-	//MONTHS DIFFERENCE
-	public static void monthsDiff(ArrayList<Member> memberList) {
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		LocalDate now = LocalDate.now();
-		long monthsBetween = 0;
-		
-		for(int i = 0; i < memberList.size(); i++) {
-			LocalDate dateTime = LocalDate.parse(memberList.get(i).getRegistrationDate().toString().substring(0, 10), dtf);
-			monthsBetween = ChronoUnit.MONTHS.between(dateTime, now);
-			
-			if(memberList.get(i).getMembership().equalsIgnoreCase("Silver")) {
-				if(monthsBetween > 3) {
-					memberList.get(i).setMbrStatus("Expired");
-				}
-			}
-			else if(memberList.get(i).getMembership().equalsIgnoreCase("Gold")) {
-				if(monthsBetween > 6) {
-					memberList.get(i).setMbrStatus("Expired");
-				}
-			}
-			else if(memberList.get(i).getMembership().equalsIgnoreCase("Platinum")) {
-				if(monthsBetween > 12) {
-					memberList.get(i).setMbrStatus("Expired");
-				}
-			}
-		}
-	}
 }

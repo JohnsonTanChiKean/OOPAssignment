@@ -19,29 +19,28 @@ public class Main {
 		readProduct(productList);
 		readStaff(staffList);
 		readMember(memberList, staffList);
-		
-		GetDate date=new GetDate();
-		
-		logo();
-		System.out.println(date.toString());
+
 		ZhiHang.login(staffList, productList, memberList, paymentList, receiptList, bankAccount, refundList);
 		
+		Claris.textFile(memberList);
+		ZhiHang.writeTextFile(staffList);
+		System.out.println(bankAccount.toString());
 	}
 	
 	public static void logo() {
-		System.out.println("      _____________       ____         ____        _______________________");
-		System.out.println("     /            |      |     \\      |    |      |                       |");
-		System.out.println("    /    _________|      |      \\     |    |      |                       |");
-		System.out.println("   /    /                |       \\    |    |      |________       ________|");
-		System.out.println("  /    /                 |        \\   |    |               |     |");
-		System.out.println(" /    /                  |    |\\   \\  |    |               |     |");
-		System.out.println("/    /                   |    | \\   \\ |    |               |     |");
-		System.out.println("\\    \\                   |    |  \\   \\|    |               |     |");
-		System.out.println(" \\    \\                  |    |   \\        |               |     |");
-		System.out.println("  \\    \\                 |    |    \\       |               |     |");
-		System.out.println("   \\    \\_________       |    |     \\      |               |     |");
-		System.out.println("    \\             |      |    |      \\     |               |     |");
-		System.out.println("     \\____________|      |____|       \\____|               |_____|");
+		System.out.printf("%-10s      _____________       ____         ____        _______________________\n", "");
+		System.out.printf("%-10s     /            |      |     \\      |    |      |                       |\n", "");
+		System.out.printf("%-10s    /    _________|      |      \\     |    |      |                       |\n", "");
+		System.out.printf("%-10s   /    /                |       \\    |    |      |________       ________|\n", "");
+		System.out.printf("%-10s  /    /                 |        \\   |    |               |     |\n", "");
+		System.out.printf("%-10s /    /                  |    |\\   \\  |    |               |     |\n", "");
+		System.out.printf("%-10s/    /                   |    | \\   \\ |    |               |     |\n", "");
+		System.out.printf("%-10s\\    \\                   |    |  \\   \\|    |               |     |\n", "");
+		System.out.printf("%-10s \\    \\                  |    |   \\        |               |     |\n", "");
+		System.out.printf("%-10s  \\    \\                 |    |    \\       |               |     |\n", "");
+		System.out.printf("%-10s   \\    \\_________       |    |     \\      |               |     |\n", "");
+		System.out.printf("%-10s    \\             |      |    |      \\     |               |     |\n", "");
+		System.out.printf("%-10s     \\____________|      |____|       \\____|               |_____|\n\n", "");
 	}
 	
 	public static void readProduct(ArrayList<Product> productList) {
@@ -120,13 +119,15 @@ public class Main {
 					String[] row=line.split(",");
 					for(int i=0; i<staffList.size(); i++) {
 						if(staffList.get(i).getFullStaffID().equals(row[9])) {
-							Member tempMember=new Member(row[0], row[1], row[2], row[3], row[4], Integer.parseInt(row[5]), row[6], row[7], row[8], staffList.get(i), row[10]);
+							Member tempMember=new Member(row[0], row[1], row[2], row[3], row[4], Integer.parseInt(row[5]), row[6], row[7], row[8], staffList.get(i), row[10], row[11]);
 							memberList.add(tempMember);
 						}
 					}
 					
 				}
-				Claris.monthsDiff(memberList);
+				for(int i = 0; i < memberList.size(); i++) {
+					memberList.get(i).checkStatus();
+				}
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
