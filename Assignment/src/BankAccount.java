@@ -48,7 +48,13 @@ public class BankAccount {
 
 	public String toString() {
 		String bankAccountDetails="";
-		bankAccountDetails+=String.format("");
+		bankAccountDetails+=String.format("%-10s--------------------------------------------------------------\n","");
+		bankAccountDetails+=String.format("%-10s| Total Payment Amount | Total Refund Amount | Total Revenue |\n","");
+		bankAccountDetails+=String.format("%-10s|----------------------+---------------------+---------------|\n","");
+		bankAccountDetails+=String.format("%-10s|        %-5d         |         %-5d       |    %-10.2f |\n","", noOfPayments, noOfRefunds, revenue);
+		bankAccountDetails+=String.format("%-10s--------------------------------------------------------------\n","");
+		bankAccountDetails+=String.format("%-10s","");
+		bankAccountDetails+=String.format("%-10s","");
 		return bankAccountDetails;
 	}
 }

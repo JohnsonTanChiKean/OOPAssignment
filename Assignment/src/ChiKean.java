@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import javax.swing.ImageIcon;
@@ -171,6 +172,7 @@ public class ChiKean {
 		}
 		else {
 			do {
+				Collections.sort(storage);
 				invalidInput=0;
 				System.out.println();
 				System.out.printf("%-10s--------------------\n", "");
@@ -228,6 +230,7 @@ public class ChiKean {
 			}
 			else {
 				do {
+					Collections.sort(ram);
 					invalidInput=0;
 					System.out.println();
 					System.out.printf("%-10s----------------\n", "");
@@ -417,6 +420,7 @@ public class ChiKean {
 		}
 		else {
 			do {
+				Collections.sort(generation);
 				invalidInput=0;
 				System.out.println();
 				System.out.printf("%-10s----------------------------\n", "");
@@ -602,6 +606,7 @@ public class ChiKean {
 		}
 		else {
 			do {
+				Collections.sort(ram);
 				invalidInput=0;
 				System.out.println();
 				System.out.printf("%-10s----------------\n", "");
@@ -1603,6 +1608,7 @@ public class ChiKean {
 		}
 		else {
 			do {
+				Collections.sort(scrSize);
 				invalidInput=0;
 				System.out.println();
 				System.out.printf("%-10s----------------\n", "");
@@ -3475,5 +3481,4 @@ public class ChiKean {
 		System.out.println();
 	}
 
-	
 }
