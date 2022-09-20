@@ -58,18 +58,16 @@ public class Payment {
 	public void memberDiscount(Member member) {
 		this.member = member;
 		if(member!=null) {
-			if((member.getMembership().equals("Silver"))&&(member.getMbrStatus().equalsIgnoreCase("active"))) {
+			if(member.getMembership().equals("Silver")) {
 				this.discount=0.02;
 			}
-			else if(member.getMembership().equals("Gold")&&(member.getMbrStatus().equalsIgnoreCase("active"))) {
+			else if(member.getMembership().equals("Gold")) {
 				this.discount=0.03;
 			}
-			else if(member.getMembership().equals("Platinum")&&(member.getMbrStatus().equalsIgnoreCase("active"))) {
+			else if(member.getMembership().equals("Platinum")) {
 				this.discount=0.05;
 			}
-			else {
-				this.discount=0.0;
-			}
+			
 		}
 		else {
 			this.discount=0.0;
