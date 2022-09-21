@@ -2534,6 +2534,9 @@ public class ChiKean {
 							}
 							System.out.printf("%-22sProduct has been added to cart.\n\n", "");
 						}
+						else {
+							System.out.printf("%-22sProduct not added to cart\n\n", "");
+						}
 					}
 					else {
 						System.out.printf("%-22sProduct not added to cart\n\n", "");
@@ -2545,6 +2548,9 @@ public class ChiKean {
 					System.out.printf("%-22sWould you like to add another product?(Y=yes) ", "");
 					choice=Character.toUpperCase(scanner.next().charAt(0));
 					scanner.nextLine();
+				}
+				else if(cart.getNoOfProducts()==100) {
+					System.out.printf("%-22sMaximum limit reached.\n", "");
 				}
 			}while(choice=='Y');
 			if((cancel!=-1)||(cancel==-1&&cart.getNoOfProducts()>0)) {

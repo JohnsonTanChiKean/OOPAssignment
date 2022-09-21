@@ -113,6 +113,9 @@ public class ZhiHang {
 						cancel=1;
 						loop=1;
 					}
+					else if(staffList.get(index).getFullStaffID().equalsIgnoreCase("S1000")){
+						System.out.printf("\n%-25sAccess Denied. Password is incorrect.\n", "");
+					}
 					else {
 						System.out.printf("\n%-25sAccess Denied. Password is incorrect.\n", "");
 						wrongCount++;
@@ -263,7 +266,7 @@ public class ZhiHang {
 	}
 	
 	public static void staffMenu(ArrayList<Staff> staffList,Staff staff,ArrayList<Receipt> receiptList) {
-		if(staff.getPosition().equalsIgnoreCase("manager")||staff.getPosition().equalsIgnoreCase("admin")) {
+		if(staff.getPosition().equalsIgnoreCase("manager")||staff.getPosition().equalsIgnoreCase("admin")||staff.getPosition().equalsIgnoreCase("executive")) {
 			int choice=0, loop=0, invalid=0;
 			char quitChoice;
 			Scanner scanner=new Scanner(System.in);
@@ -271,19 +274,19 @@ public class ZhiHang {
 				invalid=0;
 				choice=0;
 				loop=0;
-				System.out.printf("%-10s==================================\n", "");
-				System.out.printf("%-10sWELCOME TO STAFF MANAGEMENT MODULE\n", "");
-				System.out.printf("%-10s==================================\n\n", "");
+				System.out.printf("%-30s==================================\n", "");
+				System.out.printf("%-30sWELCOME TO STAFF MANAGEMENT MODULE\n", "");
+				System.out.printf("%-30s==================================\n\n", "");
 				
-				System.out.printf("%-10s------------------------------\n", "");
-				System.out.printf("%-10s|Staff Management Module Menu|\n", "");
-				System.out.printf("%-10s------------------------------\n", "");
-				System.out.printf("%-10s|  1.      Add Staff         |\n", "");
-				System.out.printf("%-10s|  2. Modify Staff Details   |\n", "");
-				System.out.printf("%-10s|  3.    View All Staff      |\n", "");
-				System.out.printf("%-10s|  0.         Exit           |\n", "");
-				System.out.printf("%-10s------------------------------\n", "");
-				System.out.print("Select Action to perform: ");
+				System.out.printf("%-30s------------------------------\n", "");
+				System.out.printf("%-30s|Staff Management Module Menu|\n", "");
+				System.out.printf("%-30s------------------------------\n", "");
+				System.out.printf("%-30s|  1.      Add Staff         |\n", "");
+				System.out.printf("%-30s|  2. Modify Staff Details   |\n", "");
+				System.out.printf("%-30s|  3.    View All Staff      |\n", "");
+				System.out.printf("%-30s|  0.         Exit           |\n", "");
+				System.out.printf("%-30s------------------------------\n", "");
+				System.out.printf("%-32%Select Action to perform: ","");
 				
 				try {
 					choice=scanner.nextInt();
@@ -314,23 +317,24 @@ public class ZhiHang {
 		int choice=0, loop=0, invalid=0;;
 		char quitChoice;
 		Scanner scanner=new Scanner(System.in);
+		if(staff.getPosition().equals("admin")||staff.getPosition().equals("manager")) {
 		do {
 			
 			choice=0;
 			loop=0;
 			invalid=0;
 		
-			System.out.printf("%-10s------------------------------\n", "");
-			System.out.printf("%-10s| Modify Staff Details Menu  |\n", "");
-			System.out.printf("%-10s------------------------------\n", "");
-			System.out.printf("%-10s|1. Edit Password            |\n", "");
-			System.out.printf("%-10s|2. Change Contact Number    |\n", "");
-			System.out.printf("%-10s|3. Change Position          |\n", "");
-		    System.out.printf("%-10s|4. Change Name              |\n", "");
-		    System.out.printf("%-10s|5. Change Status            |\n", "");
-			System.out.printf("%-10s|0. Exit                     |\n", "");
-			System.out.printf("%-10s------------------------------\n", "");
-			System.out.print("Select Action to perform: ");
+			System.out.printf("%-29s------------------------------\n", "");
+			System.out.printf("%-29s| Modify Staff Details Menu  |\n", "");
+			System.out.printf("%-29s------------------------------\n", "");
+			System.out.printf("%-29s|1. Edit Password            |\n", "");
+			System.out.printf("%-29s|2. Change Contact Number    |\n", "");
+			System.out.printf("%-29s|3. Change Position          |\n", "");
+		    System.out.printf("%-29s|4. Change Name              |\n", "");
+		    System.out.printf("%-29s|5. Change Status            |\n", "");
+			System.out.printf("%-29s|0. Exit                     |\n", "");
+			System.out.printf("%-29s------------------------------\n", "");
+			System.out.printf("%32s Select Action to perform: ","");
 			try {
 				choice=scanner.nextInt();
 				scanner.nextLine();
@@ -349,6 +353,42 @@ public class ZhiHang {
 			}
 			
 		}while(loop==1);
+	}
+		if(staff.getPosition().equals("executive")) {
+			do {
+				
+				choice=0;
+				loop=0;
+				invalid=0;
+			
+				System.out.printf("%-29s------------------------------\n", "");
+				System.out.printf("%-29s| Modify Staff Details Menu  |\n", "");
+				System.out.printf("%-29s------------------------------\n", "");
+				System.out.printf("%-29s|1. Edit Password            |\n", "");
+				System.out.printf("%-29s|2. Change Contact Number    |\n", "");
+				System.out.printf("%-29s|3. Change Position          |\n", "");
+			    System.out.printf("%-29s|4. Change Name              |\n", "");
+				System.out.printf("%-29s|0. Exit                     |\n", "");
+				System.out.printf("%-29s------------------------------\n", "");
+				System.out.printf("%32s Select Action to perform: ","");
+				try {
+					choice=scanner.nextInt();
+					scanner.nextLine();
+				}
+				catch(InputMismatchException e) {
+					scanner.nextLine();
+					invalid=1;
+				}
+				switch(choice) {
+				case 1:editPassword(staffList,staff); loop=1;break;
+				case 2:editContactNumber(staffList);loop=1;break;
+				case 3:changePosition(staffList);loop=1;break;
+				case 4:editName(staffList);loop=1;break;
+				case 0: break;
+				}
+				
+			}while(loop==1);
+		}
 	
 	}
 	
@@ -373,6 +413,7 @@ public class ZhiHang {
 			System.out.printf("%-30s|    2.    Staff Report       |\n", "");
 			System.out.printf("%-30s|    3.    Member Report      |\n", "");
 			System.out.printf("%-30s|    4.    Refund Report      |\n", "");
+			System.out.printf("%-30s|    5.   Inventory Report    |\n", "");
 			System.out.printf("%-30s|    0.   Exit Report Menu    |\n", "");
 			System.out.printf("%-30s-------------------------------\n\n", "");
 			System.out.printf("%-30s     Select your choice: ", "");
@@ -391,6 +432,7 @@ public class ZhiHang {
 				case 2: staffReport(receiptList, staffList); loop=1; break;
 				case 3: Claris.displayReport(memberList, receiptList, refundList); loop=1; break;
 				case 4: JiaHui.rfReportMenu(refundList, productList, receiptList, paymentList); loop=1; break;
+				case 5: JiaHui.inventoryReport(productList, receiptList, refundList, paymentList); loop=1; break;
 				case 0: break;
 				}
 			}
@@ -403,20 +445,20 @@ public class ZhiHang {
 	
 	public static void dailyReport( ArrayList<Receipt> receiptList, Staff staff) {
 		int countTransaction=0;
-		System.out.printf("%-10s-------------------------------------------------------\n", "");
-		System.out.printf("%-10s|                  Daily  Report                      |\n", "");
-		System.out.printf("%-10s-------------------------------------------------------\n", "");
-		System.out.printf("%-10s|Staff Name:%-12s                              |\n","",staff.getName());
+		System.out.printf("%-29s-------------------------------------------------------\n", "");
+		System.out.printf("%-29s|                  Daily  Report                      |\n", "");
+		System.out.printf("%-29s-------------------------------------------------------\n", "");
+		System.out.printf("%-29s|Staff Name:%-12s                              |\n","",staff.getName());
 		for(int i=0;i<receiptList.size();i++) {
 			if(receiptList.get(i).getPayment().getStaff().getFullStaffID().equals(staff.getFullStaffID())) {
 				countTransaction++;
 			}
 			
 		}
-		System.out.printf("%-10s|You Had Completed %d Order !                          |\n","",countTransaction);                                                            
-		System.out.printf("%-10s|Your Next Target is %d Order !                        |\n","",countTransaction+5);
-		System.out.printf("%-10s|Thank You For Your Constribution !                   |\n","");                     
-		System.out.printf("%-10s------------------------------------------------ -----\n", "");
+		System.out.printf("%-29s|You Had Completed %d Order !                          |\n","",countTransaction);                                                            
+		System.out.printf("%-29s|Your Next Target is %d Order !                        |\n","",countTransaction+5);
+		System.out.printf("%-29s|Thank You For Your Constribution !                   |\n","");                     
+		System.out.printf("%-29s------------------------------------------------ -----\n", "");
 	}
 	public static void staffReport( ArrayList<Receipt> receiptList, ArrayList<Staff> staffList) {
 		Scanner scanner=new Scanner(System.in);
@@ -430,11 +472,11 @@ public class ZhiHang {
 					System.out.println("Staff ID:"+staffList.get(i).getIdNo());
 					System.out.println("Report:");
 					int countTransaction=0;
-					System.out.printf("%-10s--------------------------------------------------\n", "");
-					System.out.printf("%-10s|               Staff Daily  Report              |\n", "");
-					System.out.printf("%-10s--------------------------------------------------\n", "");
-					System.out.printf("%-10s| Name                  Total Transaction Done   |\n", "");
-					System.out.printf("%-10s--------------------------------------------------\n", "");
+					System.out.printf("%-29s--------------------------------------------------\n", "");
+					System.out.printf("%-29s|               Staff Daily  Report              |\n", "");
+					System.out.printf("%-29s--------------------------------------------------\n", "");
+					System.out.printf("%-29s| Name                  Total Transaction Done   |\n", "");
+					System.out.printf("%-29s--------------------------------------------------\n", "");
 
 				for(int k=0;k<staffList.size();k++) {
 					countTransaction=0;
@@ -444,29 +486,29 @@ public class ZhiHang {
 								countTransaction++;
 							}
 							
-					}		System.out.printf("%-10s|%-20s            %-2d              |\n","",staffList.get(k).getName(),countTransaction);
+					}		System.out.printf("%-29s|%-20s            %-2d              |\n","",staffList.get(k).getName(),countTransaction);
 
 						
 					}
 					
 				}
 					
-					System.out.printf("%-10s|         Thank You For Their Constribution !    |\n","");                     
-					System.out.printf("%-10s-------------------------------------------------\n", "");
+					System.out.printf("%-29s|         Thank You For Their Constribution !    |\n","");                     
+					System.out.printf("%-29s-------------------------------------------------\n", "");
 					
 				
 				}
 
 	public static void viewStaff(ArrayList<Staff>staffList) {
-		System.out.printf("%-10s------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
-		System.out.printf("%-10s|                               Staff List                                                                                                                       |\n", "");
-		System.out.printf("%-10s------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
-		System.out.printf("%-10s|Name                                    Phone Number                         Birthday            Position                 Salary            Status              |\n", "");
-		System.out.printf("%-10s------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
+		System.out.printf("%-29s------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
+		System.out.printf("%-29s|                               Staff List                                                                                                                       |\n", "");
+		System.out.printf("%-29s------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
+		System.out.printf("%-29s|Name                                    Phone Number                         Birthday            Position                 Salary            Status              |\n", "");
+		System.out.printf("%-29s------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
 		for(int i=0;i<staffList.size();i++) {
-	   System.out.printf("%-10s|%-30s           %-20s                 %-10s        %-10s            %9.2f           %-10s           |\n","",staffList.get(i).getName(),staffList.get(i).getContactNum(),staffList.get(i).getBirthDate(),staffList.get(i).getPosition(),staffList.get(i).getSalary(),staffList.get(i).getStatus());
+	   System.out.printf("%-29s|%-30s           %-20s                 %-10s        %-10s            %9.2f           %-10s           |\n","",staffList.get(i).getName(),staffList.get(i).getContactNum(),staffList.get(i).getBirthDate(),staffList.get(i).getPosition(),staffList.get(i).getSalary(),staffList.get(i).getStatus());
 		}
-		System.out.printf("%-10s------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
+		System.out.printf("%-29s------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
 		
 	}
 		
@@ -484,55 +526,55 @@ public class ZhiHang {
 		 String getConfirm;
 	    do {
 	    	foundStatus=true;
-	    	System.out.print("Please Enter Staff ID To Be Edit:");
+	    	System.out.printf("%-30s Please Enter Staff ID To Be Edit:","");
 	    	getID=scanner.nextLine();
 			scanner.nextLine();
 			getID=getID.toUpperCase();
 			if(getID.length()!=5) {
-				System.out.println("Invalid Staff ID Format! Staff ID must have 5 digits SXXXX");
+				System.out.printf("\n%-30s Invalid Staff ID Format! Staff ID must have 5 digits SXXXX","");
 			}
 			else {
 				getidNo=Integer.parseInt(getID.replace("S", ""));
 				String getReenter;
 				for(int i=0;i<staffList.size();i++) {
 					if(staffList.get(i).getIdNo()==getidNo) {
-						System.out.println("Staff Name:"+staffList.get(i).getName());
-						System.out.println("Staff ID:"+staffList.get(i).getIdNo());
+						System.out.printf("%-30s Staff Name:%s\n","",staffList.get(i).getName());
+						System.out.printf("%-30s Staff ID:%s\n","",staffList.get(i).getIdNo());
 						foundStatus=true;
 						String newName;
 						do { 
 							
-							System.out.print("Enter New Name :");
+							System.out.printf("%-30s Enter New Name :","");
 							staffName=scanner.nextLine();
 							scanner.nextLine();
 							checkName=valiName(staffName);
 							if(checkName==false) {
-								System.out.println("Name Format Invalid");
-								System.out.println("Please Try Again");
+								System.out.printf("%-30s Name Format Invalid\n","");
+								System.out.printf("%-30s Please Try Again\n","");
 							}
 						}while(checkName==false);
 						if(checkName==true) {
-						System.out.print("Do You Sure To Modify This Name?:");
+						System.out.printf("%-30s Do You Sure To Modify This Name?:","");
 						getReenter=scanner.nextLine();
 						getReenter=getReenter.toUpperCase();
 						if(getReenter.equals("Y")) {
 						staffList.get(i).setName(staffName);
 						writeTextFile(staffList);
-						System.out.println("Name Modified");
+						System.out.printf("\n%-32s Name Modified\n","");
 						}
 						else if(!getReenter.equals("N")||!getReenter.equals("Y")) {
-							System.out.println("Invalid");
+							System.out.printf("\n %-32s Invalid","");
 						}
 						else {
-							System.out.println("Name Not Modified And Will Back To Staff Management Page");						
+							System.out.printf("\n %-32s Name Not Modified And Will Back To Staff Management Page","");						
 						}
 					  }
 					}
 				}
 			}
 			if(foundStatus==false) {
-				System.out.println("Staff ID not found. Please try again");
-				System.out.print("Would you like to try again? (Y=yes) ");
+				System.out.printf("\n%-32s Staff ID not found. Please try again","");
+				System.out.printf("\n%-32s Would you like to try again? (Y=yes) ","");
 				getChoice=Character.toUpperCase(scanner.next().charAt(0));
 				scanner.nextLine();
 			}
@@ -552,46 +594,46 @@ public class ZhiHang {
 	    
 	    do {
 	    	foundStatus=true;
-	    	System.out.print("Please Enter Staff ID To Be Edit:");
+	    	System.out.printf("%30s Please Enter Staff ID To Be Edit:","");
 	    	getID=scanner.nextLine();
 			scanner.nextLine();
 			getID=getID.toUpperCase();
 			if(getID.length()!=5) {
-				System.out.println("Invalid Staff ID Format! Staff ID must have 5 digits SXXXX");
+				System.out.printf("%-30s Invalid Staff ID Format! Staff ID must have 5 digits SXXXX\n","");
 			}
 			else {
 				getidNo=Integer.parseInt(getID.replace("S", ""));
 				String getReenter;
 				for(int i=0;i<staffList.size();i++) {
 					if(staffList.get(i).getIdNo()==getidNo) {
-						System.out.println("Staff Name:"+staffList.get(i).getName());
-						System.out.println("Staff ID:"+staffList.get(i).getIdNo());
+						System.out.printf("%-30s Staff Name:%s","",staffList.get(i).getName());
+						System.out.printf("\n%-30s Staff ID:%s","",staffList.get(i).getIdNo());
 						foundStatus=true;
 						String ModiphoneNum,newPhoneNum;
-						System.out.print("Enter New Phone Number:");
+						System.out.printf("\n%-30s Enter New Phone Number:","");
 						ModiphoneNum=scanner.nextLine();
 						newPhoneNum= contactNoValidation(ModiphoneNum);
-						System.out.print("Do You Sure To Modify This Phone Number?:");
+						System.out.printf("\n%-30s Do You Sure To Modify This Phone Number?:","");
 						getReenter=scanner.nextLine();
 						getReenter=getReenter.toUpperCase();
 						if(getReenter.equals("Y")) {
 						staffList.get(i).setContactNum(newPhoneNum);
 						writeTextFile(staffList);
-						System.out.println("Phone Number Modified");
+						System.out.printf("\n%-30s Phone Number Modified\n","");
 						foundStatus=true;
 						}
 						else if(!getReenter.equals("N")&&!getReenter.equals("Y")) {
-							System.out.println("Invalid");
+							System.out.printf("\n%-30sInvalid","");
 						}
 						else {
-							System.out.println("Phone Number Not Modified And Will Back To Staff Management Page");						
+							System.out.printf("\n%-30s Phone Number Not Modified And Will Back To Staff Management Page","");						
 						}
 					}
 				}
 			}
 			if(foundStatus==false) {
-				System.out.println("Staff ID not found. Please try again");
-				System.out.print("Would you like to try again? (Y=yes) ");
+				System.out.printf("\n%-30s Staff ID not found. Please try again","");
+				System.out.printf("\n%-30s Would you like to try again? (Y=yes) ","");
 				getChoice=Character.toUpperCase(scanner.next().charAt(0));
 				scanner.nextLine();
 			}
@@ -626,16 +668,16 @@ public class ZhiHang {
 		
 		//Birthday and generated add time and date
 		//Enter Name
-		System.out.print("Welcome to Staff Add Section\n");
+		System.out.printf("\n%-30s Welcome to Staff Add Section\n","");
 		do { 
 			
-			System.out.print("Enter Name :");
+			System.out.printf("\n%-30sEnter Name :","");
 			staffName=scanner.nextLine();
 			scanner.nextLine();
 			checkname=valiName(staffName);
 			if(checkname==false) {
-				System.out.println("Name Format Invalid");
-				System.out.println("Please Try Again");
+				System.out.printf("\n%-30sName Format Invalid","");
+				System.out.printf("\n%-30sPlease Try Again","");
 			}
 		}while(checkname==false);
 		
@@ -644,34 +686,34 @@ public class ZhiHang {
 		//Enter IC +Validation
 		do {	
 		
-			System.out.print("Enter IC No :");
+			System.out.printf("\n%-30sEnter IC No :","");
 			
 			icNo=scanner.nextLine();
 			checkIC=checkIC(icNo);
 			
 			if(checkIC==false) {
-					System.out.println("IC Format Invalid");
-					System.out.println("Please Try Again");
+					System.out.printf("\n%-30sIC Format Invalid","");
+					System.out.printf("\n%-30sPlease Try Again","");
 				
 				}
 			
 		}while(checkIC==false);
 		String phoneNum,newPhoneNum;
-		System.out.print("Enter Phone Number:");
+		System.out.printf("\n%-30s Enter Phone Number:","");
 		phoneNum=scanner.nextLine();
 		newPhoneNum= contactNoValidation(phoneNum);
 		
 		
 		boolean getPosition;
 			do {
-				System.out.print("Enter Position:");
+				System.out.printf("\n%-30sEnter Position:","");
 				staffPosition="";
 				staffPosition=scanner.nextLine();
 				staffPosition=staffPosition.toLowerCase();
 				
 				if(!staffPosition.equals("cashier")&&!staffPosition.equals("manager")&&!staffPosition.equals("executive")) { 
-					System.out.println("Position is Invalid");
-				    System.out.println("Please Enter Again");
+					System.out.printf("\n%-30sPosition is Invalid","");
+				    System.out.printf("\n%-30sPlease Enter Again","");
 				}
 			}while(!staffPosition.equals("cashier")&&!staffPosition.equals("manager")&&!staffPosition.equals("executive"));
 		        
@@ -680,10 +722,10 @@ public class ZhiHang {
 			boolean checkPassword=false;
 			do {		
 		
-				System.out.print("Enter Password :");
+				System.out.printf("\n%-30sEnter Password :","");
 				staffPassword=scanner.nextLine();
 				scanner.nextLine();
-				System.out.print("Enter Password Again :");
+				System.out.printf("\n%-30sEnter Password Again :","");
 				valiPassword=scanner.nextLine();
         
           
@@ -692,24 +734,24 @@ public class ZhiHang {
 					checkPassword=checkPassword(valiPassword);
 					
 						if(checkPassword==true){
-								System.out.println("Valid Password");
+								System.out.printf("\n%-30sValid Password","");
 							}
 							else {
-								System.out.println("Invalid Password");
-								System.out.println("Please Check Through These Critiral");
-								System.out.println("1)Please Ensure The Password Format Is CORRECT");
-								System.out.println("2)Please Ensure The Password is at least 7 characters long");
+								System.out.printf("\n%-30sInvalid Password","");
+								System.out.printf("\n%-30sPlease Check Through These Criterial","");
+								System.out.printf("\n%-30s1)Please Ensure The Password Format Is CORRECT","");
+								System.out.printf("\n%-30s2)Please Ensure The Password is at least 7 characters long","");
 							}
 				}
 				else {
-					System.out.println("Invalid Password");
-					System.out.println("Passwords Entered do not match");
+					System.out.printf("\n%-30sInvalid Password","");
+					System.out.printf("\n%-30sPasswords Entered do not match","");
 				}
 			
 			}while(checkPassword==false);
 			countEnter=0;
 			 getConfirm="";
-				System.out.print("Do You Want To Add This Staff ?(Y=Yes) :");
+				System.out.printf("\n%-30sDo You Want To Add This Staff ?(Y=Yes) :","");
 				addStaff=scanner.nextLine();
 		    	addStaff=addStaff.toUpperCase();
 		    	if(addStaff.equals("Y")) {
@@ -720,15 +762,15 @@ public class ZhiHang {
 		    		writeTextFile(staffList);
 		    	}
 		    	else {
-					System.out.println("Staff Is Not Added");
+					System.out.printf("\n%-30sStaff Is Not Added","");
 		    	}
 		   
-			System.out.print("Do You Want To Continue Add Staff ?(Y=Yes) :");
+			System.out.printf("\n%-30sDo You Want To Continue Add Staff ?(Y=Yes) :","");
 			 getConfirm=scanner.nextLine();
 			 getConfirm=getConfirm.toUpperCase();
 	    	
 	    	
-	    	System.out.println("The Number Of Staff Added is "+countEnter);
+	    	System.out.printf("\n%-30sThe Number Of Staff Added is %d\n ","",countEnter);
 	    		
 			}while(getConfirm.equals(("Y")));
 		
@@ -744,10 +786,10 @@ public class ZhiHang {
 	    Scanner scanner=new Scanner(System.in);
 	    if(staff.getPosition().equals("cashier")) {
 	    	do {
-				System.out.print("Enter New Password :");
+				System.out.printf("\n%-30sEnter New Password :","");
 				String newPassword=scanner.nextLine();
 				scanner.nextLine();
-				System.out.print("Enter Password Again :");
+				System.out.printf("\n%-30sEnter Password Again :","");
 				String newEnterPassword=scanner.nextLine();
 	    
 	      
@@ -756,23 +798,23 @@ public class ZhiHang {
 					 checkPassword=checkPassword(newEnterPassword);
 					
 						if(checkPassword==true){
-								System.out.println("Valid Password");
-								System.out.println(" Password is "+newEnterPassword);
+								System.out.printf("\n%-30sValid Password","");
+								System.out.printf("\n%-30sPassword is %s ","",newEnterPassword);
 								staff.setPassword(newEnterPassword);
 								writeTextFile(staffList);
 								tryAgain.equals("N");
 							}
 							else {
-								System.out.println("Invalid Password");
-								System.out.println("Please Check Through These Critiral");
-								System.out.println("1)Please Ensure The Password Format Is CORRECT");
-								System.out.println("2)Please Ensure The Password is at least 7 characters long");
+								System.out.printf("\n%-30sInvalid Password","");
+								System.out.printf("\n%-30sPlease Check Through These Criterial","");
+								System.out.printf("\n%-30s1)Please Ensure The Password Format Is CORRECT","");
+								System.out.printf("\n%-30s2)Please Ensure The Password is at least 7 characters long","");
 							}
 				}
 					else {
-					System.out.println("Invalid Password");
-					System.out.println("Passwords Entered do not match");
-					System.out.println("Do You Want To Try Again?(Press Y)");
+					System.out.printf("\n%-30sInvalid Password","");
+					System.out.printf("\n%-30sPasswords Entered do not match","");
+					System.out.printf("\n%-30sDo You Want To Try Again?(Press Y)","");
 					tryAgain=scanner.nextLine();
 					tryAgain=tryAgain.toUpperCase();
 				}
@@ -784,7 +826,7 @@ public class ZhiHang {
 	    if(!staff.getPosition().equals("cashier")) {
 		do {
 	
-		System.out.print("Please Enter The ID of Staff:");
+		System.out.printf("\n%-30sPlease Enter The ID of Staff:","");
 		getID=scanner.nextLine();
 		 getFirstS=getID.substring(0,1);
 		getFirstS=getFirstS.toUpperCase();
@@ -797,10 +839,10 @@ public class ZhiHang {
 		}
 			if(staffList.get(i).getIdNo()==getNum) {
 				do {
-				System.out.print("Enter New Password :");
+				System.out.printf("\n%-30sEnter New Password :","");
 				String newPassword=scanner.nextLine();
 				scanner.nextLine();
-				System.out.print("Enter Password Again :");
+				System.out.printf("\n%-30sEnter Password Again :","");
 				String newEnterPassword=scanner.nextLine();
 	    
 	      
@@ -809,23 +851,23 @@ public class ZhiHang {
 					 checkPassword=checkPassword(newEnterPassword);
 					
 						if(checkPassword==true){
-								System.out.println("Valid Password");
-								System.out.println(" Password is "+newEnterPassword);
+								System.out.printf("\n%-30sValid Password","");
+								System.out.printf("\\n%-30sPassword is %s ","",newEnterPassword);
 								staffList.get(i).setPassword(newEnterPassword);
 								
 								tryAgain.equals("N");
 							}
 							else {
-								System.out.println("Invalid Password");
-								System.out.println("Please Check Through These Critiral");
-								System.out.println("1)Please Ensure The Password Format Is CORRECT");
-								System.out.println("2)Please Ensure The Password is at least 7 characters long");
+								System.out.printf("\n%-30sInvalid Password","");
+								System.out.printf("\n%-30sPlease Check Through These Critiral","");
+								System.out.printf("\n%-30s1)Please Ensure The Password Format Is CORRECT","");
+								System.out.printf("\n%-30s2)Please Ensure The Password is at least 7 characters long","");
 							}
 				}
 					else {
-					System.out.println("Invalid Password");
-					System.out.println("Passwords Entered do not match");
-					System.out.println("Do You Want To Try Again?(Press Y)");
+					System.out.printf("\n%-30sInvalid Password","");
+					System.out.printf("\n%-30sPasswords Entered do not match","");
+					System.out.printf("\n%-30sDo You Want To Try Again?(Press Y)","");
 					tryAgain=scanner.nextLine();
 					tryAgain=tryAgain.toUpperCase();
 					if(checkPassword==true) {
@@ -842,9 +884,9 @@ public class ZhiHang {
 		
 		        
 		else {
-			System.out.println("Format Invalid");
+			System.out.printf("\n%-30sFormat Invalid","");
 		}
-		System.out.print("Do You Want To Modify Password Again?: ");
+		System.out.printf("\n%-30sDo You Want To Modify Password Again?: ","");
 		 getChoice=scanner.nextLine();
 		 getChoice=getChoice.toUpperCase();
 		 }while(getChoice.equals("Y"));
@@ -895,7 +937,7 @@ public class ZhiHang {
 		
 		do {
 			invalid=0;
-			System.out.print("Please Enter The ID of Staff:");
+			System.out.printf("\n%-30sPlease Enter The ID of Staff:","");
 			getID=scanner.nextLine();
 			getFirstS=getID.substring(0,1);
 			getFirstS=getFirstS.toUpperCase();
@@ -905,21 +947,21 @@ public class ZhiHang {
 				
 					if(staffList.get(i).getIdNo()==getNum) {
 					
-						System.out.println("Staff Name:"+staffList.get(i).getName());
-						System.out.println("Staff ID:"+staffList.get(i).getIdNo());
-						System.out.println("Staff Status:"+staffList.get(i).getStatus());
+						System.out.printf("\n%-30sStaff Name:%s","",staffList.get(i).getName());
+						System.out.printf("\n%-30sStaff ID:%s","",staffList.get(i).getIdNo());
+						System.out.printf("\n%-30sStaff Status:%s","",staffList.get(i).getStatus());
 					
 						if(staffList.get(i).getStatus().equals("Active")) {
-							System.out.printf("-------------------------------------------\n","");
-							System.out.printf("              Status Selection             \n","");
-							System.out.printf("-------------------------------------------\n","");
-							System.out.println("Change The Status To Resign (Press Y)?:");
+							System.out.printf("\n%-30s-------------------------------------------\n","");
+							System.out.printf("\n%-30s              Status Selection             \n","");
+							System.out.printf("\n%-30s-------------------------------------------\n","");
+							System.out.printf("\n%-30sChange The Status To Resign (Press Y)?:","");
 							getChoice=scanner.nextLine();
 							getChoice=getChoice.toUpperCase();
 						
 							if(getChoice.equals("Y")) {
 								staffList.get(i).setStatus("Y");
-								System.out.println("Status:"+staffList.get(i).getStatus());
+								System.out.printf("\\n%-30sStatus:","",staffList.get(i).getStatus());
 								writeTextFile(staffList);
 							}
 						
@@ -958,11 +1000,11 @@ public class ZhiHang {
 									writeTextFile(staffList);
 								}
 								else if(selection==0){
-									System.out.println("You have quit");
+									System.out.printf("\n%-30sYou have quit","");
 								}
 								else {
 									invalid=1;
-									System.out.println("Invalid Choice. Please try again");
+									System.out.printf("\n%-30sInvalid Choice. Please try again","");
 								}
 							}while(invalid==1);
 							
@@ -976,12 +1018,12 @@ public class ZhiHang {
 				}
 			}
 			else {
-				System.out.println("Format Invalid");
+				System.out.printf("\n%-30sFormat Invalid","");
 			}
 			if(countStaff!=staffList.size()-1) {
-				System.out.println("Staff ID Not Found");
+				System.out.printf("\n%-30sStaff ID Not Found","");
 			}
-			System.out.print("Do You Want To Modify Status Again?: ");
+			System.out.printf("\n%-30sDo You Want To Modify Status Again?: ","");
 			getChoice=scanner.nextLine();
 			scanner.nextLine();
 			getChoice=getChoice.toUpperCase();
@@ -1000,7 +1042,7 @@ public class ZhiHang {
 		int getNum;
 		int countStaff=0;
 		do {
-		System.out.print("Please Enter The ID of Staff:");
+		System.out.printf("\n%-30sPlease Enter The ID of Staff:","");
 		getID=scanner.nextLine();
 		 getFirstS=getID.substring(0,1);
 		getFirstS=getFirstS.toUpperCase();
@@ -1010,23 +1052,23 @@ public class ZhiHang {
 			 for(int i=0;i<staffList.size();i++) {
 					
 					if(staffList.get(i).getIdNo()==getNum) {
-						System.out.println("Staff Name:"+staffList.get(i).getName());
-						System.out.println("Staff ID:"+staffList.get(i).getIdNo());
-						System.out.println("Staff Position:"+staffList.get(i).getPosition());
+						System.out.printf("\n%-30sStaff Name:%s","",staffList.get(i).getName());
+						System.out.printf("\n%-30sStaff ID:%s","",staffList.get(i).getIdNo());
+						System.out.printf("\n%-30sStaff Position:%s","",staffList.get(i).getPosition());
 						System.out.println();
-						System.out.println("Change Position");
-						System.out.println("Manager Position:(Press X)");
-						System.out.println("Executive Position:(Press Y)");
-						System.out.println("Cashier Position:(Press Z)");
+						System.out.printf("\n%-30sChange Position","");
+						System.out.printf("\n%-30sManager Position:(Press X)","");
+						System.out.printf("\n%-30sExecutive Position:(Press Y)","");
+						System.out.printf("\n%-30sCashier Position:(Press Z)","");
 						
-						System.out.print("Change The Position:");
+						System.out.printf("\n%-30sChange The Position:","");
 						getChoice=scanner.nextLine();
 						getChoice=getChoice.toUpperCase();
 						
 						if(getChoice.equals("X")||getChoice.equals("Y")||getChoice.equals("Z")) {
 							
 							staffList.get(i).setPosition(getChoice);
-							System.out.println("Status:"+staffList.get(i).getPosition());
+							System.out.printf("\n%-30sStatus:%s","",staffList.get(i).getPosition());
 							writeTextFile(staffList);
 						}
 						
@@ -1043,12 +1085,12 @@ public class ZhiHang {
 				
 		}
 			else {
-					System.out.println("Format Invalid");
+					System.out.printf("\n%-30sFormat Invalid","");
 			}
 				if(countStaff!=staffList.size()-1) {
-					System.out.println("Staff ID Not Found");
+					System.out.printf("\n%-30sStaff ID Not Found","");
 				}
-				System.out.print("Do You Want To Modify Position Again?: ");
+				System.out.printf("\n%-30sDo You Want To Modify Position Again?: ","");
 				 getChoice=scanner.nextLine();
 				 getChoice=getChoice.toUpperCase();
 				if(getChoice.equals("Y"))
@@ -1064,9 +1106,9 @@ public class ZhiHang {
 		int totalCountCash=0;
 		int totalCountCreditCard=0;
 		int totalCountTnG=0;
-		System.out.printf("------------------------------------------------------------------------\n");
-		System.out.printf("|                       Payment Method Report                          |\n");
-		System.out.printf("------------------------------------------------------------------------\n");
+		System.out.printf("\n%-30s------------------------------------------------------------------------\n","");
+		System.out.printf("%-30s|                       Payment Method Report                          |\n","");
+		System.out.printf("%-30s------------------------------------------------------------------------\n","");
 		for(int i=0;i<receiptList.size();i++) {
 		
 		if(receiptList.get(i).getPayment().getPaymentMethod().equalsIgnoreCase("Cash")) {
@@ -1081,11 +1123,11 @@ public class ZhiHang {
 		}
 		
 		}
-		System.out.printf("|Total Payment By Cash:%d                                               |\n",totalCountCash);
-		System.out.printf("|                                                                      |\n");
-		System.out.printf("|Total Payment By Credit Card:%d                                        |\n",totalCountCreditCard);
-		System.out.printf("|                                                                      |\n");	
-		System.out.printf("|Total Payment By TnG:%d                                                |\n",totalCountTnG);
+		System.out.printf("%-30s|Total Payment By Cash:%d                                               |\n","",totalCountCash);
+		System.out.printf("%-30s|                                                                      |\n","");
+		System.out.printf("%-30s|Total Payment By Credit Card:%d                                        |\n","",totalCountCreditCard);
+		System.out.printf("%-30s|                                                                      |\n","");	
+		System.out.printf("%-30s|Total Payment By TnG:%d                                                |\n","",totalCountTnG);
 		System.out.println("------------------------------------------------------------------------");		
 	}
 	

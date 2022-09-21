@@ -1,7 +1,10 @@
+
+import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
+import java.time.temporal.Temporal;
 
 public class Member extends Person{
 	private String memberID = "M", membership, activePeriod, mbrStatus;

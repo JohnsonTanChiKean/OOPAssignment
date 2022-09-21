@@ -17,9 +17,9 @@ public class Claris {
 	public static void menu(ArrayList<Member> memberList, Staff staff, ArrayList<Receipt> receiptList, ArrayList<Refund> refundList) {
 		Scanner scanner = new Scanner(System.in);
 		
-		System.out.printf("%-10s===================================\n", "");
-		System.out.printf("%-10sWELCOME TO MEMBER MANAGEMENT MODULE\n", "");
-		System.out.printf("%-10s===================================\n", "");
+		System.out.printf("%-28s===================================\n", "");
+		System.out.printf("%-28sWELCOME TO MEMBER MANAGEMENT MODULE\n", "");
+		System.out.printf("%-28s===================================\n", "");
 		
 		int valid = 1;
 		char yesNo = 'Y';
@@ -44,16 +44,18 @@ public class Claris {
 					displayReceipt(receiptList);
 					break;
 				case 0:
-					System.out.println("  You are properly quit!");
+					System.out.printf("%-28sYou are properly quit!", "");
+					System.out.println();
 					break;
 				default:
-					System.out.print("  Invalid Choice. Kindly re-enter again (0-4): ");
+					System.out.printf("%-28sInvalid Choice. Kindly re-enter again (0-4): ", "");
 					userChoice = scanner.nextInt();
 					break;
 				}
 			}while(valid != 1);
 			
-			System.out.print("  Move forward to another function (Y = Yes)? ");
+			System.out.println();
+			System.out.printf("%-20sMove forward to another function (Y = Yes)? ", "");
 			yesNo = scanner.next().charAt(0);
 			
 		}while(Character.toUpperCase(yesNo) == 'Y');
@@ -67,20 +69,20 @@ public class Claris {
 		int invalidInput = 0;
 		
 		do {
-			System.out.printf("%-10s------------------------------\n", "");
-			System.out.printf("%-10s|      Member Main Menu      |\n", "");
-			System.out.printf("%-10s------------------------------\n", "");
-			System.out.printf("%-10s|                            |\n", "");
-			System.out.printf("%-10s|1.       Add Member         |\n", "");
-			System.out.printf("%-10s|2.  Modify Member Details   |\n", "");
-			System.out.printf("%-10s|3.      Search Member       |\n", "");
-			System.out.printf("%-10s|4.     View all Member      |\n", "");
-			System.out.printf("%-10s|5.     Display Receipt      |\n", "");
-			System.out.printf("%-10s|0.          Quit            |\n", "");
-			System.out.printf("%-10s|                            |\n", "");
-			System.out.printf("%-10s------------------------------\n", "");
+			System.out.printf("%-31s-----------------------------\n", "");
+			System.out.printf("%-31s|      Member Main Menu     |\n", "");
+			System.out.printf("%-31s-----------------------------\n", "");
+			System.out.printf("%-31s|                           |\n", "");
+			System.out.printf("%-31s|1.       Add Member        |\n", "");
+			System.out.printf("%-31s|2.  Modify Member Details  |\n", "");
+			System.out.printf("%-31s|3.      Search Member      |\n", "");
+			System.out.printf("%-31s|4.     View all Member     |\n", "");
+			System.out.printf("%-31s|5.     Display Receipt     |\n", "");
+			System.out.printf("%-31s|0.          Quit           |\n", "");
+			System.out.printf("%-31s|                           |\n", "");
+			System.out.printf("%-31s-----------------------------\n", "");
 			
-			System.out.print("  Enter your Choice >> ");
+			System.out.printf("%-28sEnter your Choice >> ", "");
 			
 			invalidInput = 0;
 			
@@ -98,7 +100,8 @@ public class Claris {
 			}
 			
 			if(invalidInput == -1) {
-				System.out.println("Invalid Choice. Please Try Again.");
+				System.out.printf("%-28sInvalid Choice. Please Try Again.", "");
+				System.out.println();
 			}
 		}while(invalidInput == -1);
 		
@@ -128,14 +131,15 @@ public class Claris {
 			contAdd = 'N';
 			cancel = 0;
 			
-			System.out.println("  Register at (date and time): " + getDate);
+			System.out.printf("%-28sRegister at (date and time): " + getDate, "");
+			System.out.println();
 			
-			System.out.print("  Enter Member's Name (Enter -1 to cancel): ");
+			System.out.printf("%-28sEnter Member's Name (Enter -1 to cancel): ", "");
 			newMbrName = scanner.nextLine();
 			if(!newMbrName.equals("-1")) {
 				validName = ZhiHang.valiName(newMbrName);
 				while(validName == false) {
-					System.out.print("  Invalid Name. Please ensure that your name only has letters (Enter -1 to cancel): ");
+					System.out.printf("%-28sInvalid Name. Please ensure that your name only has letters (Enter -1 to cancel): ", "");
 					newMbrName = scanner.nextLine();
 					if(!newMbrName.equals("-1")) {
 						validName = ZhiHang.valiName(newMbrName);
@@ -151,18 +155,18 @@ public class Claris {
 			}
 			
 			if(cancel != -1) {
-				System.out.print("\n  Enter Member's IC Number (Enter -1 to cancel): ");
+				System.out.printf("\n%-28sEnter Member's IC Number (Enter -1 to cancel): ", "");
 				newMbrIcNo = scanner.next();
 				if(!newMbrIcNo.equals("-1")) {
 					validIc = ZhiHang.checkIC(newMbrIcNo);
 					scanner.nextLine();
 					while(validIc == false) {
-						System.out.println("  Invalid IC. Please ensure that you IC fulfilled conditions below:");
-						System.out.println("  ================================");
-						System.out.println("  1. Only has numbers.");
-						System.out.println("  2. Has length of 12 digits.");
-						System.out.println("  2. Has valid Day, Month and Year.");
-						System.out.print("\n   Please Try Again (Enter -1 to cancel): ");
+						System.out.printf("%-28sInvalid IC. Please ensure that you IC fulfilled conditions below:\n", "");
+						System.out.printf("%-28s================================\n", "");
+						System.out.printf("%-28s1. Only has numbers.\n", "");
+						System.out.printf("%-28s2. Has length of 12 digits.\n", "");
+						System.out.printf("%-28s3. Has valid Day, Month and Year.\n", "");
+						System.out.printf("\n%-28sPlease Try Again (Enter -1 to cancel): ", "");
 						newMbrIcNo = scanner.nextLine();
 						if(!newMbrIcNo.equals("-1")) {
 							validIc = ZhiHang.checkIC(newMbrIcNo);
@@ -177,10 +181,9 @@ public class Claris {
 					cancel = -1;
 				}
 			}
-//			newMbrIcNo = icNoValidation(newMbrIcNo);
 			
 			if(cancel != -1) {
-				System.out.print("\n  Enter Member's Contact Number (Enter -1 to cancel): ");
+				System.out.printf("\n%-28sEnter Member's Contact Number (Enter -1 to cancel): ", "");
 				newContactNum = scanner.next();
 				if(!newContactNum.equals("-1")) {
 					newContactNum = contactNoValidation(newContactNum);
@@ -202,7 +205,7 @@ public class Claris {
 			}
 			
 			if(cancel != -1) {
-				System.out.print("\n  Do you want to add this new member (Y = Yes)? ");
+				System.out.printf("\n%-20sDo you want to add this new member (Y = Yes)? ", "");
 				addYesNo = scanner.next().toUpperCase().charAt(0);
 				scanner.nextLine();
 				
@@ -215,7 +218,8 @@ public class Claris {
 				}
 			}
 			
-			System.out.print("  Do you want to add more new member (Y = Yes)? ");
+			System.out.println();
+			System.out.printf("%-20sDo you want to add more new member (Y = Yes)? ", "");
 			contAdd = scanner.next().toUpperCase().charAt(0);
 			scanner.nextLine();
 		} while(Character.toUpperCase(contAdd) == 'Y');
@@ -232,7 +236,7 @@ public class Claris {
 		int choice;
 		int found = 0;
 		int invalid = 0;
-		int index = -1;
+		int index = 0;
 		char modify = 'N';
 		boolean validName = false;
 		
@@ -245,16 +249,16 @@ public class Claris {
 				searchChoice = 0;
 				contModify = 'N';
 				invalid = 0;
-				index = -1;
+				index = 0;
 				
-				System.out.printf("%-10s-----------------\n", "");
-				System.out.printf("%-10s| Search Member |\n", "");
-				System.out.printf("%-10s-----------------\n", "");
-				System.out.printf("%-10s|1. Member ID   |\n", "");
-				System.out.printf("%-10s|2. Member IC   |\n", "");
-				System.out.printf("%-10s-----------------\n", "");
+				System.out.printf("%-38s-----------------\n", "");
+				System.out.printf("%-38s| Search Member |\n", "");
+				System.out.printf("%-38s-----------------\n", "");
+				System.out.printf("%-38s|1. Member ID   |\n", "");
+				System.out.printf("%-38s|2. Member IC   |\n", "");
+				System.out.printf("%-38s-----------------\n", "");
 				
-				System.out.print("  Enter your Choice (Enter -1 to cancel): ");
+				System.out.printf("%-28sEnter your Choice (Enter -1 to cancel): ", "");
 				try {
 					searchChoice = scanner.nextInt();
 					scanner.nextLine();
@@ -266,7 +270,7 @@ public class Claris {
 				if((searchChoice >= 1 && searchChoice <= 2) && invalid == 0) {
 					switch(searchChoice) {
 					case 1:
-						System.out.print("  Enter Member ID for modification: ");
+						System.out.printf("%-28sEnter Member ID for modification: ", "");
 						String mbrId = scanner.nextLine().toUpperCase();
 						
 						if(mbrId.charAt(0) != 'M') {
@@ -299,21 +303,21 @@ public class Claris {
 				}
 				
 				if(index == -1) {
-					System.out.println("  Member Not Found. Press Enter To Try Again.");
+					System.out.printf("%-28sMember Not Found. Press Enter To Try Again.", "");
 					scanner.nextLine();
 				}
 				
 			}while(invalid == -1 || index == -1);
 			
 			if(invalid != -1 && index != -1 && cancel != -1) {
-				System.out.printf("%-10s----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
-				System.out.printf("%-10s|                                                                                                                                                                                                  |\n", "");
-				System.out.printf("%-10s|   %-17s%-30s%-25s%-15s%-18s%-13s%-17s%-17s%-17s%-19s   |\n", "", "Member ID", "Name", "Identification Number", "Birth Date", "Contact Number", "Membership", "Active Period", "Member Status", "Registered By", "Registration Date");
-				System.out.printf("%-10s|   %-17s%-30s%-25s%-15s%-18s%-13s%-17s%-17s%-17s%-19s   |\n", "", "---------", "----", "---------------------", "----------", "--------------", "----------", "-------------", "-------------", "-------------", "-----------------");
-				System.out.printf("%-10s|   %-17s%-30s%-25s%-15s%-18s%-13s%-17s%-17s%-17s%-19s   |\n", "", memberList.get(index).getFullMemID(), memberList.get(index).getName(), memberList.get(index).getIcNo(), memberList.get(index).getBirthDate(),
+				System.out.printf("%-5s----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
+				System.out.printf("%-5s|                                                                                                                                                                                                  |\n", "");
+				System.out.printf("%-5s|   %-17s%-30s%-25s%-15s%-18s%-13s%-17s%-17s%-17s%-19s   |\n", "", "Member ID", "Name", "Identification Number", "Birth Date", "Contact Number", "Membership", "Active Period", "Member Status", "Registered By", "Registration Date");
+				System.out.printf("%-5s|   %-17s%-30s%-25s%-15s%-18s%-13s%-17s%-17s%-17s%-19s   |\n", "", "---------", "----", "---------------------", "----------", "--------------", "----------", "-------------", "-------------", "-------------", "-----------------");
+				System.out.printf("%-5s|   %-17s%-30s%-25s%-15s%-18s%-13s%-17s%-17s%-17s%-19s   |\n", "", memberList.get(index).getFullMemID(), memberList.get(index).getName(), memberList.get(index).getIcNo(), memberList.get(index).getBirthDate(),
 						memberList.get(index).getContactNum(), memberList.get(index).getMembership(), memberList.get(index).getActivePeriod(), memberList.get(index).getMbrStatus(), memberList.get(index).getRegisteredBy().getFullStaffID(), memberList.get(index).getRegistrationDate());
-				System.out.printf("%-10s|                                                                                                                                                                                                  |\n", "");
-				System.out.printf("%-10s----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
+				System.out.printf("%-5s|                                                                                                                                                                                                  |\n", "");
+				System.out.printf("%-5s----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
 				tempName = memberList.get(index).getName();
 				tempContactNum = memberList.get(index).getContactNum();
 				tempMbrshipType = memberList.get(index).getMembership();
@@ -323,12 +327,12 @@ public class Claris {
 				
 				switch(choice) {
 				case 1:
-					System.out.print("  Enter Member NEW Name (Enter -1 to cancel): ");
+					System.out.printf("%-28sEnter Member NEW Name (Enter -1 to cancel): ", "");
 					tempName = scanner.nextLine();
 					if(!tempName.equals("-1")) {
 						validName = ZhiHang.valiName(tempName);
 						while(validName == false) {
-							System.out.print("  Invalid Name. Please ensure that your name only has letters (Enter -1 to cancel): ");
+							System.out.printf("%-28sInvalid Name. Please ensure that your name only has letters (Enter -1 to cancel): ", "");
 							tempName = scanner.nextLine();
 							if(!tempName.equals("-1")) {
 								validName = ZhiHang.valiName(tempName);
@@ -344,7 +348,7 @@ public class Claris {
 					}
 					break;
 				case 2:
-					System.out.print("  Enter Member NEW Contact Number (Enter -1 to cancel): ");
+					System.out.printf("%-28sEnter Member NEW Contact Number (Enter -1 to cancel): ", "");
 					tempContactNum = scanner.nextLine();
 					if(!tempContactNum.equals("-1")) {
 						tempContactNum = contactNoValidation(tempContactNum);
@@ -360,12 +364,12 @@ public class Claris {
 					}
 					break;
 				case 4:
-					System.out.print("  Enter Member NEW Name (Enter -1 to cancel): ");
+					System.out.printf("%-28sEnter Member NEW Name (Enter -1 to cancel): ", "");
 					tempName = scanner.nextLine();
 					if(!tempName.equals("-1")) {
 						validName = ZhiHang.valiName(tempName);
 						while(validName == false) {
-							System.out.print("  Invalid Name. Please ensure that your name only has letters (Enter -1 to cancel): ");
+							System.out.printf("%-28sInvalid Name. Please ensure that your name only has letters (Enter -1 to cancel): ", "");
 							tempName = scanner.nextLine();
 							if(!tempName.equals("-1")) {
 								validName = ZhiHang.valiName(tempName);
@@ -381,7 +385,7 @@ public class Claris {
 					}
 					
 					if(cancel != -1) {
-						System.out.print("  Enter Member NEW Contact Number (Enter -1 to cancel): ");
+						System.out.printf("%-28sEnter Member NEW Contact Number (Enter -1 to cancel): ", "");
 						tempContactNum = scanner.nextLine();
 						if(!tempContactNum.equals("-1")) {
 							tempContactNum = contactNoValidation(tempContactNum);
@@ -399,7 +403,8 @@ public class Claris {
 					}
 					break;
 				case 0:
-					System.out.println("  You Are Quit.");
+					System.out.printf("%-28sYou Are Quit.", "");
+					System.out.println();
 					break;
 				}
 				
@@ -419,7 +424,7 @@ public class Claris {
 							tempContactNum, tempMbrType, mbrActivePeriod(tempMbrType), tempStatus, memberList.get(index).getRegisteredBy().getFullStaffID(), memberList.get(index).getRegistrationDate());
 					System.out.printf("%-10s|                                                                                                                                                                                                  |\n", "");
 					System.out.printf("%-10s----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n", "");
-					System.out.print("  Are you sure to Modify? (Y = Yes): ");
+					System.out.printf("%-28sAre you sure to Modify (Y = Yes)? ", "");
 					modify = Character.toUpperCase(scanner.next().charAt(0));
 					scanner.nextLine();
 					
@@ -434,16 +439,17 @@ public class Claris {
 						textFile(memberList);
 					}
 					else {
-						System.out.println("  Modification Cancelled.");
+						System.out.printf("%-28sModification Cancelled.", "");
+						System.out.println();
 					}
 				}
 			}
 			
 			if(invalid == -1) {
-				System.out.print("  Invalid Member ID.");
+				System.out.printf("%-28sInvalid Member ID.", "");
 			}
 			
-			System.out.print("  Would you like to modify another record (Y = Yes)?: ");
+			System.out.printf("%-28sWould you like to modify another record (Y = Yes)? ", "");
 			contModify = scanner.next().charAt(0);
 			
 		} while(Character.toUpperCase(contModify) == 'Y');
@@ -467,20 +473,20 @@ public class Claris {
 				 invalidInput = 0;
 				 found = false;
 					
-					System.out.printf("%-10s------------------------------\n", "");
-					System.out.printf("%-10s|     Search Member Menu     |\n", "");
-					System.out.printf("%-10s------------------------------\n", "");
-					System.out.printf("%-10s|                            |\n", "");
-					System.out.printf("%-10s|1. Member ID                |\n", "");
-					System.out.printf("%-10s|2. Name                     |\n", "");
-					System.out.printf("%-10s|3. Identification Number    |\n", "");
-					System.out.printf("%-10s|4. Contact Number           |\n", "");
-					System.out.printf("%-10s|5. Membership Type          |\n", "");
-					System.out.printf("%-10s|0. Cancel                   |\n", "");
-					System.out.printf("%-10s|                            |\n", "");
-					System.out.printf("%-10s------------------------------\n", "");
+					System.out.printf("%-31s------------------------------\n", "");
+					System.out.printf("%-31s|     Search Member Menu     |\n", "");
+					System.out.printf("%-31s------------------------------\n", "");
+					System.out.printf("%-31s|                            |\n", "");
+					System.out.printf("%-31s|1. Member ID                |\n", "");
+					System.out.printf("%-31s|2. Name                     |\n", "");
+					System.out.printf("%-31s|3. Identification Number    |\n", "");
+					System.out.printf("%-31s|4. Contact Number           |\n", "");
+					System.out.printf("%-31s|5. Membership Type          |\n", "");
+					System.out.printf("%-31s|0. Cancel                   |\n", "");
+					System.out.printf("%-31s|                            |\n", "");
+					System.out.printf("%-31s------------------------------\n", "");
 					
-					System.out.printf("  Please enter your choice: ");
+					System.out.printf("%-28sPlease enter your choice: ", "");
 					
 					try {
 						selectionS = scanner.nextInt();
@@ -496,13 +502,14 @@ public class Claris {
 					}
 					
 					if(invalidInput == -1) {
-						System.out.println("  Invalid Choice. Please Try Again.");
+						System.out.printf("%-28sInvalid Choice. Please Try Again.", "");
+						System.out.println();
 					}
 			 }while(invalidInput == -1);
 			
 			switch(selectionS) {
 			case 1:
-				System.out.print("  Enter Member ID to Search: ");
+				System.out.printf("%-28sEnter Member ID to Search: ", "");
 				String mbrID = scanner.next().toUpperCase();
 				for(int i = 0; i < memberList.size(); i++) {
 					if(memberList.get(i).getFullMemID().equals(mbrID)) {
@@ -512,7 +519,7 @@ public class Claris {
 				}
 				break;
 			case 2:
-				System.out.print("  Enter Name to Search: ");
+				System.out.printf("%-28sEnter Name to Search: ", "");
 				String mbrName = scanner.nextLine();
 				for(int i = 0; i < memberList.size(); i++) {
 					if(memberList.get(i).getName().equalsIgnoreCase(mbrName)) {
@@ -522,7 +529,7 @@ public class Claris {
 				}
 				break;
 			case 3:
-				System.out.print("  Enter Identification Number to Search: ");
+				System.out.printf("%-28sEnter Identification Number to Search: ", "");
 				String mbrIcNo = scanner.next();
 				for(int i = 0; i < memberList.size(); i++) {
 					if(memberList.get(i).getIcNo().equals(mbrIcNo)) {
@@ -532,7 +539,7 @@ public class Claris {
 				}
 				break;
 			case 4:
-				System.out.print("  Enter Contact Number to Search: ");
+				System.out.printf("%-28sEnter Contact Number to Search: ", "");
 				String mbrContactNo = scanner.next();
 				for(int i = 0; i < memberList.size(); i++) {
 					if(memberList.get(i).getContactNum().equals(mbrContactNo)) {
@@ -547,16 +554,16 @@ public class Claris {
 				int valid = 1;
 				
 				do {
-					System.out.printf("%-10s------------------------------\n", "");
-					System.out.printf("%-10s|       Membership Type      |\n", "");
-					System.out.printf("%-10s------------------------------\n", "");
-					System.out.printf("%-10s|                            |\n", "");
-					System.out.printf("%-10s|1. Silver                   |\n", "");
-					System.out.printf("%-10s|2. Gold                     |\n", "");
-					System.out.printf("%-10s|3. Platinum                 |\n", "");
-					System.out.printf("%-10s|                            |\n", "");
-					System.out.printf("%-10s------------------------------\n", "");
-					System.out.printf("  Enter Membership Type to Search: ");
+					System.out.printf("%-30s------------------------------\n", "");
+					System.out.printf("%-30s|       Membership Type      |\n", "");
+					System.out.printf("%-30s------------------------------\n", "");
+					System.out.printf("%-30s|                            |\n", "");
+					System.out.printf("%-30s|1. Silver                   |\n", "");
+					System.out.printf("%-30s|2. Gold                     |\n", "");
+					System.out.printf("%-30s|3. Platinum                 |\n", "");
+					System.out.printf("%-30s|                            |\n", "");
+					System.out.printf("%-30s------------------------------\n", "");
+					System.out.printf("%-28sEnter Membership Type to Search: ", "");
 					selectMbrShip = scanner.nextInt();
 					scanner.nextLine();
 					
@@ -571,7 +578,7 @@ public class Claris {
 					}
 					else {
 						System.out.println();
-						System.out.println("  Invalid Membership Type. Press Enter to Try Again.");
+						System.out.printf("%-28sInvalid Membership Type. Press Enter to Try Again.", "");
 						scanner.nextLine();
 						valid = 0;
 					}
@@ -594,15 +601,21 @@ public class Claris {
 				System.out.printf("%-10s|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n", "");
 				break;
 			case 0:
-				System.out.println("  Searching Cancelled.");
+				System.out.printf("%-28sSearching Cancelled.", "");
+				System.out.println();
+				found = true;
+				break;
 			}
 			
 			if(found == false) {
-				System.out.println("  Record Doesn't Exist.");
+				System.out.printf("%-28sRecord Doesn't Exist.", "");
+				System.out.println();
 			}
 			
-			System.out.print("  Would you like to search for another record (Y = Yes)? ");
-			contSearch = scanner.next().toUpperCase().charAt(0);
+			if(selectionS != 0) {
+				System.out.printf("%-28sWould you like to search for another record (Y = Yes)? ", "");
+				contSearch = scanner.next().toUpperCase().charAt(0);
+			}
 		} while(contSearch == 'Y' && selectionS != 0);
 	}
 	
@@ -611,7 +624,7 @@ public class Claris {
 		Scanner scanner = new Scanner(System.in);
 		int index = -1;
 		
-		System.out.printf("  Enter IC: ");
+		System.out.printf("%-28sEnter IC: ", "");
 		String ic = scanner.next();
 		
 		for(int i = 0; i < memberList.size(); i++) {
@@ -674,16 +687,16 @@ public class Claris {
 			valid = 1;
 			
 			System.out.println();
-			System.out.printf("%-10s------------------------------------------------------\n", "");
-			System.out.printf("%-10s|       Membership Type      |    Discounts Given    |\n", "");
-			System.out.printf("%-10s------------------------------------------------------\n", "");
-			System.out.printf("%-10s|                            |                       |\n", "");
-			System.out.printf("%-10s|1. Silver                   |         1. 2%%         |\n", "");
-			System.out.printf("%-10s|2. Gold                     |         2. 3%%         |\n", "");
-			System.out.printf("%-10s|3. Platinum                 |         3. 5%%         |\n", "");
-			System.out.printf("%-10s|                            |                       |\n", "");
-			System.out.printf("%-10s------------------------------------------------------\n", "");
-			System.out.print("  Enter Membership Type (Enter -1 to cancel): ");
+			System.out.printf("%-18s------------------------------------------------------\n", "");
+			System.out.printf("%-18s|       Membership Type      |    Discounts Given    |\n", "");
+			System.out.printf("%-18s------------------------------------------------------\n", "");
+			System.out.printf("%-18s|                            |                       |\n", "");
+			System.out.printf("%-18s|1. Silver                   |         1. 2%%         |\n", "");
+			System.out.printf("%-18s|2. Gold                     |         2. 3%%         |\n", "");
+			System.out.printf("%-18s|3. Platinum                 |         3. 5%%         |\n", "");
+			System.out.printf("%-18s|                            |                       |\n", "");
+			System.out.printf("%-18s------------------------------------------------------\n", "");
+			System.out.printf("%-20sEnter Membership Type (Enter -1 to cancel): ", "");
 			selectMbrShip = scanner.nextInt();
 			System.out.println();
 			
@@ -701,7 +714,7 @@ public class Claris {
 			}
 			else {
 				System.out.println();
-				System.out.println("  Invalid Membership Type. Press Enter to Try Again.");
+				System.out.printf("%-20sInvalid Membership Type. Press Enter to Try Again.", "");
 				scanner.nextLine();
 				valid = 0;
 			}
@@ -738,19 +751,19 @@ public class Claris {
 		do {
 			invalidInput = 0;
 			
-			System.out.printf("%-10s--------------------------------\n", "");
-			System.out.printf("%-10s| Modify Member Detail(s) Menu |\n", "");
-			System.out.printf("%-10s--------------------------------\n", "");
-			System.out.printf("%-10s|                              |\n", "");
-			System.out.printf("%-10s| 1. Name                      |\n", "");
-			System.out.printf("%-10s| 2. Contact Number            |\n", "");
-			System.out.printf("%-10s| 3. Membership                |\n", "");
-			System.out.printf("%-10s| 4. All Details               |\n", "");
-			System.out.printf("%-10s| 0. Quit                      |\n", "");
-			System.out.printf("%-10s|                              |\n", "");
-			System.out.printf("%-10s--------------------------------\n", "");
+			System.out.printf("%-30s--------------------------------\n", "");
+			System.out.printf("%-30s| Modify Member Detail(s) Menu |\n", "");
+			System.out.printf("%-30s--------------------------------\n", "");
+			System.out.printf("%-30s|                              |\n", "");
+			System.out.printf("%-30s| 1. Name                      |\n", "");
+			System.out.printf("%-30s| 2. Contact Number            |\n", "");
+			System.out.printf("%-30s| 3. Membership                |\n", "");
+			System.out.printf("%-30s| 4. All Details               |\n", "");
+			System.out.printf("%-30s| 0. Quit                      |\n", "");
+			System.out.printf("%-30s|                              |\n", "");
+			System.out.printf("%-30s--------------------------------\n", "");
 			
-			System.out.printf("  Please enter field to modify: ");
+			System.out.printf("%-28sPlease enter field to modify: ", "");
 			
 			try {
 				selectionM = scanner.nextInt();
@@ -766,7 +779,8 @@ public class Claris {
 			}
 			
 			if(invalidInput == -1) {
-				System.out.println("  Invalid Choice. Please Try Again.");
+				System.out.printf("%-28sInvalid Choice. Please Try Again.", "");
+				System.out.println();
 			}
 		}while(invalidInput == -1);
 		
@@ -775,12 +789,14 @@ public class Claris {
 	
 	//DISPLAY REPORT
 	public static void displayReport(ArrayList<Member> memberList, ArrayList<Receipt> receiptList, ArrayList<Refund> refundList) {
-		//total order made by each customer
-		int totalOrder = 0;
-		//total points collected
-		int totalPoint = 0;
-		//total order made
-		int finalOrder = 0;
+		GetDate getDate = new GetDate();
+		int totalOrder = 0; //total order made by each customer
+		int totalPoint = 0; //total points collected
+		int finalOrder = 0; //total order made
+		
+		System.out.println();
+		System.out.printf("%-28sCurrent Member Report at (date and time): " + getDate, "");
+		System.out.println();
 		
 		System.out.printf("%-10s--------------------------------------------------------------------------------------------------------\n", "");
 		System.out.printf("%-10s|                                                                                                      |\n", "");
@@ -811,7 +827,7 @@ public class Claris {
 				}
 			}
 			if(totalOrder != 0) {
-				System.out.printf("%-10s|    %-30s         |              %-13d |             %-15d |", "", memberList.get(i).getName(), totalOrder, totalPoint);
+				System.out.printf("%-10s|    %-30s         |              %-13d |             %-15d |\n", "", memberList.get(i).getName(), totalOrder, totalPoint);
 			}
 			finalOrder += totalOrder;
 		}
@@ -916,7 +932,7 @@ public class Claris {
 		boolean loop = false;
 		int invalid = 0;
 		
-		System.out.print("  Enter Member ID: ");
+		System.out.printf("%-28sEnter Member ID: ", "");
 		String memberId = scanner.next().toUpperCase();
 		
 		for(int i = 0; i < receiptList.size(); i++) {
@@ -937,11 +953,11 @@ public class Claris {
 					do {
 						invalid = 0;
 						
-						System.out.printf("%-10s-------------------\n", "");
-						System.out.printf("%-10s| 1. Next Receipt |\n", "");
-						System.out.printf("%-10s| 0. Exit         |\n", "");
-						System.out.printf("%-10s-------------------\n", "");
-						System.out.print("  Enter your Choice: ");
+						System.out.printf("%-42s-------------------\n", "");
+						System.out.printf("%-42s| 1. Next Receipt |\n", "");
+						System.out.printf("%-42s| 0. Exit         |\n", "");
+						System.out.printf("%-42s-------------------\n", "");
+						System.out.printf("%-28sEnter your Choice: ", "");
 
 						try {
 							choice = scanner.nextInt();
@@ -965,12 +981,12 @@ public class Claris {
 					do {
 						invalid = 0;
 						
-						System.out.printf("%-10s-----------------------\n", "");
-						System.out.printf("%-10s| 1. Next Receipt     |\n", "");
-						System.out.printf("%-10s| 2. Previous Receipt |\n", "");
-						System.out.printf("%-10s| 0. Exit             |\n", "");
-						System.out.printf("%-10s-----------------------\n", "");
-						System.out.print("  Enter your Choice: ");
+						System.out.printf("%-42s-----------------------\n", "");
+						System.out.printf("%-42s| 1. Next Receipt     |\n", "");
+						System.out.printf("%-42s| 2. Previous Receipt |\n", "");
+						System.out.printf("%-42s| 0. Exit             |\n", "");
+						System.out.printf("%-42s-----------------------\n", "");
+						System.out.printf("%-28sEnter your Choice: ", "");
 
 						try {
 							choice = scanner.nextInt();
@@ -998,11 +1014,11 @@ public class Claris {
 					do {
 						invalid = 0;
 						
-						System.out.printf("%-10s-----------------------\n", "");
-						System.out.printf("%-10s| 1. Previous Receipt |\n", "");
-						System.out.printf("%-10s| 0. Exit             |\n", "");
-						System.out.printf("%-10s-----------------------\n", "");
-						System.out.print("  Enter your Choice: ");
+						System.out.printf("%-42s-----------------------\n", "");
+						System.out.printf("%-42s| 1. Previous Receipt |\n", "");
+						System.out.printf("%-42s| 0. Exit             |\n", "");
+						System.out.printf("%-42s-----------------------\n", "");
+						System.out.printf("%-28sEnter your Choice: ", "");
 						
 						try {
 							choice = scanner.nextInt();
@@ -1023,13 +1039,14 @@ public class Claris {
 					}while(invalid == 1);
 				}
 				else {
-					System.out.println("  Press Enter to Exit.");
+					System.out.printf("%-28sPress Enter to Exit.\n", "");
 					scanner.nextLine();
 				}
 			}while(loop == true);
 		}
 		else {
-			System.out.println("  This Member Does Not Have Any Purchases.");
+			System.out.printf("%-28sThis Member Does Not Have Any Purchases.", "");
+			System.out.println();
 		}
 	}
 	
@@ -1037,13 +1054,6 @@ public class Claris {
 	//CONTACT NUMBER VALIDATION
 	public static String contactNoValidation(String contactNo) {
 		Scanner scanner = new Scanner(System.in);
-//		Pattern pattern = Pattern.compile("(0)?[1-9][0-9]{10,11}");
-//		List<String> values = new ArrayList<String>();
-//		values.add(contactNo);
-//		for(String value : values) {
-//			Matcher matcher = pattern.matcher(value);
-//			System.out.println(matcher.matches());
-//		}
 		int invalid = 0;
 		
 		if(contactNo.substring(0, 3).equals("011") || contactNo.substring(0, 3).equals("015")) {
@@ -1069,8 +1079,8 @@ public class Claris {
 		while(invalid == 1) {
 			invalid = 0;
 			
-			System.out.println("  Invalid Contact Number.");
-			System.out.print("  Kindly press enter to re-try (only 10/11 digits are allowed): ");
+			System.out.printf("%-28sInvalid Contact Number.\n", "");
+			System.out.printf("%-28sKindly press enter to re-try (only 10/11 digits are allowed): ", "");
 			contactNo = scanner.nextLine();
 			
 			if(contactNo.substring(0, 3).equals("011") || contactNo.substring(0, 3).equals("015")) {
@@ -1112,7 +1122,8 @@ public class Claris {
 			}
 			fw.close();
 		} catch (IOException e) {
-			System.out.println("An error occurred. Unable to Write member.txt File.");
+			System.out.printf("%-28sAn error occurred. Unable to Write member.txt File.");
+			System.out.println();
 			e.printStackTrace();
 		}
 	}

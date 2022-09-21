@@ -1,5 +1,5 @@
 
-public class Person {
+public abstract class Person {
 	private String name, icNo, birthDate, contactNum;
 	
 	public Person() {
@@ -103,4 +103,7 @@ public class Person {
 		
 		birthDate = icNo.substring(4, 6) + "-" + month + "-" + newYear;
 	}
+	
+	public abstract String toString();
+	public abstract boolean equals(Object o);
 }
